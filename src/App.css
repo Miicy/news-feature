@@ -1,6 +1,7 @@
 .App {
 	text-align: center;
 	margin: 0;
+	height: 100vh;
 }
 .body {
 	font-family: "montserrat";
@@ -8,5 +9,37 @@
 
 .hover:hover {
 	color: grey;
-  transition: "color 0.3s",
+	transition: "color 0.3s";
+}
+
+.pageCover {
+	height: calc(100vh - 85px);
+	width: 100%;
+	background-image: url("./media/gradient.jpg");
+	margin: 0;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1;
+}
+
+.pageContainer {
+	margin-top: 5%;
+	margin-bottom: 5%;
+	position: absolute;
+	width: 70%;
+	min-width: 300px;
+	height: 90%;
+	/* height: auto; */
+	background-color: rgba(255, 255, 255, 0.83);
+	border-radius: 16px;
+	border: 1px solid rgba(255, 255, 255, 0.73);
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+	display: flex;
+	justify-content: center;
+	z-index: 10;
 }

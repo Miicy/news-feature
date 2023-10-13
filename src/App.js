@@ -15,11 +15,15 @@ function App() {
 		<ThemeProvider theme={theme}>
 			<BrowserRouter>
 				<Header />
-				<Routes>
-					<Route path="/*" element={<Home />} />
-					<Route path="/news" element={<News />} />
-					<Route path="/contact" element={<Contact />} />
-				</Routes>
+				<div className="pageCover">
+					<div className="pageContainer">
+						<Routes>
+							<Route path="/*" element={<Home />} />
+							<Route path="/news" element={<News />} />
+							<Route path="/contact" element={<Contact />} />
+						</Routes>
+					</div>
+				</div>
 				{/* <LoadingModal />
 				<NotificationContainer /> */}
 			</BrowserRouter>

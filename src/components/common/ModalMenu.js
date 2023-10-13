@@ -8,7 +8,7 @@ function ModalMenu({ headerStyles, menuOpen, toggleMenu }) {
 		container: {
 			marginTop: "0",
 			backgroundColor: "#455059",
-			height: "calc(100vh - 120px)",
+			height: "calc(100vh - 85px)",
 			width: "100%",
 			boxShadow: "inset 0px 5px 31px 3px rgba(0,0,0,0.34)",
 		},

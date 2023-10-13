@@ -42,7 +42,7 @@ function Header() {
 		},
 		navLi: {
 			display: "inline-block",
-			margin: "0 40px",
+			margin: "0 50px",
 			cursor: "pointer",
 			color: "white",
 			fontWeight: "450",
@@ -66,7 +66,7 @@ function Header() {
             height:"100%",
             width:"100%",
 			position: "absolute",
-			marginTop: "120px",
+			marginTop: "125px",
             zIndex: 1,
             
 		},
