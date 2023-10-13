@@ -1,8 +1,12 @@
 import "./App.css";
 import { useState } from "react";
-import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import { themeCreation } from "./theme/themeDesign";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Header from "./components/layout/Header";
+import Home from "./pages/Home";
+import News from "./pages/News";
+import Contact from "./pages/Contact";
 
 function App() {
 	const [theme] = useState(themeCreation());
@@ -10,7 +14,12 @@ function App() {
 	return (
 		<ThemeProvider theme={theme}>
 			<BrowserRouter>
-
+				<Header />
+				<Routes>
+					<Route path="/*" element={<Home />} />
+					<Route path="/news" element={<News />} />
+					<Route path="/contact" element={<Contact />} />
+				</Routes>
 				{/* <LoadingModal />
 				<NotificationContainer /> */}
 			</BrowserRouter>
