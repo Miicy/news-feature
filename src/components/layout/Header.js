@@ -29,6 +29,7 @@ function Header() {
 			boxShadow:
 				"inset 0px 10px 31px 3px rgba(0,0,0,0.34),0px 5px 21px 0px rgba(0,0,0,0.71)",
             zIndex: 100,
+			borderBottom: "1px solid white"
             
 		},
 		navUl: {
