@@ -13,14 +13,14 @@
 }
 
 .pageCover {
-	height: calc(100vh - 85px);
+	min-height:100vh;
+	height: auto;
 	width: 100%;
 	background-image: url("./media/gradient.jpg");
 	margin: 0;
 	background-size: cover;
-	background-repeat: no-repeat;
 	background-position: center;
-	position: relative;
+	background-attachment: fixed;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -28,18 +28,47 @@
 }
 
 .pageContainer {
-	margin-top: 5%;
-	margin-bottom: 5%;
-	position: absolute;
-	width: 80%;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	position: relative;
 	min-width: 300px;
-	height: 90%;
+	width: 75%;
+	min-height: 100vh;
+	height: auto;
 	/* height: auto; */
 	background-color: rgba(255, 255, 255, 0.83);
 	border-radius: 16px;
 	border: 1px solid rgba(255, 255, 255, 0.73);
 	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
 	z-index: 10;
+}
+
+body::-webkit-scrollbar {
+	display: none; /* for Chrome, Safari, and Opera */
+}
+
+/* Firefox */
+* {
+	scrollbar-width: auto;
+	scrollbar-color: #ededed #000000;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+	width: 7px;
+}
+
+*::-webkit-scrollbar-track {
+	background: rgb(17, 17, 17);
+	padding: 2px;
+}
+
+*::-webkit-scrollbar-thumb {
+	background-color: #ededed;
+	border-radius: 2px;
+	border: 0px solid #ffffff;
 }

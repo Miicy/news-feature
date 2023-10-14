@@ -1,0 +1,51 @@
+[
+	{
+	  "id": 1,
+	  "picture": "http://",
+	  "title": "Latest News Title",
+	  "content": "This is the latest news content.",
+	  "date": "2023-10-14"
+	},
+	{
+	  "id": 2,
+	  "title": "News Title 1",
+	  "content": "This is news content 1.",
+	  "date": "2023-10-13"
+	},
+	{
+	  "id": 3,
+	  "title": "News Title 2",
+	  "content": "This is news content 2.",
+	  "date": "2023-10-12"
+	},
+	{
+	  "id": 4,
+	  "title": "News Title 2",
+	  "content": "This is news content 2.",
+	  "date": "2023-10-12"
+	},
+	{
+	  "id": 5,
+	  "title": "News Title 2",
+	  "content": "This is news content 2.",
+	  "date": "2023-10-12"
+	},
+	{
+	  "id": 6,
+	  "title": "News Title 2",
+	  "content": "This is news content 2.",
+	  "date": "2023-10-12"
+	},
+	{
+		"id": 7,
+		"title": "News Title 2",
+		"content": "This is news content 2.",
+		"date": "2023-10-12"
+	  },
+	  {
+		"id": 8,
+		"title": "News Title 2",
+		"content": "This is news content 2.",
+		"date": "2023-10-12"
+	  }
+  ]

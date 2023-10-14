@@ -44,11 +44,12 @@ function Header() {
 			fontWeight: "700",
 			fontSize: "1.5em",
 			marginLeft: isScreenSmall || isMobile ? "30px" : "0",
+			display:"flex",
+			justifyContent:"center"
 		},
 		navUl: {
-			float: "right",
+			padding:"0",
 			height: "100%",
-			width: "90%",
 			display: "flex",
 			justifyContent: "flex-end",
 			alignItems: "center",
