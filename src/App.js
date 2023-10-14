@@ -7,6 +7,8 @@ import Header from "./components/layout/Header";
 import Home from "./pages/Home";
 import News from "./pages/News";
 import Contact from "./pages/Contact";
+import LoadingModal from "./components/other/LoadingModal";
+import NotificationContainer from "./components/other/NotificationContainer";
 
 function App() {
 	const [theme] = useState(themeCreation());
@@ -24,8 +26,8 @@ function App() {
 						</Routes>
 					</div>
 				</div>
-				{/* <LoadingModal />
-				<NotificationContainer /> */}
+				<LoadingModal />
+				<NotificationContainer />
 			</BrowserRouter>
 		</ThemeProvider>
 	);

@@ -1,4 +1,4 @@
-import { Divider, useMediaQuery } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { isMobile } from "react-device-detect";
@@ -10,14 +10,13 @@ function Header() {
 	const isScreenSmall = useMediaQuery("(max-width: 500px)");
 	const [menuOpen, setMenuOpen] = useState(false);
 
-    const toggleMenu = () => {
-        setMenuOpen((prevMenuOpen) => !prevMenuOpen);
-      };
+	const toggleMenu = () => {
+		setMenuOpen((prevMenuOpen) => !prevMenuOpen);
+	};
 
-      
 	const headerStyles = {
 		nav: {
-            position: "relative",
+			position: "relative",
 			fontSize: "1.2em",
 			background: "#182A3A",
 			height: "80px",
@@ -28,28 +27,52 @@ function Header() {
 			alignItems: "center",
 			boxShadow:
 				"inset 0px 10px 31px 3px rgba(0,0,0,0.34),0px 5px 21px 0px rgba(0,0,0,0.71)",
-            zIndex: 100,
-			borderBottom: "1px solid white"
-            
+			zIndex: 100,
+			borderBottom: "1px solid white",
 		},
-		navUl: {
-			float: "right",
-			height: "100%",
+		navContainer:{
 			width: "80%",
 			display: "flex",
 			justifyContent: "center",
 			alignItems: "center",
 		},
-		navLi: {
+		logo: {
 			display: "inline-block",
-			margin: "0 50px",
+			width:"10%",
+			cursor: "pointer",
+			color: "white",
+			fontWeight: "700",
+			fontSize: "1.5em",
+			marginLeft: isScreenSmall || isMobile ? "30px" : "0",
+		},
+		navUl: {
+			float: "right",
+			height: "100%",
+			width: "90%",
+			display: "flex",
+			justifyContent: "flex-end",
+			alignItems: "center",
+			fontSize: isScreenSmall || isMobile ? "1em" : "initial",
+		},
+		navLi: {
+			margin: "0 30px",
 			cursor: "pointer",
 			color: "white",
 			fontWeight: "450",
+			width:"100px",
+			display:"flex",
+			justifyContent: "center",
+			alignItems: "center",
 		},
 		linkActive: {
 			transition: "0.5s",
 			color: "grey",
+			display:"flex",
+			justifyContent: "center",
+			alignItems: "center",
+			width:"100px",
+			height: isScreenSmall || isMobile ? "initial" : "80px",
+			borderBottom: isScreenSmall || isMobile ? "none" : "1px solid red",
 		},
 		iconContainer: {
 			width: "100%",
@@ -63,70 +86,76 @@ function Header() {
 			cursor: "pointer",
 		},
 		modal: {
-            height:"100%",
-            width:"100%",
+			height: "100%",
+			width: "100%",
 			position: "absolute",
 			marginTop: "125px",
-            zIndex: 1,
-            
+			zIndex: 1,
 		},
 	};
 
 	return (
 		<nav style={headerStyles.nav}>
-			{!isScreenSmall || isMobile ? (
-				<ul style={headerStyles.navUl}>
-					<li style={headerStyles.navLi}>
-						<p
+			<div style={headerStyles.navContainer}>
+				<p style={headerStyles.logo} onClick={() => navigate("/")}>
+					LOGO
+				</p>
+				{!isScreenSmall || isMobile ? (
+					<ul style={headerStyles.navUl}>
+						<li style={headerStyles.navLi}>
+							<p
+								className="hover"
+								onClick={() => navigate("/")}
+								style={{
+									...(window.location.pathname === "/" &&
+										headerStyles.linkActive),
+								}}
+							>
+								Home
+							</p>
+						</li>
+						<li style={headerStyles.navLi}>
+							<p
+								className="hover"
+								onClick={() => navigate("/news")}
+								style={{
+									...(window.location.pathname === "/news" &&
+										headerStyles.linkActive),
+								}}
+							>
+								News
+							</p>
+						</li>
+						<li style={headerStyles.navLi}>
+							<p
+								className="hover"
+								onClick={() => navigate("/contact")}
+								style={{
+									...(window.location.pathname === "/contact" &&
+										headerStyles.linkActive),
+								}}
+							>
+								Contact
+							</p>
+						</li>
+					</ul>
+				) : (
+					<div style={headerStyles.iconContainer}>
+						<MenuIcon
 							className="hover"
-							onClick={() => navigate("/")}
-							style={{
-								...(window.location.pathname === "/" &&
-									headerStyles.linkActive),
-							}}
-						>
-							Home
-						</p>
-					</li>
-					<Divider orientation="vertical" variant="middle" />
-					<li style={headerStyles.navLi}>
-						<p
-							className="hover"
-							onClick={() => navigate("/news")}
-							style={{
-								...(window.location.pathname === "/news" &&
-									headerStyles.linkActive),
-							}}
-						>
-							News
-						</p>
-					</li>
-					<Divider orientation="vertical" variant="middle" light />
-					<li style={headerStyles.navLi}>
-						<p
-							className="hover"
-							onClick={() => navigate("/contact")}
-							style={{
-								...(window.location.pathname === "/contact" &&
-									headerStyles.linkActive),
-							}}
-						>
-							Contact
-						</p>
-					</li>
-				</ul>
-			) : (
-				<div style={headerStyles.iconContainer}>
-					<MenuIcon
-						className="hover"
-						sx={headerStyles.icon}
-						onClick={() => setMenuOpen((prevMenuOpen) => !prevMenuOpen)}
-					/>
-				</div>
-			)}
-			{menuOpen || isScreenSmall && (
+							sx={headerStyles.icon}
+							onClick={() => setMenuOpen((prevMenuOpen) => !prevMenuOpen)}
+						/>
+					</div>
+				)}
+			</div>
+			{menuOpen && isScreenSmall && (
 				<div style={headerStyles.modal}>
-					<ModalMenu headerStyles={headerStyles} menuOpen={menuOpen} toggleMenu={toggleMenu} />
+					<ModalMenu
+						headerStyles={headerStyles}
+						menuOpen={menuOpen}
+						toggleMenu={toggleMenu}
+					/>
 				</div>
 			)}
 		</nav>
