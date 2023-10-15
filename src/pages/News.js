@@ -8,11 +8,12 @@ import newsData from "../helpers/newsData.json";
 
 function News() {
 	const isScreenSmall = useMediaQuery("(max-width: 500px)");
+	const isScreenMediumSmaller = useMediaQuery("(max-width: 800px)");
 	const isScreenMedium = useMediaQuery("(max-width: 1200px)");
 	const [layoutColumn, setLayoutColumn] = useState(true);
 
 	const toggleLayoutColumn = () => {
-		if (!isMobile && !isScreenSmall) {
+		if (!isScreenMediumSmaller && !isMobile && !isScreenSmall) {
 			setLayoutColumn(!layoutColumn);
 		}
 	};
@@ -188,7 +189,7 @@ function News() {
 					</Link>
 					<p color="textPrimary">News</p>
 				</Breadcrumbs>
-				{!isMobile && !isScreenSmall && (
+				{!isScreenMediumSmaller && !isMobile && !isScreenSmall && (
 					<div style={newsPageStyles.layout} onClick={toggleLayoutColumn}>
 						{layoutColumn ? (
 							<div style={newsPageStyles.layoutCircle}>
@@ -209,9 +210,13 @@ function News() {
 						<div style={newsPageStyles.date}>{latestNews.date}</div>
 					</div>
 				</div>
-				<div className="newsContainer"style={newsPageStyles.newsContainer}>
+				<div className="newsContainer" style={newsPageStyles.newsContainer}>
 					{restOfNews.map((news) => (
-						<div className={isRestOfNewsOdd && !layoutColumn ? "lastChild" : ""} key={news.id} style={newsPageStyles.singleNews}>
+						<div
+							className={isRestOfNewsOdd && !layoutColumn ? "lastChild" : ""}
+							key={news.id}
+							style={newsPageStyles.singleNews}
+						>
 							<div style={newsPageStyles.singleNewsImage}></div>
 							<div style={newsPageStyles.singleNewsText}>
 								<div style={newsPageStyles.singleNewsTextContainer}>
