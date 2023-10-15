@@ -1,5 +1,6 @@
 import { useMediaQuery } from "@mui/material";
 import { isMobile } from "react-device-detect";
+import { useNavigate } from "react-router-dom";
 
 export default function NewsContainer({
 	news,
@@ -7,6 +8,7 @@ export default function NewsContainer({
 	layoutColumn,
 	index,
 }) {
+	const navigate = useNavigate();
 	const isScreenSmall = useMediaQuery("(max-width: 500px)");
 	const isScreenMedium = useMediaQuery("(max-width: 1200px)");
 
@@ -37,7 +39,7 @@ export default function NewsContainer({
 			paddingLeft: "10px",
 		},
 		readMore: {
-			width: "95%",
+			width: "98%",
 			display: "flex",
 			justifyContent: "space-between",
 			alignItems: "center",
@@ -88,7 +90,13 @@ export default function NewsContainer({
 				<p style={newsContainerStyles.singleNewsContent}>{news.content}</p>
 				<div style={newsContainerStyles.readMore}>
 					{news.date}
-					<p style={{ textDecoration: "underline", cursor:"pointer" }}>Read more</p>
+					<p
+						style={{ textDecoration: "underline", cursor: "pointer" }}
+						// onClick={() => navigate(`/news/${news._id}`)} for database
+						onClick={() => navigate(`/news/${news.id}`)}
+					>
+						Read more
+					</p>
 				</div>
 			</div>
 		</div>

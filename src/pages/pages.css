@@ -1,0 +1,16 @@
+.innerPageContainer {
+	width: 88%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.breadcrumbsContainer {
+	margin-top: 15px;
+	width: 95%;
+	display: flex;
+	justify-content: space-between;
+	align-items: "center";
+}

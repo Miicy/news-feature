@@ -1,22 +1,25 @@
-import { Breadcrumbs, useMediaQuery } from "@mui/material";
-import Link from "@mui/material/Link";
+import { useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import ViewHeadlineIcon from "@mui/icons-material/ViewHeadline";
 import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import NewsContainer from "../components/common/NewsContainer";
 import useGetAllNews from "../helpers/hooks/getAllNews";
+import BreadcrumbsPage from "../components/common/Breadcrumbs";
+import "./pages.css";
+import { useNavigate } from "react-router-dom";
 
 function News() {
+	const navigate = useNavigate();
 	const isScreenSmall = useMediaQuery("(max-width: 500px)");
 	const isScreenMediumSmaller = useMediaQuery("(max-width: 800px)");
 	const isScreenMedium = useMediaQuery("(max-width: 1200px)");
 	const [layoutColumn, setLayoutColumn] = useState(true);
 
 	const allNews = useGetAllNews();
-	const [newsLimit, setNewsLimit] = useState(7);
 
-	console.log(allNews);
+	//load more limit
+	const [newsLimit, setNewsLimit] = useState(7);
 
 	//news layout
 	const toggleLayoutColumn = () => {
@@ -42,21 +45,6 @@ function News() {
 	};
 
 	const newsPageStyles = {
-		container: {
-			width: "90%",
-			height: "100%",
-			display: "flex",
-			flexDirection: "column",
-			justifyContent: "center",
-			alignItems: "center",
-		},
-		breadcrumbs: {
-			marginTop: "15px",
-			width: "95%",
-			display: "flex",
-			justifyContent: "space-between",
-			alignItems: "center",
-		},
 		layout: {
 			width: "65px",
 			height: "32px",
@@ -90,6 +78,7 @@ function News() {
 			display: "flex",
 			alignItems: "flex-end",
 			backgroundColor: "lightgrey",
+			cursor: "pointer",
 		},
 		textContainer: {
 			width: "100%",
@@ -114,7 +103,6 @@ function News() {
 			display: "flex",
 			justifyContent: "flex-end",
 			fontWeight: "500",
-
 		},
 		newsContainer: {
 			padding: "15px",
@@ -146,15 +134,12 @@ function News() {
 
 	if (!allNews) return null;
 
+	console.log(latestNews);
+
 	return (
-		<div style={newsPageStyles.container}>
-			<div style={newsPageStyles.breadcrumbs}>
-				<Breadcrumbs aria-label="breadcrumb">
-					<Link color="inherit" href="/">
-						Home
-					</Link>
-					<p color="textPrimary">News</p>
-				</Breadcrumbs>
+		<div className="innerPageContainer">
+			<div className="breadcrumbsContainer">
+				<BreadcrumbsPage link={"News"} />
 				{!isScreenMediumSmaller && !isMobile && !isScreenSmall && (
 					<div style={newsPageStyles.layout} onClick={toggleLayoutColumn}>
 						{layoutColumn ? (
@@ -170,7 +155,12 @@ function News() {
 				)}
 			</div>
 			<div style={newsPageStyles.news}>
-				<div style={newsPageStyles.latest}>
+				<div
+					style={newsPageStyles.latest}
+					onClick={() => {
+						navigate(`/news/${latestNews.id}`);
+					}}
+				>
 					<div style={newsPageStyles.textContainer}>
 						<div style={newsPageStyles.latestText}>{latestNews.title}</div>
 						<div style={newsPageStyles.date}>{latestNews.date}</div>
