@@ -39,10 +39,9 @@ export default function NewsContainer({
 		readMore: {
 			width: "95%",
 			display: "flex",
-			justifyContent: "Space-between",
+			justifyContent: "space-between",
 			alignItems: "center",
 			marginRight: isMobile || isScreenSmall ? "5px" : "10px",
-			cursor: "pointer",
 			fontSize: layoutColumn
 				? (isMobile && isScreenSmall) || isScreenMedium
 					? "0.7em"
@@ -89,7 +88,7 @@ export default function NewsContainer({
 				<p style={newsContainerStyles.singleNewsContent}>{news.content}</p>
 				<div style={newsContainerStyles.readMore}>
 					{news.date}
-					<p style={{ textDecoration: "underline" }}>Read more</p>
+					<p style={{ textDecoration: "underline", cursor:"pointer" }}>Read more</p>
 				</div>
 			</div>
 		</div>

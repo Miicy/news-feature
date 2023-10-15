@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import ViewHeadlineIcon from "@mui/icons-material/ViewHeadline";
 import ViewModuleIcon from "@mui/icons-material/ViewModule";
-import newsData from "../helpers/newsData.json";
 import NewsContainer from "../components/common/NewsContainer";
+import useGetAllNews from "../helpers/hooks/getAllNews";
 
 function News() {
 	const isScreenSmall = useMediaQuery("(max-width: 500px)");
@@ -13,6 +13,12 @@ function News() {
 	const isScreenMedium = useMediaQuery("(max-width: 1200px)");
 	const [layoutColumn, setLayoutColumn] = useState(true);
 
+	const allNews = useGetAllNews();
+	const [newsLimit, setNewsLimit] = useState(7);
+
+	console.log(allNews);
+
+	//news layout
 	const toggleLayoutColumn = () => {
 		if (!isScreenMediumSmaller && !isMobile && !isScreenSmall) {
 			setLayoutColumn(!layoutColumn);
@@ -20,19 +26,24 @@ function News() {
 	};
 
 	useEffect(() => {
-		if (isMobile || isScreenSmall) {
+		if (isMobile || isScreenSmall || isScreenMediumSmaller) {
 			setLayoutColumn(true);
 		}
-	}, [isMobile, isScreenSmall]);
+	}, [isMobile, isScreenSmall, isScreenMediumSmaller]);
 
-	const latestNews = newsData[0];
-	const restOfNews = newsData.slice(1);
+	const latestNews = allNews && allNews.length > 0 ? allNews[0] : null;
+	const restOfNews = allNews ? allNews.slice(1) : [];
 
 	const isRestOfNewsOdd = restOfNews.length % 2 === 1;
 
+	//news load
+	const loadMoreNews = () => {
+		setNewsLimit(newsLimit + 8);
+	};
+
 	const newsPageStyles = {
 		container: {
-			width: "95%",
+			width: "90%",
 			height: "100%",
 			display: "flex",
 			flexDirection: "column",
@@ -73,7 +84,7 @@ function News() {
 		},
 		latest: {
 			width: "100%",
-			height: "400px",
+			height: "420px",
 			borderRadius: "10px",
 			marginBottom: "15px",
 			display: "flex",
@@ -99,10 +110,11 @@ function News() {
 		},
 		date: {
 			fontSize: (isMobile && isScreenSmall) || isScreenMedium ? "0.8em" : "1em",
-			width: "90%",
+			width: "98%",
 			display: "flex",
 			justifyContent: "flex-end",
 			fontWeight: "500",
+
 		},
 		newsContainer: {
 			padding: "15px",
@@ -113,9 +125,27 @@ function News() {
 			gridTemplateRows: "auto",
 			gap: "10px",
 			borderRadius: "10px",
-			marginBottom: "30px",
+		},
+		loadMore: {
+			width: "100%",
+			display: "flex",
+			justifyContent: "center",
+			alignItems: "center",
+			marginRight: isMobile || isScreenSmall ? "5px" : "10px",
+			cursor: newsLimit < restOfNews.length ? "pointer" : "none",
+			fontSize: layoutColumn
+				? (isMobile && isScreenSmall) || isScreenMedium
+					? "0.7em"
+					: "0.85em"
+				: "0.75em",
+			marginBottom: "20px",
+			marginTop: "20px",
+			textDecoration: newsLimit < restOfNews.length ? "underline" : "none",
 		},
 	};
+
+	if (!allNews) return null;
+
 	return (
 		<div style={newsPageStyles.container}>
 			<div style={newsPageStyles.breadcrumbs}>
@@ -147,7 +177,7 @@ function News() {
 					</div>
 				</div>
 				<div className="newsContainer" style={newsPageStyles.newsContainer}>
-					{restOfNews.map((news, index) => (
+					{restOfNews.slice(0, newsLimit).map((news, index) => (
 						<NewsContainer
 							key={news.id}
 							news={news}
@@ -156,6 +186,10 @@ function News() {
 							index={index}
 						/>
 					))}
+				</div>
+
+				<div style={newsPageStyles.loadMore} onClick={loadMoreNews}>
+					{newsLimit < restOfNews.length ? "Load More" : "No more News"}
 				</div>
 			</div>
 		</div>

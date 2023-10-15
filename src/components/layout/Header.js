@@ -31,7 +31,7 @@ function Header() {
 			borderBottom: "1px solid white",
 		},
 		navContainer:{
-			width: "80%",
+			width: "84%",
 			display: "flex",
 			justifyContent: "space-between",
 			alignItems: "center",
@@ -45,7 +45,8 @@ function Header() {
 			fontSize: "1.5em",
 			marginLeft: isScreenSmall || isMobile ? "30px" : "0",
 			display:"flex",
-			justifyContent:"center"
+			justifyContent:"center",
+			marginLeft:"20px"
 		},
 		navUl: {
 			padding:"0",

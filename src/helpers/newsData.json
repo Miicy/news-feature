@@ -1,51 +1,116 @@
 [
 	{
 	  "id": 1,
-	  "picture": "http://",
+	  "image": "http://",
 	  "title": "Latest News Title",
 	  "content": "This is the latest news content.",
 	  "date": "2023-10-14"
 	},
 	{
 	  "id": 2,
+	  "image": "http://",
 	  "title": "News Title 1",
 	  "content": "This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1.",
 	  "date": "2023-10-13"
 	},
 	{
 	  "id": 3,
+	  "image": "http://",
 	  "title": "News Title 2",
 	  "content": "This is news content 2.",
 	  "date": "2023-10-12"
 	},
 	{
 	  "id": 4,
+	  "image": "http://",
 	  "title": "News Title 2",
 	  "content": "This is news content 2.",
 	  "date": "2023-10-12"
 	},
 	{
 	  "id": 5,
+	  "image": "http://",
 	  "title": "News Title 2",
 	  "content": "This is news content 2.",
 	  "date": "2023-10-12"
 	},
 	{
 	  "id": 6,
+	  "image": "http://",
 	  "title": "News Title 2",
 	  "content": "This is news content 2.",
 	  "date": "2023-10-12"
 	},
 	{
 		"id": 7,
+		"image": "http://",
 		"title": "News Title 2",
 		"content": "This is news content 2.",
 		"date": "2023-10-12"
 	  },
 	  {
 		"id": 8,
+		"image": "http://",
+		"title": "News Title 2",
+		"content": "This is news content 2.",
+		"date": "2023-10-12"
+	  },
+	  {
+		"id": 9,
+		"image": "http://",
+		"title": "News Title 2",
+		"content": "This is news content 2.",
+		"date": "2023-10-12"
+	  },
+	  {
+		"id": 10,
+		"image": "http://",
+		"title": "News Title 2",
+		"content": "This is news content 2.",
+		"date": "2023-10-12"
+	  },
+	  {
+		"id": 11,
+		"image": "http://",
+		"title": "News Title 2",
+		"content": "This is news content 2.",
+		"date": "2023-10-12"
+	  },
+	  {
+		"id": 12,
+		"image": "http://",
+		"title": "News Title 2",
+		"content": "This is news content 2.",
+		"date": "2023-10-12"
+	  },
+	  {
+		"id": 13,
+		"image": "http://",
+		"title": "News Title 2",
+		"content": "This is news content 2.",
+		"date": "2023-10-12"
+	  },
+	  {
+		"id": 14,
+		"image": "http://",
+		"title": "News Title 2",
+		"content": "This is news content 2.",
+		"date": "2023-10-12"
+	  },
+	  {
+		"id": 15,
+		"image": "http://",
+		"title": "News Title 2",
+		"content": "This is news content 2.",
+		"date": "2023-10-12"
+	  },
+	  {
+		"id": 16,
+		"image": "http://",
 		"title": "News Title 2",
 		"content": "This is news content 2.",
 		"date": "2023-10-12"
 	  }
+
+
   ]

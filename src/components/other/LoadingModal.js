@@ -11,12 +11,13 @@ const LoadingModal = () => {
 	return (
 		<Backdrop
 			sx={{
-				color: "#fff",
+				color: "black",
 				zIndex: (theme) => theme.zIndex.drawer + 1,
 				display: "flex",
 				flexDirection: "column",
 				alignItems: "center",
 				justifyContent: "center",
+				zIndex: 500,
 			}}
 			open={dataState === DATA_STATE.DATA_STATE_LOADING ? true : false}
 		>

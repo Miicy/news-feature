@@ -32,7 +32,7 @@
 	margin-bottom: 50px;
 	position: relative;
 	min-width: 300px;
-	width: 70%;
+	width: 80%;
 	min-height: 100vh;
 	height: auto;
 	/* height: auto; */
@@ -73,6 +73,6 @@ body::-webkit-scrollbar {
 	border: 0px solid #ffffff;
 }
 
-.newsContainer > .lastChild:last-child {
+.newsContainer > .lastChild:first-child {
 	grid-column: span 2;
   }
