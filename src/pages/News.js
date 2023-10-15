@@ -5,6 +5,7 @@ import { isMobile } from "react-device-detect";
 import ViewHeadlineIcon from "@mui/icons-material/ViewHeadline";
 import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import newsData from "../helpers/newsData.json";
+import NewsContainer from "../components/common/NewsContainer";
 
 function News() {
 	const isScreenSmall = useMediaQuery("(max-width: 500px)");
@@ -69,7 +70,6 @@ function News() {
 			marginTop: "15px",
 			width: "95%",
 			height: "100%",
-			// overflowY:"auto"
 		},
 		latest: {
 			width: "100%",
@@ -115,70 +115,6 @@ function News() {
 			borderRadius: "10px",
 			marginBottom: "30px",
 		},
-		singleNews: {
-			width: "100%",
-			backgroundColor: "white",
-			height: layoutColumn ? "250px" : "190px",
-			borderRadius: "5px",
-			display: "flex",
-			width: layoutColumn ? "100%" : "auto",
-			// gridColumn: isRestOfNewsOdd && !layoutColumn  ? "span 2" : "auto",
-		},
-		singleNewsImage: {
-			backgroundColor: "lightgrey",
-			minWidth: "100px",
-			width: layoutColumn ? "30%" : "40%",
-			height: layoutColumn ? "100%" : "100%",
-			borderRadius: "5px 0 0 5px",
-		},
-		singleNewsTextContainer: {
-			width: "95%",
-			display: "flex",
-			justifyContent: "space-between",
-		},
-		singleNewsText: {
-			width: "80%",
-			height: "100%",
-			paddingLeft: "10px",
-		},
-		readMore: {
-			width: "95%",
-			display: "flex",
-			justifyContent: "Space-between",
-			alignItems: "center",
-			marginRight: isMobile || isScreenSmall ? "5px" : "10px",
-			cursor: "pointer",
-			fontSize: layoutColumn
-				? (isMobile && isScreenSmall) || isScreenMedium
-					? "0.7em"
-					: "0.85em"
-				: "0.75em",
-		},
-		title: {
-			fontSize: layoutColumn
-				? (isMobile && isScreenSmall) || isScreenMedium
-					? "0.9em"
-					: "1em"
-				: "0.8em",
-			minWidth: "100px",
-		},
-		singleNewsContent: {
-			marginLeft: "10px",
-			width: "90%",
-			height: layoutColumn
-				? (isMobile && isScreenSmall) || isScreenMedium
-					? "55%"
-					: "125px"
-				: "45%",
-			whiteSpace: "normal",
-			textOverflow: "ellipsis",
-			overflow: "hidden",
-			fontSize: layoutColumn
-				? (isMobile && isScreenSmall) || isScreenMedium
-					? "0.8em"
-					: "1em"
-				: "0.8em",
-		},
 	};
 	return (
 		<div style={newsPageStyles.container}>
@@ -211,24 +147,14 @@ function News() {
 					</div>
 				</div>
 				<div className="newsContainer" style={newsPageStyles.newsContainer}>
-					{restOfNews.map((news) => (
-						<div
-							className={isRestOfNewsOdd && !layoutColumn ? "lastChild" : ""}
+					{restOfNews.map((news, index) => (
+						<NewsContainer
 							key={news.id}
-							style={newsPageStyles.singleNews}
-						>
-							<div style={newsPageStyles.singleNewsImage}></div>
-							<div style={newsPageStyles.singleNewsText}>
-								<div style={newsPageStyles.singleNewsTextContainer}>
-									<h3 style={newsPageStyles.title}>{news.title}</h3>
-								</div>
-								<p style={newsPageStyles.singleNewsContent}>{news.content}</p>
-								<div style={newsPageStyles.readMore}>
-									{latestNews.date}
-									<p style={{ textDecoration: "underline" }}>Read more</p>
-								</div>
-							</div>
-						</div>
+							news={news}
+							isRestOfNewsOdd={isRestOfNewsOdd}
+							layoutColumn={layoutColumn}
+							index={index}
+						/>
 					))}
 				</div>
 			</div>
