@@ -8,6 +8,7 @@ import newsData from "../helpers/newsData.json";
 
 function News() {
 	const isScreenSmall = useMediaQuery("(max-width: 500px)");
+	const isScreenMedium = useMediaQuery("(max-width: 1200px)");
 	const [layoutColumn, setLayoutColumn] = useState(true);
 
 	const toggleLayoutColumn = () => {
@@ -25,11 +26,13 @@ function News() {
 	const latestNews = newsData[0];
 	const restOfNews = newsData.slice(1);
 
+	const isRestOfNewsOdd = restOfNews.length % 2 === 1;
+
 	const newsPageStyles = {
 		container: {
-			width: "90%",
+			width: "95%",
 			height: "100%",
-			display:"flex",
+			display: "flex",
 			flexDirection: "column",
 			justifyContent: "center",
 			alignItems: "center",
@@ -74,7 +77,7 @@ function News() {
 			marginBottom: "15px",
 			display: "flex",
 			alignItems: "flex-end",
-			backgroundColor: "grey",
+			backgroundColor: "lightgrey",
 		},
 		textContainer: {
 			width: "100%",
@@ -88,17 +91,24 @@ function News() {
 			justifyContent: "space-around",
 		},
 		latestText: {
-			width: "85%",
+			width: "90%",
 			display: "flex",
-			fontSize: "2.1em",
+			fontSize: (isMobile && isScreenSmall) || isScreenMedium ? "1.3em" : "2em",
 			fontWeight: "bold",
+		},
+		date: {
+			fontSize: (isMobile && isScreenSmall) || isScreenMedium ? "0.8em" : "1em",
+			width: "90%",
+			display: "flex",
+			justifyContent: "flex-end",
+			fontWeight: "500",
 		},
 		newsContainer: {
 			padding: "15px",
 			height: "auto",
 			backgroundColor: "grey",
 			display: "grid",
-			gridTemplateColumns: layoutColumn ? "1fr" : "repeat(3, 1fr)",
+			gridTemplateColumns: layoutColumn ? "1fr" : "repeat(2, 1fr)",
 			gridTemplateRows: "auto",
 			gap: "10px",
 			borderRadius: "10px",
@@ -106,9 +116,67 @@ function News() {
 		},
 		singleNews: {
 			width: "100%",
-			backgroundColor: "red",
-			height: "200px",
+			backgroundColor: "white",
+			height: layoutColumn ? "250px" : "190px",
 			borderRadius: "5px",
+			display: "flex",
+			width: layoutColumn ? "100%" : "auto",
+			// gridColumn: isRestOfNewsOdd && !layoutColumn  ? "span 2" : "auto",
+		},
+		singleNewsImage: {
+			backgroundColor: "lightgrey",
+			minWidth: "100px",
+			width: layoutColumn ? "30%" : "40%",
+			height: layoutColumn ? "100%" : "100%",
+			borderRadius: "5px 0 0 5px",
+		},
+		singleNewsTextContainer: {
+			width: "95%",
+			display: "flex",
+			justifyContent: "space-between",
+		},
+		singleNewsText: {
+			width: "80%",
+			height: "100%",
+			paddingLeft: "10px",
+		},
+		readMore: {
+			width: "95%",
+			display: "flex",
+			justifyContent: "Space-between",
+			alignItems: "center",
+			marginRight: isMobile || isScreenSmall ? "5px" : "10px",
+			cursor: "pointer",
+			fontSize: layoutColumn
+				? (isMobile && isScreenSmall) || isScreenMedium
+					? "0.7em"
+					: "0.85em"
+				: "0.75em",
+		},
+		title: {
+			fontSize: layoutColumn
+				? (isMobile && isScreenSmall) || isScreenMedium
+					? "0.9em"
+					: "1em"
+				: "0.8em",
+			minWidth: "100px",
+		},
+		singleNewsContent: {
+			marginLeft: "10px",
+			width: "90%",
+			height: layoutColumn
+				? (isMobile && isScreenSmall) || isScreenMedium
+					? "55%"
+					: "125px"
+				: "45%",
+			whiteSpace: "normal",
+			textOverflow: "ellipsis",
+			overflow: "hidden",
+			fontSize: layoutColumn
+				? (isMobile && isScreenSmall) || isScreenMedium
+					? "0.8em"
+					: "1em"
+				: "0.8em",
 		},
 	};
 	return (
@@ -138,23 +206,23 @@ function News() {
 				<div style={newsPageStyles.latest}>
 					<div style={newsPageStyles.textContainer}>
 						<div style={newsPageStyles.latestText}>{latestNews.title}</div>
-						<div
-							style={{
-								...newsPageStyles.latestText,
-								justifyContent: "flex-end",
-								fontSize: "1.2em",
-								fontWeight: "500",
-							}}
-						>
-							{latestNews.date}
-						</div>
+						<div style={newsPageStyles.date}>{latestNews.date}</div>
 					</div>
 				</div>
-				<div style={newsPageStyles.newsContainer}>
+				<div className="newsContainer"style={newsPageStyles.newsContainer}>
 					{restOfNews.map((news) => (
-						<div key={news.id} style={newsPageStyles.singleNews}>
-							<h3>{news.title}</h3>
-							<p>{news.content}</p>
+						<div className={isRestOfNewsOdd && !layoutColumn ? "lastChild" : ""} key={news.id} style={newsPageStyles.singleNews}>
+							<div style={newsPageStyles.singleNewsImage}></div>
+							<div style={newsPageStyles.singleNewsText}>
+								<div style={newsPageStyles.singleNewsTextContainer}>
+									<h3 style={newsPageStyles.title}>{news.title}</h3>
+								</div>
+								<p style={newsPageStyles.singleNewsContent}>{news.content}</p>
+								<div style={newsPageStyles.readMore}>
+									{latestNews.date}
+									<p style={{ textDecoration: "underline" }}>Read more</p>
+								</div>
+							</div>
 						</div>
 					))}
 				</div>

@@ -33,7 +33,7 @@ function Header() {
 		navContainer:{
 			width: "80%",
 			display: "flex",
-			justifyContent: "center",
+			justifyContent: "space-between",
 			alignItems: "center",
 		},
 		logo: {
