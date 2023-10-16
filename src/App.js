@@ -10,6 +10,7 @@ import Contact from "./pages/Contact";
 import LoadingModal from "./components/other/LoadingModal";
 import NotificationContainer from "./components/other/NotificationContainer";
 import NewsDetailed from "./pages/NewsDetailed";
+import AdminLogin from "./pages/AdminLogin";
 
 function App() {
 	const [theme] = useState(themeCreation());
@@ -25,6 +26,7 @@ function App() {
 							<Route path="/news" element={<News />} />
 							<Route path="/news/:id" element={<NewsDetailed />}/>
 							<Route path="/contact" element={<Contact />} />
+							<Route path="/admin" element={<AdminLogin />} />
 						</Routes>
 					</div>
 				</div>

@@ -47,6 +47,19 @@
 	z-index: 10;
 }
 
+@media screen and (max-width: 500px) {
+	.pageContainer {
+		min-height: 500px;
+	}
+  }
+  
+  @media screen and (max-width: 800px) {
+	.pageContainer {
+
+		min-height: 800px;
+	}
+  }
+
 body::-webkit-scrollbar {
 	display: none; /* for Chrome, Safari, and Opera */
 }

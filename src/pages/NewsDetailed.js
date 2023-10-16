@@ -25,7 +25,7 @@ function NewsDetailed() {
 
 	const newsDetailedStyles = {
 		container: {
-			marginTop: "15px",
+			marginTop: "5px",
 			width: "95%",
 			height: "100%",
 			// backgroundColor: "yellow",
