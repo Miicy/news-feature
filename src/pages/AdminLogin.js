@@ -42,11 +42,13 @@ function AdminLogin() {
 			const { username, password } = values;
 
 			if (username === "admin" && password === "555admin") {
-				const userResponse = await axios.post(
-					`${SERVER_URL}user/getadminuserdata`,
-				);
+				// const userResponse = await axios.post(
+				// 	`${SERVER_URL}user/getadminuserdata`,
+				// );
 
-				dispatch(adminLogin(userResponse.data));
+				// dispatch(adminLogin(userResponse.data));
+
+				dispatch(adminLogin(true))
 
 				const notificationPayload = {
 					text: "Admin login successful!",
@@ -84,52 +86,65 @@ function AdminLogin() {
 			alignItems: "center",
 		},
 		loginContainer: {
-			width: !isMobile && !isScreenSmall ? "60%" :"90%",
-			height: !isMobile && !isScreenSmall ? "60%" :"90%",
+			width: !isMobile && !isScreenSmall ? "60%" : "90%",
+			height: !isMobile && !isScreenSmall ? "60%" : "90%",
 			backgroundColor: "lightgrey",
-			marginBottom: "50px",
 			borderRadius: "15px",
-			display:"flex",
+			display: "flex",
+			flexDirection: "column",
 			justifyContent: "center",
 			alignItems: "center",
 		},
-		button:{
-			display: "flex",
-		justifyContent: "center",
-		alignItems: "center",
 
-		}
+		form: {
+			height: "70%",
+			width: "70%",
+			display: "flex",
+			flexDirection: "column",
+			alignItems: "center",
+			justifyContent: "center",
+		},
+		button: {
+			display: "flex",
+			justifyContent: "center",
+			alignItems: "center",
+			width: "35%",
+			marginTop: isMobile && isScreenSmall ? "10px" : "20px",
+		},
 	};
 
 	return (
 		<div style={adminLoginStyles.container}>
 			<div style={adminLoginStyles.loginContainer}>
+				<h1>Admin Login</h1>
 				<Formik
 					initialValues={initialValues}
 					validationSchema={validationSchema}
 					onSubmit={handleSubmit}
 				>
 					{(formik) => (
-						<Form>
+						<Form style={adminLoginStyles.form}>
 							<CustomField
-								name="email"
-								label="Email"
+								name="username"
+								label="Username"
 								size={!isMobile && !isScreenSmall ? "big" : "small"}
 								error={true}
-								margin={!isMobile ? "20px" : "10px"}
+								margin={!isMobile && !isScreenSmall ? "20px" : "10px"}
 								password={false}
+								width={isMobile && isScreenSmall ? "90%" : "70%"}
 							/>
 							<CustomField
 								name="password"
 								label="Password"
 								size={!isMobile && !isScreenSmall ? "big" : "small"}
 								error={true}
-								margin={!isMobile ? "20px" : "10px"}
+								margin={!isMobile && !isScreenSmall ? "20px" : "10px"}
 								password={true}
+								width={isMobile && isScreenSmall ? "90%" : "70%"}
 							/>
-							<div  style={adminLoginStyles.button}>
+							<div style={adminLoginStyles.button}>
 								<CustomButton
-									disabled={!formik.values.email || !formik.values.password}
+									disabled={!formik.values.username || !formik.values.password}
 									onClick={formik.handleSubmit}
 									buttonText={"Login"}
 								/>

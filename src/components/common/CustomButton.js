@@ -17,6 +17,7 @@ const CustomLoginButton = ({ buttonText, disabled, onClick, }) => {
       // border: `solid 1px ${theme.palette.white.opacity20}`,
       // color: theme.palette.white.opacity20,
     },
+    width:"100%"
   };
 
   return (

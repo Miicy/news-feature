@@ -39,7 +39,7 @@ const CustomField = ({
         {...rest}
         placeholder={label}
         variant="outlined"
-        size={size ? size : "small"}
+        size={size}
         fullWidth
         type={password ? (showPassword ? "text" : "password") : "text"}
         value={value}
