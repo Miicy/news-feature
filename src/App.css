@@ -11,6 +11,10 @@
 	color: grey;
 	transition: "color 0.3s";
 }
+.hoverBackground:hover {
+	background-color: grey;
+	transition: "color 0.3s";
+}
 
 .pageCover {
 	min-height:100vh;

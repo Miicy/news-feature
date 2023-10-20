@@ -174,6 +174,7 @@ function News() {
 							isRestOfNewsOdd={isRestOfNewsOdd}
 							layoutColumn={layoutColumn}
 							index={index}
+							borderRadius={"5px"}
 						/>
 					))}
 				</div>

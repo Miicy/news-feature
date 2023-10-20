@@ -1,12 +1,18 @@
-import { useMediaQuery } from "@mui/material";
+import { Tooltip, useMediaQuery } from "@mui/material";
 import { isMobile } from "react-device-detect";
 import { useNavigate } from "react-router-dom";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function NewsContainer({
 	news,
 	isRestOfNewsOdd,
 	layoutColumn,
 	index,
+	margin,
+	borderRadius,
+	readMore,
+	admin,
 }) {
 	const navigate = useNavigate();
 	const isScreenSmall = useMediaQuery("(max-width: 500px)");
@@ -14,10 +20,11 @@ export default function NewsContainer({
 
 	const newsContainerStyles = {
 		singleNews: {
+			margin: margin,
 			width: "100%",
 			backgroundColor: "white",
 			height: layoutColumn ? "250px" : "190px",
-			borderRadius: "5px",
+			borderRadius: borderRadius,
 			display: "flex",
 			width: layoutColumn ? "100%" : "auto",
 		},
@@ -29,9 +36,10 @@ export default function NewsContainer({
 			borderRadius: "5px 0 0 5px",
 		},
 		singleNewsTextContainer: {
-			width: "95%",
+			width: admin ? "95%" : "98%",
 			display: "flex",
 			justifyContent: "space-between",
+			alignItems: "center",
 		},
 		singleNewsText: {
 			width: "80%",
@@ -43,6 +51,7 @@ export default function NewsContainer({
 			display: "flex",
 			justifyContent: "space-between",
 			alignItems: "center",
+			marginLeft: admin && "10px",
 			marginRight: isMobile || isScreenSmall ? "5px" : "10px",
 			fontSize: layoutColumn
 				? (isMobile && isScreenSmall) || isScreenMedium
@@ -75,6 +84,16 @@ export default function NewsContainer({
 					: "1em"
 				: "0.8em",
 		},
+		admin: {
+			width: "40px",
+			display: "flex",
+			alignItems: "space-between",
+		},
+		adminIcon: {
+			cursor: "pointer",
+			marginRight:isScreenSmall && isMobile ? "5px" : "10px",
+			fontSize: isScreenSmall && isMobile ? "0.8em" : "1.5em",
+		},
 	};
 
 	return (
@@ -86,17 +105,29 @@ export default function NewsContainer({
 			<div style={newsContainerStyles.singleNewsText}>
 				<div style={newsContainerStyles.singleNewsTextContainer}>
 					<h3 style={newsContainerStyles.title}>{news.title}</h3>
+					{admin && (
+						<div style={newsContainerStyles.admin}>
+							<Tooltip title={`Edit news`}>
+								<EditIcon sx={newsContainerStyles.adminIcon} />
+							</Tooltip>
+							<Tooltip title={`Delete news`}>
+								<DeleteIcon sx={newsContainerStyles.adminIcon} />
+							</Tooltip>
+						</div>
+					)}
 				</div>
 				<p style={newsContainerStyles.singleNewsContent}>{news.content}</p>
 				<div style={newsContainerStyles.readMore}>
 					{news.date}
-					<p
-						style={{ textDecoration: "underline", cursor: "pointer" }}
-						// onClick={() => navigate(`/news/${news._id}`)} for database
-						onClick={() => navigate(`/news/${news.id}`)}
-					>
-						Read more
-					</p>
+					{readMore && (
+						<p
+							style={{ textDecoration: "underline", cursor: "pointer" }}
+							// onClick={() => navigate(`/news/${news._id}`)} for database
+							onClick={() => navigate(`/news/${news.id}`)}
+						>
+							Read more
+						</p>
+					)}
 				</div>
 			</div>
 		</div>

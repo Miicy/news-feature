@@ -26,5 +26,14 @@ export const themeCreation = () =>
           },
 				},
 			},
+			MuiTooltip: {
+				styleOverrides: {
+				  tooltip: {
+					backgroundColor: "black",
+					color: "white",
+					fontSize: "1em",
+				  },
+				},
+			  },
 		},
 	});
