@@ -5,7 +5,7 @@ import { setScreenSize } from "../store/reducers/layoutSlice";
 
 const ScreenSizeListener = () => {
 	const dispatch = useDispatch();
-	const isSmallScreen = useMediaQuery("(max-width: 500px)");
+	const isSmallScreen = useMediaQuery("(max-width: 600px)");
 	const isMediumSmaller = useMediaQuery("(max-width: 800px)");
 	const isMediumScreen = useMediaQuery("(max-width: 1200px)");
 

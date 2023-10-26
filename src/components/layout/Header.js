@@ -19,6 +19,7 @@ function Header() {
 	const theme = useTheme();
 	const dispatch = useDispatch();
 	const screenSize = useSelector(selectScreenSize);
+	const themeMode = useSelector(selectActiveTheme);
 	
 	const [menuOpen, setMenuOpen] = useState(false);
 
@@ -26,12 +27,11 @@ function Header() {
 		setMenuOpen((prevMenuOpen) => !prevMenuOpen);
 	};
 
-	const themeMode = useSelector(selectActiveTheme);
+	
 
 	const headerStyles = {
 		nav: {
 			position: "relative",
-			fontSize: "1.2em",
 			background: `${theme.palette.primary.main}`,
 			height: "80px",
 			width: "100%",
@@ -42,7 +42,16 @@ function Header() {
 			boxShadow:
 				"inset 0px 10px 31px 3px rgba(0,0,0,0.34),0px 5px 21px 0px rgba(0,0,0,0.71)",
 			zIndex: 100,
-			borderBottom: `1px solid ${theme.palette.opposite.main}`,
+			borderBottom: `1.5px solid ${theme.palette.forth.main}`,
+			fontSize:
+				screenSize === "large"
+					? "1.2em"
+					: screenSize === "medium"
+					? "1em"
+					: screenSize === "medium-s"
+					? "0.9em"
+					: "1.2em",
+			transition: "0.3s",
 		},
 		navContainer: {
 			width: "85%",
@@ -56,7 +65,15 @@ function Header() {
 			cursor: "pointer",
 			color: `${theme.palette.opposite.main}`,
 			fontWeight: "700",
-			fontSize: "1.5em",
+			fontSize:
+				screenSize === "large"
+					? "1.9em"
+					: screenSize === "medium"
+					? "1.7em"
+					: screenSize === "medium-s"
+					? "1.5em"
+					: "1.3em",
+			transition: "0.3s",
 			marginLeft: screenSize === "small" || isMobile ? "30px" : "0",
 			display: "flex",
 			justifyContent: "center",
@@ -68,12 +85,17 @@ function Header() {
 			display: "flex",
 			justifyContent: "flex-end",
 			alignItems: "center",
-			fontSize: screenSize === "small" || isMobile ? "1em" : "initial",
 		},
 		navLi: {
-			margin: "0 30px",
+			margin: screenSize === "large"
+			? "0 30px"
+			: screenSize === "medium"
+			? "0 25px"
+			: screenSize === "medium-s"
+			? "0"
+			: "0",
 			cursor: "pointer",
-			color:`${theme.palette.opposite.main}`,
+			color: `${theme.palette.opposite.main}`,
 			fontWeight: "450",
 			width: "100px",
 			display: "flex",
@@ -81,15 +103,15 @@ function Header() {
 			alignItems: "center",
 		},
 		linkActive: {
-			transition: "0.5s",
+			transition: "0.1s",
 			color: `${theme.palette.red.main}`,
-			fontWeight: "500",
+			fontWeight: "600",
 			display: "flex",
 			justifyContent: "center",
 			alignItems: "center",
-			width: "100px",
+			width: screenSize === "small" || isMobile ? "fit-content" : "100px",
 			height: screenSize === "small" || isMobile ? "initial" : "80px",
-			borderBottom: screenSize === "small" || isMobile ? "none" : `1px solid ${theme.palette.red.main}`,
+			borderBottom: `2.5px solid ${theme.palette.red.main}`,
 		},
 		iconContainer: {
 			width: "100%",
@@ -98,8 +120,7 @@ function Header() {
 		},
 		icon: {
 			marginRight: "5%",
-			fontSize: "1.5em",
-			color: "white",
+			color: `${theme.palette.opposite.main}`,
 			cursor: "pointer",
 		},
 		modal: {
@@ -116,9 +137,8 @@ function Header() {
 			},
 		},
 		mode: {
-			fontSize: "1.5em",
 			cursor: "pointer",
-			color:`${theme.palette.opposite.main}`
+			color: `${theme.palette.opposite.main}`,
 		},
 	};
 

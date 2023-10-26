@@ -10,11 +10,13 @@ import "./pages.css";
 import { useNavigate } from "react-router-dom";
 import { selectScreenSize } from "../store/reducers/layoutSlice";
 import { useSelector } from "react-redux";
+import { useTheme } from "@emotion/react";
 
 function News() {
 	const navigate = useNavigate();
 	const screenSize = useSelector(selectScreenSize);
 	const [layoutColumn, setLayoutColumn] = useState(true);
+	const theme = useTheme();
 
 	const allNews = useGetAllNews();
 
@@ -54,9 +56,10 @@ function News() {
 			border: "1px solid grey",
 			borderRadius: "20px",
 			cursor: "pointer",
+			backgroundColor:`${theme.palette.oppositeLighter.opacity40}`,
 		},
 		layoutCircle: {
-			backgroundColor: "grey",
+			backgroundColor: `${theme.palette.opposite.main}`,
 			borderRadius: "20px",
 			display: "flex",
 			justifyContent: "center",
@@ -64,6 +67,7 @@ function News() {
 		},
 		layoutIcon: {
 			margin: "5px",
+			color: `${theme.palette.primary.main}`,
 		},
 		news: {
 			marginTop: "15px",
@@ -129,6 +133,7 @@ function News() {
 			marginBottom: "20px",
 			marginTop: "20px",
 			textDecoration: newsLimit < restOfNews.length ? "underline" : "none",
+			color: `${theme.palette.opposite.main}`,
 		},
 	};
 

@@ -24,10 +24,11 @@ const getDesignTokens = (mode) => ({
 						main: grey[400],
 					},
 					red: {
-						main: red[400],
+						main: red[700],
 					},
 					oppositeLighter: {
 						main: grey[500],
+						opacity40: "rgba(158, 158, 158, 0.40)",
 					},
 					opposite: {
 						main: grey[900],
@@ -80,10 +81,7 @@ export const themeCreation = (mode) =>
 		components: {
 			MuiDivider: {
 				styleOverrides: {
-					root: {
-						borderColor: "grey",
-						height: "45%",
-					},
+					root: {},
 				},
 			},
 			MuiTooltip: {
