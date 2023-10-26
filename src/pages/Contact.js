@@ -5,7 +5,6 @@ import BreadcrumbsPage from "../components/common/Breadcrumbs";
 import "./pages.css";
 
 function Contact() {
-	const isScreenSmall = useMediaQuery("(max-width: 500px)");
 
 	const contactPageStyles = {
 

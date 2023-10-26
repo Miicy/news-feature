@@ -9,7 +9,7 @@ import {
 	NOTIFICATION_TYPES,
 	SERVER_URL,
 } from "../helpers/app.constants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
 	displayNotification,
 	setDataState,
@@ -17,13 +17,12 @@ import {
 import { adminLogin } from "../store/reducers/adminSlice";
 import CustomButton from "../components/common/CustomButton";
 import CustomField from "../components/common/CustomField";
-import { useMediaQuery } from "@mui/material";
+import { selectScreenSize } from "../store/reducers/layoutSlice";
 
 function AdminLogin() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-
-	const isScreenSmall = useMediaQuery("(max-width: 500px)");
+	const screenSize = useSelector(selectScreenSize);
 
 	const initialValues = {
 		username: "",
@@ -86,8 +85,8 @@ function AdminLogin() {
 			alignItems: "center",
 		},
 		loginContainer: {
-			width: !isMobile && !isScreenSmall ? "60%" : "90%",
-			height: !isMobile && !isScreenSmall ? "60%" : "90%",
+			width: !isMobile && screenSize !== "small" ? "60%" : "90%",
+			height: !isMobile && screenSize !== "small" ? "60%" : "90%",
 			backgroundColor: "lightgrey",
 			borderRadius: "15px",
 			display: "flex",
@@ -109,7 +108,7 @@ function AdminLogin() {
 			justifyContent: "center",
 			alignItems: "center",
 			width: "35%",
-			marginTop: isMobile && isScreenSmall ? "10px" : "20px",
+			marginTop: isMobile && screenSize === "small" ? "10px" : "20px",
 		},
 	};
 
@@ -127,20 +126,20 @@ function AdminLogin() {
 							<CustomField
 								name="username"
 								label="Username"
-								size={!isMobile && !isScreenSmall ? "big" : "small"}
+								size={!isMobile && screenSize !== "small" ? "big" : "small"}
 								error={true}
-								margin={!isMobile && !isScreenSmall ? "20px" : "10px"}
+								margin={!isMobile && screenSize !== "small" ? "20px" : "10px"}
 								password={false}
-								width={isMobile && isScreenSmall ? "90%" : "70%"}
+								width={isMobile && screenSize === "small" ? "90%" : "70%"}
 							/>
 							<CustomField
 								name="password"
 								label="Password"
-								size={!isMobile && !isScreenSmall ? "big" : "small"}
+								size={!isMobile && screenSize !== "small"? "big" : "small"}
 								error={true}
-								margin={!isMobile && !isScreenSmall ? "20px" : "10px"}
+								margin={!isMobile && screenSize !== "small" ? "20px" : "10px"}
 								password={true}
-								width={isMobile && isScreenSmall ? "90%" : "70%"}
+								width={isMobile && screenSize === "small" ? "90%" : "70%"}
 							/>
 							<div style={adminLoginStyles.button}>
 								<CustomButton

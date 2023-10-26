@@ -1,5 +1,6 @@
 .innerPageContainer {
-	width: 95%;
+	padding: 15px;
+	width: 98%;
 	height: 100%;
 	display: flex;
 	flex-direction: column;

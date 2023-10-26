@@ -6,19 +6,19 @@ import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import useGetAllNews from "../helpers/hooks/getAllNews";
 import NewsContainer from "../components/common/NewsContainer";
+import { selectScreenSize } from "../store/reducers/layoutSlice";
+import { useSelector } from "react-redux";
 
 function AdminNews() {
 	const navigate = useNavigate();
-	const isScreenSmall = useMediaQuery("(max-width: 500px)");
-	const isScreenMediumSmaller = useMediaQuery("(max-width: 800px)");
-	const isScreenMedium = useMediaQuery("(max-width: 1200px)");
+	const screenSize = useSelector(selectScreenSize);
 
 	const allNews = useGetAllNews();
 
 	const adminNewsStyles = {
 		allNews: {
-			marginTop: isMobile && isScreenSmall ? "10px" : "20px",
-			marginBottom: isMobile && isScreenSmall ? "10px" : "20px",
+			marginTop: isMobile && screenSize === "small" ? "10px" : "20px",
+			marginBottom: isMobile && screenSize === "small" ? "10px" : "20px",
 			width: "95%",
 			minHeight: "30vh",
 			height: "auto",
@@ -29,7 +29,7 @@ function AdminNews() {
 		},
 		addNews: {
 			width: "100%",
-			height: isMobile && isScreenSmall ? "40px" : "60px",
+			height: isMobile && screenSize === "small" ? "40px" : "60px",
 			display: "flex",
 			justifyContent: "center",
 			alignItems: "center",

@@ -3,6 +3,8 @@ import { isMobile } from "react-device-detect";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useSelector } from "react-redux";
+import { selectScreenSize } from "../../store/reducers/layoutSlice";
 
 export default function NewsContainer({
 	news,
@@ -11,12 +13,11 @@ export default function NewsContainer({
 	index,
 	margin,
 	borderRadius,
-	readMore,
+	readMore = true,
 	admin,
 }) {
 	const navigate = useNavigate();
-	const isScreenSmall = useMediaQuery("(max-width: 500px)");
-	const isScreenMedium = useMediaQuery("(max-width: 1200px)");
+	const screenSize = useSelector(selectScreenSize);
 
 	const newsContainerStyles = {
 		singleNews: {
@@ -52,16 +53,16 @@ export default function NewsContainer({
 			justifyContent: "space-between",
 			alignItems: "center",
 			marginLeft: admin && "10px",
-			marginRight: isMobile || isScreenSmall ? "5px" : "10px",
+			marginRight: isMobile || screenSize === "small" ? "5px" : "10px",
 			fontSize: layoutColumn
-				? (isMobile && isScreenSmall) || isScreenMedium
+				? (isMobile && screenSize === "small") || screenSize === "medium"
 					? "0.7em"
 					: "0.85em"
 				: "0.75em",
 		},
 		title: {
 			fontSize: layoutColumn
-				? (isMobile && isScreenSmall) || isScreenMedium
+				? (isMobile && screenSize === "small") || screenSize === "medium"
 					? "0.9em"
 					: "1em"
 				: "0.8em",
@@ -71,7 +72,7 @@ export default function NewsContainer({
 			marginLeft: "10px",
 			width: "90%",
 			height: layoutColumn
-				? (isMobile && isScreenSmall) || isScreenMedium
+				? (isMobile && screenSize === "small") || screenSize === "medium"
 					? "55%"
 					: "125px"
 				: "45%",
@@ -79,7 +80,7 @@ export default function NewsContainer({
 			textOverflow: "ellipsis",
 			overflow: "hidden",
 			fontSize: layoutColumn
-				? (isMobile && isScreenSmall) || isScreenMedium
+				? (isMobile && screenSize === "small") || screenSize === "medium"
 					? "0.8em"
 					: "1em"
 				: "0.8em",
@@ -91,8 +92,8 @@ export default function NewsContainer({
 		},
 		adminIcon: {
 			cursor: "pointer",
-			marginRight:isScreenSmall && isMobile ? "5px" : "10px",
-			fontSize: isScreenSmall && isMobile ? "0.8em" : "1.5em",
+			marginRight:screenSize === "small" && isMobile ? "5px" : "10px",
+			fontSize: screenSize === "small" && isMobile ? "0.8em" : "1.5em",
 		},
 	};
 

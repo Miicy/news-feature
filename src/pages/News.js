@@ -8,12 +8,12 @@ import useGetAllNews from "../helpers/hooks/getAllNews";
 import BreadcrumbsPage from "../components/common/Breadcrumbs";
 import "./pages.css";
 import { useNavigate } from "react-router-dom";
+import { selectScreenSize } from "../store/reducers/layoutSlice";
+import { useSelector } from "react-redux";
 
 function News() {
 	const navigate = useNavigate();
-	const isScreenSmall = useMediaQuery("(max-width: 500px)");
-	const isScreenMediumSmaller = useMediaQuery("(max-width: 800px)");
-	const isScreenMedium = useMediaQuery("(max-width: 1200px)");
+	const screenSize = useSelector(selectScreenSize);
 	const [layoutColumn, setLayoutColumn] = useState(true);
 
 	const allNews = useGetAllNews();
@@ -23,16 +23,16 @@ function News() {
 
 	//news layout
 	const toggleLayoutColumn = () => {
-		if (!isScreenMediumSmaller && !isMobile && !isScreenSmall) {
+		if (screenSize !== "medium-s" && !isMobile &&  screenSize !== "small") {
 			setLayoutColumn(!layoutColumn);
 		}
 	};
 
 	useEffect(() => {
-		if (isMobile || isScreenSmall || isScreenMediumSmaller) {
+		if (isMobile || screenSize === "small"|| screenSize === "medium-s") {
 			setLayoutColumn(true);
 		}
-	}, [isMobile, isScreenSmall, isScreenMediumSmaller]);
+	}, [isMobile, screenSize === "small", screenSize === "medium-s"]);
 
 	const latestNews = allNews && allNews.length > 0 ? allNews[0] : null;
 	const restOfNews = allNews ? allNews.slice(1) : [];
@@ -94,11 +94,11 @@ function News() {
 		latestText: {
 			width: "90%",
 			display: "flex",
-			fontSize: (isMobile && isScreenSmall) || isScreenMedium ? "1.3em" : "2em",
+			fontSize: (isMobile && screenSize === "small") || screenSize === "medium" ? "1.3em" : "2em",
 			fontWeight: "bold",
 		},
 		date: {
-			fontSize: (isMobile && isScreenSmall) || isScreenMedium ? "0.8em" : "1em",
+			fontSize: (isMobile && screenSize === "small") || screenSize === "medium" ? "0.8em" : "1em",
 			width: "98%",
 			display: "flex",
 			justifyContent: "flex-end",
@@ -119,10 +119,10 @@ function News() {
 			display: "flex",
 			justifyContent: "center",
 			alignItems: "center",
-			marginRight: isMobile || isScreenSmall ? "5px" : "10px",
+			marginRight: isMobile || screenSize === "small" ? "5px" : "10px",
 			cursor: newsLimit < restOfNews.length ? "pointer" : "none",
 			fontSize: layoutColumn
-				? (isMobile && isScreenSmall) || isScreenMedium
+				? (isMobile && screenSize === "small") || screenSize === "medium"
 					? "0.7em"
 					: "0.85em"
 				: "0.75em",
@@ -140,7 +140,7 @@ function News() {
 		<div className="innerPageContainer">
 			<div className="breadcrumbsContainer">
 				<BreadcrumbsPage link={"News"} />
-				{!isScreenMediumSmaller && !isMobile && !isScreenSmall && (
+				{screenSize !== "medium-s"&& !isMobile && screenSize !== "small" && (
 					<div style={newsPageStyles.layout} onClick={toggleLayoutColumn}>
 						{layoutColumn ? (
 							<div style={newsPageStyles.layoutCircle}>

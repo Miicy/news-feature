@@ -4,13 +4,13 @@ import { useParams } from "react-router-dom";
 import useGetAllNews from "../helpers/hooks/getAllNews";
 import { useMediaQuery } from "@mui/material";
 import { isMobile } from "react-device-detect";
+import { selectScreenSize } from "../store/reducers/layoutSlice";
+import { useSelector } from "react-redux";
 
 function NewsDetailed() {
 	const { id } = useParams();
 	const allNews = useGetAllNews();
-
-	const isScreenSmall = useMediaQuery("(max-width: 500px)");
-
+	const screenSize = useSelector(selectScreenSize);
 	const [newsDetails, setNewsDetails] = useState(null);
 
 	useEffect(() => {
@@ -35,31 +35,31 @@ function NewsDetailed() {
 		titleContainer: {
 			display: "flex",
 			flexDirection: "column",
-			alignItems: isScreenSmall || isMobile ? "center" : "flex-start",
+			alignItems: screenSize === "small" || isMobile ? "center" : "flex-start",
 		},
 		title: {
-			fontSize: isScreenSmall || isMobile ? "1em" : "2em",
-			marginLeft: isScreenSmall || isMobile ? "2px" : "5px",
+			fontSize: screenSize === "small" || isMobile ? "1em" : "2em",
+			marginLeft: screenSize === "small" || isMobile ? "2px" : "5px",
 			fontWeight: "bold",
 		},
 		image: {
 			backgroundColor: "grey",
-			height: isScreenSmall || isMobile ? "200px" : "400px",
-			width: isScreenSmall || isMobile ? "85%" : "100%",
+			height: screenSize === "small" || isMobile ? "200px" : "400px",
+			width: screenSize === "small" || isMobile ? "85%" : "100%",
 			borderRadius: "10px",
 		},
 
 		content: {
-			fontSize: isScreenSmall || isMobile ? "0.9em" : "1.2em",
-			margin: isScreenSmall || isMobile ? "20px 0" : "35px 0",
-			minHeight:isScreenSmall || isMobile ? "200px" : "200px",
+			fontSize: screenSize === "small" || isMobile ? "0.9em" : "1.2em",
+			margin: screenSize === "small" || isMobile ? "20px 0" : "35px 0",
+			minHeight:screenSize === "small" || isMobile ? "200px" : "200px",
 		},
 		date:{
 			width: "100%",
 			display: "flex",
 			justifyContent: "flex-end",
 			marginBottom:"20px",
-			fontSize: isScreenSmall || isMobile ? "0.85em" : "1em",
+			fontSize: screenSize === "small" || isMobile ? "0.85em" : "1em",
 		}
 	};
 	if (!allNews) return null;

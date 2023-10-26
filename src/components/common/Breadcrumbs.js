@@ -1,18 +1,20 @@
 import Link from "@mui/material/Link";
 import { Breadcrumbs, useMediaQuery } from "@mui/material";
 import { isMobile } from "react-device-detect";
+import { selectScreenSize } from "../../store/reducers/layoutSlice";
+import { useSelector } from "react-redux";
+
 function BreadcrumbsPage({ second, link }) {
-	const isScreenSmall = useMediaQuery("(max-width: 500px)");
-	const isScreenMediumSmaller = useMediaQuery("(max-width: 800px)");
-	const isScreenMedium = useMediaQuery("(max-width: 1200px)");
+	const screenSize = useSelector(selectScreenSize);
+	
 	return (
 		<Breadcrumbs
 			aria-label="breadcrumb"
 			sx={{
 				fontSize:
-					isMobile || isScreenSmall
+					isMobile || screenSize === "small"
 						? "0.85em"
-						: isScreenMedium
+						: screenSize === "medium"
 						? "0.95em"
 						: "1em",
 			}}
