@@ -51,7 +51,7 @@ function Header() {
 					: screenSize === "medium-s"
 					? "0.9em"
 					: "1.2em",
-			transition: "0.3s",
+			transition: "0.2s",
 		},
 		navContainer: {
 			width: "85%",

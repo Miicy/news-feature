@@ -70,6 +70,7 @@ function App() {
 			justifyContent: "flex-start",
 			alignItems: "center",
 			zIndex: 10,
+			transition: "0.2s",
 		},
 	};
 

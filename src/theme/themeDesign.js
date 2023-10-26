@@ -43,7 +43,7 @@ const getDesignTokens = (mode) => ({
 					// palette values for dark mode
 					primary: {
 						main: grey[900],
-						opacity80: "rgba(33, 33, 33, 0.85)",
+						opacity80: "rgba(33, 33, 33, 0.60)",
 					},
 					secondary: {
 						main: grey[800],
@@ -90,6 +90,16 @@ export const themeCreation = (mode) =>
 						backgroundColor: mode === "light" ? grey[900] : grey[50],
 						color: mode === "light" ? grey[50] : grey[900],
 						fontSize: "0.8em",
+					},
+				},
+			},
+			MuiTextField: {
+				styleOverrides: {
+					root: {
+						"& .MuiOutlinedInput-root": {
+							borderRadius: 20,
+							fontSize: "0.85em",
+						},
 					},
 				},
 			},

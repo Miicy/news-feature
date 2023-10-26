@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { selectScreenSize } from "../store/reducers/layoutSlice";
 import { useSelector } from "react-redux";
 import { useTheme } from "@emotion/react";
+import SearchInput from "../components/common/SearchInput";
 
 function News() {
 	const navigate = useNavigate();
@@ -25,13 +26,13 @@ function News() {
 
 	//news layout
 	const toggleLayoutColumn = () => {
-		if (screenSize !== "medium-s" && !isMobile &&  screenSize !== "small") {
+		if (screenSize !== "medium-s" && !isMobile && screenSize !== "small") {
 			setLayoutColumn(!layoutColumn);
 		}
 	};
 
 	useEffect(() => {
-		if (isMobile || screenSize === "small"|| screenSize === "medium-s") {
+		if (isMobile || screenSize === "small" || screenSize === "medium-s") {
 			setLayoutColumn(true);
 		}
 	}, [isMobile, screenSize === "small", screenSize === "medium-s"]);
@@ -47,6 +48,10 @@ function News() {
 	};
 
 	const newsPageStyles = {
+		breadcrumbsContainerMobile: {
+			flexDirection: screenSize === "small" || isMobile ? "column" : "row",
+			justifyContent: screenSize === "small" || isMobile ? "center" : "space-between",
+		},
 		layout: {
 			width: "65px",
 			height: "32px",
@@ -56,7 +61,7 @@ function News() {
 			border: "1px solid grey",
 			borderRadius: "20px",
 			cursor: "pointer",
-			backgroundColor:`${theme.palette.oppositeLighter.opacity40}`,
+			backgroundColor: `${theme.palette.oppositeLighter.opacity40}`,
 		},
 		layoutCircle: {
 			backgroundColor: `${theme.palette.opposite.main}`,
@@ -76,7 +81,7 @@ function News() {
 		},
 		latest: {
 			width: "100%",
-			height: "420px",
+			height: screenSize === "small" || isMobile ? "400px" : "500px",
 			borderRadius: "10px",
 			marginBottom: "15px",
 			display: "flex",
@@ -98,11 +103,26 @@ function News() {
 		latestText: {
 			width: "90%",
 			display: "flex",
-			fontSize: (isMobile && screenSize === "small") || screenSize === "medium" ? "1.3em" : "2em",
+			fontSize:
+				screenSize === "large"
+					? "2.2em"
+					: screenSize === "medium"
+					? "2em"
+					: screenSize === "medium-s"
+					? "1.7em"
+					: "1.3em",
 			fontWeight: "bold",
+			transsition:" 0.2s"
 		},
 		date: {
-			fontSize: (isMobile && screenSize === "small") || screenSize === "medium" ? "0.8em" : "1em",
+			fontSize:
+			screenSize === "large"
+					? "1.2em"
+					: screenSize === "medium"
+					? "1em"
+					: screenSize === "medium-s"
+					? "0.9em"
+					: "0.8em",
 			width: "98%",
 			display: "flex",
 			justifyContent: "flex-end",
@@ -143,9 +163,13 @@ function News() {
 
 	return (
 		<div className="innerPageContainer">
-			<div className="breadcrumbsContainer">
+			<div
+				className="breadcrumbsContainer"
+				style={newsPageStyles.breadcrumbsContainerMobile}
+			>
 				<BreadcrumbsPage link={"News"} />
-				{screenSize !== "medium-s"&& !isMobile && screenSize !== "small" && (
+				<SearchInput />
+				{!isMobile && screenSize !== "small" && (
 					<div style={newsPageStyles.layout} onClick={toggleLayoutColumn}>
 						{layoutColumn ? (
 							<div style={newsPageStyles.layoutCircle}>
