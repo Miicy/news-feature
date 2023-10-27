@@ -50,16 +50,20 @@ function App() {
 			zIndex: 1,
 		},
 		pageContainer: {
-			marginTop: "50px",
-			marginBottom: "50px",
+			margin:
+				screenSize === "medium-s"
+					? "25px 0"
+					: screenSize === "small"
+					? "5px 0"
+					: "50px 0",
 			position: "relative",
 			minWidth: "300px",
-			width: "80%",
+			width: screenSize === "small" ? "85%" : "90%",
 			minHeight:
 				screenSize === "medium-s"
-					? "800px"
+					? "1000px"
 					: screenSize === "small"
-					? "500px"
+					? "850px"
 					: "100vh",
 			height: "auto",
 			backgroundColor: `${theme.palette.primary.main}`,
@@ -88,7 +92,10 @@ function App() {
 							<Route path="/contact" element={<Contact />} />
 							<Route path="/admin" element={<AdminLogin />} />
 							<Route path="/admin/admin-panel" element={<AdminNews />} />
-							<Route path="/admin/admin-panel/add-news" element={<AdminAddNews />} />
+							<Route
+								path="/admin/admin-panel/add-news"
+								element={<AdminAddNews />}
+							/>
 						</Routes>
 					</div>
 				</div>

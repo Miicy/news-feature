@@ -129,7 +129,11 @@ function AdminAddNews() {
 			display: "flex",
 			flexDirection: "row",
 			width: "100%",
-			marginTop: "10px",
+			marginTop: screenSize === "medium-s"
+			? "15px"
+			: screenSize === "small"
+			? "20px"
+			: "10px",
 			justifyContent: "space-between",
 		},
 	};
