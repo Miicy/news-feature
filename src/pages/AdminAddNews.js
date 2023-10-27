@@ -183,10 +183,8 @@ function AdminAddNews() {
                                         <FormikField
                                         form={form}
                                         {...formik}
-                                        label="Ime"
-                                        sx={{ width: "100%" }}
-                                        fullWidth
-                                        size="small"
+                                        label="Title"
+                                        size={screenSize === "small" || isMobile ? "small" : "big"}
                                     />
 									)}
 								</Field>

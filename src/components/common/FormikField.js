@@ -1,4 +1,5 @@
 import { TextField } from "@mui/material";
+import { Field } from "formik";
 
 const FormikField = ({ field, form, type, helperText, sx, ...rest }) => {
 	const { value, name, onBlur, onChange } = field;
@@ -22,17 +23,20 @@ const FormikField = ({ field, form, type, helperText, sx, ...rest }) => {
 	};
 
 	return (
-		<TextField
+		<Field
+			as={TextField}
+			{...rest}
+			color="opposite"
 			sx={sx ? sx : null}
+			variant="outlined"
 			type={type}
 			name={name}
-			title={error}
-			onBlur={onBlur}
 			onChange={onChange}
 			value={value ? value : ""}
 			error={!!error && touched}
+			fullWidth
 			helperText={touched ? handleErrorDetection() : handleHelperText()}
-			{...rest}
+			
 		/>
 	);
 };

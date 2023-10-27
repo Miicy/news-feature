@@ -41,6 +41,7 @@ const LoginField = ({
         variant="outlined"
         size={size}
         fullWidth
+        color="opposite"
         type={password ? (showPassword ? "text" : "password") : "text"}
         value={value}
         InputProps={{
