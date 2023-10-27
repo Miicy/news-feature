@@ -97,9 +97,13 @@ export const themeCreation = (mode) =>
 				styleOverrides: {
 					root: {
 						"& .MuiOutlinedInput-root": {
-							borderRadius: 20,
+							borderRadius: 10,
 							fontSize: "0.85em",
+							borderColor: mode === "light" ? grey[600] : grey[200],
 						},
+						"&:not(.Mui-focused) .MuiOutlinedInput-notchedOutline": {
+							borderColor: mode === "light" ? grey[600] : grey[200],
+						  },
 					},
 				},
 			},

@@ -16,7 +16,7 @@ import {
 } from "../store/reducers/notificationSlice";
 import { adminLogin } from "../store/reducers/adminSlice";
 import CustomButton from "../components/common/CustomButton";
-import CustomField from "../components/common/CustomField";
+import LoginField from "../components/common/LoginField";
 import { selectScreenSize } from "../store/reducers/layoutSlice";
 
 function AdminLogin() {
@@ -110,6 +110,10 @@ function AdminLogin() {
 			width: "35%",
 			marginTop: isMobile && screenSize === "small" ? "10px" : "20px",
 		},
+		fieldContainer:{
+			width: isMobile && screenSize === "small" ? "90%" : "70%",
+			margin: !isMobile && screenSize !== "small" ? "20px" : "10px"
+		}
 	};
 
 	return (
@@ -123,23 +127,22 @@ function AdminLogin() {
 				>
 					{(formik) => (
 						<Form style={adminLoginStyles.form}>
-							<CustomField
+							<LoginField
 								name="username"
 								label="Username"
 								size={!isMobile && screenSize !== "small" ? "big" : "small"}
 								error={true}
-								margin={!isMobile && screenSize !== "small" ? "20px" : "10px"}
 								password={false}
-								width={isMobile && screenSize === "small" ? "90%" : "70%"}
+								style={adminLoginStyles.fieldContainer}
 							/>
-							<CustomField
+							<LoginField
 								name="password"
 								label="Password"
 								size={!isMobile && screenSize !== "small"? "big" : "small"}
 								error={true}
-								margin={!isMobile && screenSize !== "small" ? "20px" : "10px"}
 								password={true}
-								width={isMobile && screenSize === "small" ? "90%" : "70%"}
+								style={adminLoginStyles.fieldContainer}
+								
 							/>
 							<div style={adminLoginStyles.button}>
 								<CustomButton

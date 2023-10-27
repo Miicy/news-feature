@@ -18,6 +18,7 @@ import ScreenSizeListener from "./helpers/ScreenSizeListener";
 import backgroundLight from "./media/background-light.svg";
 import backgroundDark from "./media/background-dark.svg";
 import { selectScreenSize } from "./store/reducers/layoutSlice";
+import AdminAddNews from "./pages/AdminAddNews";
 
 function App() {
 	const [theme, setTheme] = useState(themeCreation());
@@ -87,6 +88,7 @@ function App() {
 							<Route path="/contact" element={<Contact />} />
 							<Route path="/admin" element={<AdminLogin />} />
 							<Route path="/admin/admin-panel" element={<AdminNews />} />
+							<Route path="/admin/admin-panel/add-news" element={<AdminAddNews />} />
 						</Routes>
 					</div>
 				</div>

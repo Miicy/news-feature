@@ -68,7 +68,7 @@ function NewsDetailed() {
 	return (
 		<div className="innerPageContainer">
 			<div className="breadcrumbsContainer">
-				<BreadcrumbsPage second={"News"} link={newsDetails.title} />
+				<BreadcrumbsPage second={"News"} secondUrl={"news"} link={newsDetails.title} />
 			</div>
 			<div style={newsDetailedStyles.container}>
 				<div style={newsDetailedStyles.titleContainer}>

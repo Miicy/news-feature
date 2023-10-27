@@ -34,9 +34,9 @@ function AdminNews() {
 			justifyContent: "center",
 			alignItems: "center",
 			backgroundColor: "lightGrey",
-			borderRadius: "15px 15px 0px 0px",
+			borderRadius: "5px",
 			cursor: "pointer",
-			marginBottom: "5px",
+			marginBottom: "10px",
 		},
 		addIcon: {},
 	};
@@ -45,7 +45,11 @@ function AdminNews() {
 	return (
 		<div className="innerPageContainer">
 			<div className="breadcrumbsContainer">
-				<BreadcrumbsPage second={"Admin"} link={"Admin News"} />
+				<BreadcrumbsPage
+					second={"Admin"}
+					secondUrl={"admin"}
+					link={"Admin News"}
+				/>
 			</div>
 			<div style={adminNewsStyles.allNews}>
 				<Tooltip title={`Add News`}>
@@ -57,20 +61,19 @@ function AdminNews() {
 					</div>
 				</Tooltip>
 				{allNews.map((news, index) => (
-				<NewsContainer
-					key={news.id}
-					news={news}
-					index={index}
-					isRestOfNewsOdd={false}
-					layoutColumn={true}
-					margin={"2px 0"}
-					borderRadius={"0"}
-					readMore={false}
-					admin={true}
-				/>
-			))}
+					<NewsContainer
+						key={news.id}
+						news={news}
+						index={index}
+						isRestOfNewsOdd={false}
+						layoutColumn={true}
+						margin={"2px 0"}
+						borderRadius={"0"}
+						readMore={false}
+						admin={true}
+					/>
+				))}
 			</div>
-			
 		</div>
 	);
 }

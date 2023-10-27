@@ -3,26 +3,26 @@ import { ErrorMessage, Field } from "formik";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useState } from "react";
+import { selectScreenSize } from "../../store/reducers/layoutSlice";
+import { useSelector } from "react-redux";
+import { isMobile } from "react-device-detect";
 
-const CustomField = ({
+const LoginField = ({
   label,
-  width,
   size,
   error,
-  margin,
   password,
   value,
+  style,
   ...rest
 }) => {
+  const screenSize = useSelector(selectScreenSize);
+
   const errorMessageStyles = {
     color: "red",
-    fontSize: "0.7em",
+    fontSize: isMobile && screenSize === "small" ? "0.8em" : "1em",
     height: "20px",
-  };
-
-  const fieldContainer = {
-    margin: margin,
-    width: width,
+    transition: "0.3"
   };
 
   const [showPassword, setShowPassword] = useState(false);
@@ -33,7 +33,7 @@ const CustomField = ({
   
 
   return (
-    <div style={fieldContainer}>
+    <div style={style}>
       <Field
         as={TextField}
         {...rest}
@@ -62,4 +62,4 @@ const CustomField = ({
   );
 };
 
-export default CustomField;
+export default LoginField;

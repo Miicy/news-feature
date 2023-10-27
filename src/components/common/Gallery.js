@@ -66,7 +66,7 @@ function Gallery() {
 	//styles
 	const theme = useTheme();
 
-	const gallery = {
+	const galleryStyles = {
 		container: {
 			display: "flex",
 			flexDirection: "column",
@@ -147,7 +147,7 @@ function Gallery() {
 	};
 
 	return (
-		<div style={gallery.container}>
+		<div style={galleryStyles.container}>
 			{/* <div style={gallery.arrow}>
 				<div style={gallery.arrowContainer}>
 					<NavigateBeforeIcon
@@ -178,7 +178,7 @@ function Gallery() {
 					/>
 				</div>
 			</div> */}
-			<div style={gallery.sliderSquare}>
+			<div style={galleryStyles.sliderSquare}>
 				{slides.map((slide, slideIndex) => (
 					<div key={slideIndex}>
 						{slideIndex === currentImage ? (
@@ -206,10 +206,10 @@ function Gallery() {
 					</div>
 				))}
 			</div>
-            <div style={gallery.p}>
-            <p style={gallery.newsTitle}> Title</p>
-            <p style={gallery.content}>Content</p>
-            <p style={gallery.date}>Date</p>
+            <div style={galleryStyles.p}>
+            <p style={galleryStyles.newsTitle}> Title</p>
+            <p style={galleryStyles.content}>Content</p>
+            <p style={galleryStyles.date}>Date</p>
 
             </div>
 		</div>

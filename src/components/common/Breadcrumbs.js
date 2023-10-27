@@ -4,7 +4,7 @@ import { isMobile } from "react-device-detect";
 import { selectScreenSize } from "../../store/reducers/layoutSlice";
 import { useSelector } from "react-redux";
 
-function BreadcrumbsPage({ second, link }) {
+function BreadcrumbsPage({ second, secondUrl, third, thirdUrl, link }) {
 	const screenSize = useSelector(selectScreenSize);
 	
 	return (
@@ -23,8 +23,13 @@ function BreadcrumbsPage({ second, link }) {
 				Home
 			</Link>
 			{second && (
-				<Link color="inherit" href={`/${second}`}>
+				<Link color="inherit" href={`/${secondUrl}`}>
 					{second}
+				</Link>
+			)}
+			{third && (
+				<Link color="inherit" href={`/${thirdUrl}`}>
+					{third}
 				</Link>
 			)}
 			<p color="textPrimary">{link}</p>
