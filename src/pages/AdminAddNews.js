@@ -36,17 +36,16 @@ function AdminAddNews() {
 	const initialValues = {
 		title: "",
 		date: today,
-		content: null,
+		content: "",
 	};
 
 	const validationSchema = Yup.object().shape({
 		title: Yup.string().required("Title required!"),
 		date: Yup.date().required("Date required!"),
-		content: Yup.string().required("Content required!"),
+		// content: Yup.string().required("Content required!"),
 	});
 
 	const onSubmit = async (values) => {
-		
 		try {
 			const date = new Date(values.date);
 			const formattedDate = `${date.getDate()}/${
@@ -130,8 +129,6 @@ function AdminAddNews() {
 		},
 	};
 
-	const [content, setContent] = useState("");
-
 	return (
 		<div className="innerPageContainer">
 			<div className="breadcrumbsContainer">
@@ -149,9 +146,7 @@ function AdminAddNews() {
 					validationSchema={validationSchema}
 					onSubmit={onSubmit}
 				>
-					
 					{({ isValid, values }) => (
-						
 						<Form style={AdminAddNewsStyles.form}>
 							<div style={AdminAddNewsStyles.titleDate}>
 								<FormikField
@@ -167,7 +162,6 @@ function AdminAddNews() {
 								<FormikDatePicker
 									name="date"
 									label="Date"
-									date={values.date}
 									today={today}
 									sx={{
 										width:
@@ -183,6 +177,8 @@ function AdminAddNews() {
 								/>
 							</div>
 							<ReactQuillComponent name="content" />
+							<ErrorMessage name="content" />
+
 							<div style={AdminAddNewsStyles.button}>
 								<CustomLoginButton
 									type="submit"

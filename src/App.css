@@ -48,7 +48,7 @@ body::-webkit-scrollbar {
 	grid-column: span 2;
 }
 
-.ql-container {
+/* .ql-container {
 	border-bottom-left-radius: 10px;
 	border-bottom-right-radius: 10px;
 }
@@ -56,4 +56,4 @@ body::-webkit-scrollbar {
 .ql-snow.ql-toolbar {
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
-}
+} */
