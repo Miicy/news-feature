@@ -1,5 +1,5 @@
 import Link from "@mui/material/Link";
-import { Breadcrumbs, useMediaQuery } from "@mui/material";
+import { Breadcrumbs } from "@mui/material";
 import { isMobile } from "react-device-detect";
 import { selectScreenSize } from "../../store/reducers/layoutSlice";
 import { useSelector } from "react-redux";
@@ -13,7 +13,7 @@ function BreadcrumbsPage({ second, secondUrl, third, thirdUrl, link }) {
 			sx={{
 				fontSize:
 					isMobile || screenSize === "small"
-						? "0.85em"
+						? "0.8em"
 						: screenSize === "medium"
 						? "0.95em"
 						: "1em",

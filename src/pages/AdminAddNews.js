@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectScreenSize } from "../store/reducers/layoutSlice";
 import { isMobile } from "react-device-detect";
 import CustomField from "../components/common/LoginField";
-import { Formik, Form, Field, useFormikContext } from "formik";
+import { Formik, Form, Field, useFormikContext, ErrorMessage } from "formik";
 import {
 	DATA_STATE,
 	NOTIFICATION_TYPES,
@@ -18,38 +18,46 @@ import {
 import { useNavigate } from "react-router-dom";
 
 import CustomLoginButton from "../components/common/CustomButton";
-import ReactQuill from "react-quill";
+
 import FormikField from "../components/common/FormikField";
+import FormikDatePicker from "../components/common/FormikDatePicker";
+import { useTheme } from "@emotion/react";
+
+import dayjs from "dayjs";
+import ReactQuillComponent from "../components/common/ReactQuillComponent";
 
 function AdminAddNews() {
 	const screenSize = useSelector(selectScreenSize);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const theme = useTheme();
+	const today = dayjs();
 
-	const FORM_FIELDS = {
-		TITLE: "title",
-		CONTENT: "content",
-		DATE: "date",
+	const initialValues = {
+		title: "",
+		date: today,
+		content: null,
 	};
 
-	const initialValues = useMemo(() => {
-		return {
-			[FORM_FIELDS.TITLE]: null,
-			[FORM_FIELDS.CONTENT]: null,
-			[FORM_FIELDS.DATE]: null,
-		};
-	}, []);
-
 	const validationSchema = Yup.object().shape({
-		[FORM_FIELDS.TITLE]: Yup.string().required("Title required!"),
-		[FORM_FIELDS.CONTENT]: Yup.string().required("Content required!"),
-		[FORM_FIELDS.DATE]: Yup.number().required("Date required!"),
+		title: Yup.string().required("Title required!"),
+		date: Yup.date().required("Date required!"),
+		content: Yup.string().required("Content required!"),
 	});
 
-	const onSubmit = async (values, { setErrors }) => {
+	const onSubmit = async (values) => {
+		
 		try {
-			dispatch(setDataState(DATA_STATE.DATA_STATE_LOADING));
-			// [FORM_FIELDS.TITLE]: formValues[FORM_FIELDS.TITLE],
+			const date = new Date(values.date);
+			const formattedDate = `${date.getDate()}/${
+				date.getMonth() + 1
+			}/${date.getFullYear()}`;
+
+			const updatedValues = {
+				...values,
+				date: formattedDate,
+			};
+
 			console.log("Form Values:", values);
 		} catch (error) {
 			if (
@@ -83,35 +91,24 @@ function AdminAddNews() {
 			alignItems: "space-between",
 			justifyContent: "center",
 		},
-		titleContainer: {
+		formCotainer: {
 			display: "flex",
 			flexDirection: "column",
 			width: "95%",
 			alignItems: screenSize === "small" || isMobile ? "center" : "flex-start",
 		},
-		title: {
-			fontSize: screenSize === "small" || isMobile ? "1em" : "2em",
-			marginLeft: screenSize === "small" || isMobile ? "2px" : "5px",
-			fontWeight: "bold",
-		},
-		image: {
-			backgroundColor: "grey",
-			height: screenSize === "small" || isMobile ? "200px" : "400px",
-			width: screenSize === "small" || isMobile ? "85%" : "100%",
-			borderRadius: "10px",
-		},
-
-		content: {
-			fontSize: screenSize === "small" || isMobile ? "0.9em" : "1.2em",
-			margin: screenSize === "small" || isMobile ? "20px 0" : "35px 0",
-			minHeight: screenSize === "small" || isMobile ? "200px" : "200px",
-		},
-		date: {
-			width: "100%",
+		titleDate: {
 			display: "flex",
-			justifyContent: "flex-end",
-			marginBottom: "20px",
-			fontSize: screenSize === "small" || isMobile ? "0.85em" : "1em",
+			flexDirection: screenSize === "small" || isMobile ? "column" : "row",
+			width: "100%",
+			marginTop:
+				screenSize === "medium-s"
+					? "15px"
+					: screenSize === "small"
+					? "10px"
+					: "20px",
+			justifyContent: "space-between",
+			height: "60px",
 		},
 		quill: {
 			minHeight: "fit-content",
@@ -119,46 +116,19 @@ function AdminAddNews() {
 			width: "100%",
 			color: "black",
 		},
+		image: {
+			backgroundColor: "grey",
+			height: screenSize === "small" || isMobile ? "200px" : "400px",
+			width: screenSize === "small" || isMobile ? "85%" : "100%",
+			borderRadius: "10px",
+		},
 		button: {
 			display: "flex",
 			marginTop: "70px",
 			cursor: "pointer",
 			width: "20%",
 		},
-		titleDate: {
-			display: "flex",
-			flexDirection: "row",
-			width: "100%",
-			marginTop: screenSize === "medium-s"
-			? "15px"
-			: screenSize === "small"
-			? "20px"
-			: "10px",
-			justifyContent: "space-between",
-		},
 	};
-
-	const modules = {
-		toolbar: [
-			[{ header: [1, 2, false] }],
-			["bold", "italic", "underline", "strike"],
-			[{ list: "ordered" }, { list: "bullet" }],
-			[{ align: [] }],
-			["link"],
-		],
-	};
-
-	const formats = [
-		"header",
-		"bold",
-		"italic",
-		"underline",
-		"strike",
-		"list",
-		"bullet",
-		"align",
-		"link",
-	];
 
 	const [content, setContent] = useState("");
 
@@ -173,56 +143,51 @@ function AdminAddNews() {
 					link={"Add News"}
 				/>
 			</div>
-			<div style={AdminAddNewsStyles.titleContainer}>
+			<div style={AdminAddNewsStyles.formCotainer}>
 				<Formik
 					initialValues={initialValues}
 					validationSchema={validationSchema}
 					onSubmit={onSubmit}
 				>
-					{(values, isValid) => (
+					
+					{({ isValid, values }) => (
+						
 						<Form style={AdminAddNewsStyles.form}>
 							<div style={AdminAddNewsStyles.titleDate}>
-								<Field name={FORM_FIELDS.TITLE}>
-									{({ form, ...formik }) => (
-                                        <FormikField
-                                        form={form}
-                                        {...formik}
-                                        label="Title"
-                                        size={screenSize === "small" || isMobile ? "small" : "big"}
-                                    />
-									)}
-								</Field>
+								<FormikField
+									name="title"
+									label="Title"
+									type="text"
+									sx={{
+										width: screenSize === "small" || isMobile ? "100%" : "50%",
+									}}
+									size={screenSize === "small" || isMobile ? "small" : ""}
+								/>
 
-								{/* <CustomField
+								<FormikDatePicker
 									name="date"
 									label="Date"
-									size={
-										!isMobile && screenSize !== "small" ? "medium" : "small"
-									}
-									error={true}
-									margin={"0"}
-									password={false}
-									width={isMobile && screenSize === "small" ? "50%" : "20%"}
-								/> */}
-							</div>
-
-							{/* <Field name="content">
-								<ReactQuill
-									{...Field}
-									style={AdminAddNewsStyles.quill}
-									modules={modules}
-									// onChange={(value) => setFieldValue("content", value)}
-									formats={formats}
+									date={values.date}
+									today={today}
+									sx={{
+										width:
+											screenSize === "small" || isMobile
+												? "100%"
+												: screenSize === "medium"
+												? "60%"
+												: screenSize === "medium-s"
+												? "60%"
+												: "40%",
+										transition: "0.3s",
+									}}
 								/>
-							</Field> */}
+							</div>
+							<ReactQuillComponent name="content" />
 							<div style={AdminAddNewsStyles.button}>
 								<CustomLoginButton
-									disabled={
-										!values.title || values.content
-										// || !formik.values.date
-									}
-									onClick={() => onSubmit(values)}
-									buttonText={"Add"}
+									type="submit"
+									// disabled={!isValid}
+									buttonText="Add"
 								/>
 							</div>
 						</Form>
@@ -230,7 +195,6 @@ function AdminAddNews() {
 				</Formik>
 				{/* <div style={AdminAddNewsStyles.image}></div> */}
 			</div>
-			<div style={AdminAddNewsStyles.date}></div>
 		</div>
 	);
 }

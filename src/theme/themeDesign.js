@@ -100,8 +100,20 @@ export const themeCreation = (mode) =>
 							borderRadius: 10,
 							fontSize: "0.85em",
 						},
-						"&:not(.Mui-focused) .MuiOutlinedInput-notchedOutline": {
-
+						"& .MuiOutlinedInput-root.MuiInputBase-colorPrimary.Mui-focused.MuiInputBase-formControl.MuiInputBase-adornedEnd":
+							{
+								borderColor: `${mode === "light" ? grey[900] : grey[50]}`,
+								border: `2px solid`,
+							},
+					},
+				},
+			},
+			MuiFormLabel: {
+				styleOverrides: {
+					root: {
+						"&.MuiInputLabel-root.Mui-focused": {
+							color: mode === "light" ? grey[900] : grey[50],
+							// backgroundColor: mode === "light" ? grey[50] : grey[700],
 						},
 					},
 				},

@@ -54,11 +54,11 @@ function App() {
 				screenSize === "medium-s"
 					? "25px 0"
 					: screenSize === "small"
-					? "5px 0"
+					? "30px 0"
 					: "50px 0",
 			position: "relative",
 			minWidth: "300px",
-			width: screenSize === "small" ? "85%" : "90%",
+			width: screenSize === "small" ? "85%" : "88%",
 			minHeight:
 				screenSize === "medium-s"
 					? "1000px"

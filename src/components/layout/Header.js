@@ -54,7 +54,7 @@ function Header() {
 			transition: "0.2s",
 		},
 		navContainer: {
-			width: "85%",
+			width: "95%",
 			display: "flex",
 			justifyContent: "space-between",
 			alignItems: "center",

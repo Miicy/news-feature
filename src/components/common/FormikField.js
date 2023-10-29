@@ -1,43 +1,29 @@
-import { TextField } from "@mui/material";
+
+import TextField from "@mui/material/TextField";
 import { Field } from "formik";
 
-const FormikField = ({ field, form, type, helperText, sx, ...rest }) => {
-	const { value, name, onBlur, onChange } = field;
-	const { getFieldMeta } = form;
-	const { error, touched } = getFieldMeta(name);
-
-	const handleErrorDetection = () => {
-		if (error) {
-			return error;
-		} else {
-			return " ";
-		}
-	};
-
-	const handleHelperText = () => {
-		if (helperText) {
-			return helperText;
-		} else {
-			return " ";
-		}
-	};
-
+const FormikField = ({ size, name, label, type, sx, helperText, ...rest }) => {
 	return (
-		<Field
-			as={TextField}
-			{...rest}
-			color="opposite"
-			sx={sx ? sx : null}
-			variant="outlined"
-			type={type}
-			name={name}
-			onChange={onChange}
-			value={value ? value : ""}
-			error={!!error && touched}
-			fullWidth
-			helperText={touched ? handleErrorDetection() : handleHelperText()}
-			
-		/>
+		<Field name={name}>
+			{({ field, form }) => {
+				const { error, touched } = form.getFieldMeta(name);
+
+				return (
+					<TextField
+						label={label}
+						type={type}
+						{...field}
+						{...rest}
+						sx={sx || null}
+						variant="outlined"
+						color="opposite"
+						size={size}
+						error={!!error && touched}
+						helperText={touched ? error : helperText}
+					/>
+				);
+			}}
+		</Field>
 	);
 };
 
