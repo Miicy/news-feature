@@ -44,11 +44,13 @@ body::-webkit-scrollbar {
 	border: 0px solid #ffffff;
 }
 
+/* layout */
 .newsContainer > .lastChild:first-child {
 	grid-column: span 2;
 }
 
-/* .ql-container {
+/* quill */
+.ql-container {
 	border-bottom-left-radius: 10px;
 	border-bottom-right-radius: 10px;
 }
@@ -56,4 +58,17 @@ body::-webkit-scrollbar {
 .ql-snow.ql-toolbar {
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
-} */
+}
+
+.quill-error > * {
+	border: 1px solid #d32f2f !important;
+}
+
+:root {
+	--text-color-light: grey[900];
+	--text-color-dark: grey[50];
+}
+
+.quill > .ql-container > .ql-editor.ql-blank::before {
+	color: var(--text-color-light);
+}

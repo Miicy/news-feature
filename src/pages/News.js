@@ -61,10 +61,10 @@ function News() {
 			border: "1px solid grey",
 			borderRadius: "20px",
 			cursor: "pointer",
-			backgroundColor: `${theme.palette.oppositeLighter.opacity40}`,
+			backgroundColor: theme.palette.oppositeLighter.opacity40,
 		},
 		layoutCircle: {
-			backgroundColor: `${theme.palette.opposite.main}`,
+			backgroundColor: theme.palette.opposite.main,
 			borderRadius: "20px",
 			display: "flex",
 			justifyContent: "center",
@@ -72,7 +72,7 @@ function News() {
 		},
 		layoutIcon: {
 			margin: "5px",
-			color: `${theme.palette.primary.main}`,
+			color: theme.palette.primary.main,
 		},
 		news: {
 			marginTop: "15px",

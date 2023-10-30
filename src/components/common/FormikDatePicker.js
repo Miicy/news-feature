@@ -1,15 +1,17 @@
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DesktopDatePicker } from "@mui/x-date-pickers";
+import { DateField, DesktopDatePicker } from "@mui/x-date-pickers";
 
 import { ErrorMessage, Field } from "formik";
 import { TextField } from "@mui/material";
 import { useSelector } from "react-redux";
 import { selectScreenSize } from "../../store/reducers/layoutSlice";
 import { isMobile } from "react-device-detect";
+import { useTheme } from "@emotion/react";
 
 const FormikDatePicker = ({
 	name,
+	size,
 	label,
 	today,
 	form,
@@ -18,10 +20,11 @@ const FormikDatePicker = ({
 	...rest
 }) => {
 	const screenSize = useSelector(selectScreenSize);
+	const theme = useTheme();
 
 	const DatePickerStyles = {
 		error: {
-			color: "#d32f2f",
+			color: theme.palette.red.error,
 			fontSize: "0.8em",
 			display: "flex",
 			justifyContent: "flex-start",
@@ -33,20 +36,19 @@ const FormikDatePicker = ({
 					: screenSize === "medium-s"
 					? "58.5%"
 					: "38.5%",
-			
 		},
 		container: {
 			width: "100%",
 			display: "flex",
 			flexDirection: "column",
 			alignItems: "flex-end",
-			margin: screenSize === "small" || isMobile ? "20px 0"  : "0",
+			margin: screenSize === "small" || isMobile ? "20px 0" : "0",
 		},
 	};
 
 	return (
 		<Field name={name}>
-			{({ field, form }) => {
+			{({ form }) => {
 				return (
 					<LocalizationProvider dateAdapter={AdapterDayjs}>
 						<div style={DatePickerStyles.container}>
@@ -56,14 +58,10 @@ const FormikDatePicker = ({
 								sx={sx || null}
 								onChange={(value) => form.setFieldValue("date", value)}
 								value={today}
-								renderInput={(params) => (
-									<TextField
-										name={name}
-										variant="outlined"
-										fullWidth
-										{...params}
-									/>
-								)}
+								format="LL"
+								slotProps={{
+									textField: { variant: "outlined", color: "opposite", label: "Date", size:size },
+								}}
 							/>
 							<ErrorMessage
 								style={DatePickerStyles.error}

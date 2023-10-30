@@ -23,9 +23,6 @@ const getDesignTokens = (mode) => ({
 					fifth: {
 						main: grey[400],
 					},
-					red: {
-						main: red[700],
-					},
 					oppositeLighter: {
 						main: grey[500],
 						opacity40: "rgba(158, 158, 158, 0.40)",
@@ -38,6 +35,12 @@ const getDesignTokens = (mode) => ({
 						primary: grey[900],
 						secondary: grey[700],
 					},
+					red: {
+						main: red[700],
+						error: "#d32f2f",
+						
+					},
+					
 			  }
 			: {
 					// palette values for dark mode
@@ -57,9 +60,6 @@ const getDesignTokens = (mode) => ({
 					fifth: {
 						main: grey[700],
 					},
-					red: {
-						main: red[400],
-					},
 					opposite: {
 						main: grey[50],
 					},
@@ -70,6 +70,10 @@ const getDesignTokens = (mode) => ({
 					text: {
 						primary: grey[50],
 						secondary: grey[400],
+					},
+					red: {
+						main: red[400],
+						error: "#d32f2f",
 					},
 			  }),
 	},
@@ -98,23 +102,16 @@ export const themeCreation = (mode) =>
 					root: {
 						"& .MuiOutlinedInput-root": {
 							borderRadius: 10,
-							fontSize: "0.85em",
 						},
-						"& .MuiOutlinedInput-root.MuiInputBase-colorPrimary.Mui-focused.MuiInputBase-formControl.MuiInputBase-adornedEnd":
-							{
-								borderColor: `${mode === "light" ? grey[900] : grey[50]}`,
-								border: `2px solid`,
-							},
 					},
 				},
 			},
 			MuiFormLabel: {
 				styleOverrides: {
 					root: {
-						"&.MuiInputLabel-root.Mui-focused": {
-							color: mode === "light" ? grey[900] : grey[50],
-							// backgroundColor: mode === "light" ? grey[50] : grey[700],
-						},
+						// "&.MuiInputLabel-root.Mui-focused": {
+						// 	color: mode === "light" ? grey[900] : grey[50],
+						// },
 					},
 				},
 			},

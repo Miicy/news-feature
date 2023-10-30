@@ -6,26 +6,30 @@ import { ErrorMessage, Field } from "formik";
 import { selectScreenSize } from "../../store/reducers/layoutSlice";
 import { useSelector } from "react-redux";
 import { isMobile } from "react-device-detect";
+import { useTheme } from "@emotion/react";
+import { THEME_MODES } from "../../store/reducers/userSlice";
 
-function ReactQuillComponent(name, ...rest) {
+function ReactQuillComponent(name, helperText, ...rest) {
 	const screenSize = useSelector(selectScreenSize);
+	const theme = useTheme();
 	const ReactQuillComponentStyles = {
 		container: {
-			margin:
-				screenSize === "small" || isMobile
-					? "70px 0px"
-					: screenSize === "medium-s"
-					? "30px 0px"
-					: "40px 0px",
+			color: theme.palette.opposite.main,
+		},
+		quill: {
 			minHeight: "fit-content",
 			height: "400px",
 			borderRadius: "5px",
 		},
+		quillError: {
+			color: theme.palette.red.error,
+			margin: "3px 14px 0 14px",
+		},
 	};
 	const modules = {
 		toolbar: [
-			[{ header: [1, 2, false] }],
-			[{ size: [] }],
+			[{ header: [1, 2, 3, 4, false] }],
+			// [{ size: [] }],
 			["bold", "italic", "underline", "strike"],
 			[{ list: "ordered" }, { list: "bullet" }],
 			[{ align: [] }],
@@ -35,7 +39,7 @@ function ReactQuillComponent(name, ...rest) {
 
 	const formats = [
 		"header",
-		"size",
+		// "size",
 		"bold",
 		"italic",
 		"underline",
@@ -48,23 +52,50 @@ function ReactQuillComponent(name, ...rest) {
 		"video",
 	];
 
+	if (THEME_MODES === "light") {
+		document.documentElement.style.setProperty(
+			"--text-color-light",
+			"grey[900]",
+		);
+		document.documentElement.style.setProperty(
+			"--text-color-dark", "grey[50]");
+	} else {
+		document.documentElement.style.setProperty(
+			"--text-color-light",
+			"grey[50]",
+		);
+		document.documentElement.style.setProperty(
+			"--text-color-dark",
+			"grey[900]",
+		);
+	}
+
 	return (
 		<Field name={name}>
-			{({ field, form }) => (
-				<ReactQuill
-					style={ReactQuillComponentStyles.container}
-					value={field.value}
-					onChange={(value) => {
-						console.log("Value Type:",  value);
-					}}
-					modules={modules}
-					formats={formats}
-					placeholder={"Article"}
-					{...rest}
-				/>
-			)}
+			{({ form }) => {
+				return (
+					<div style={ReactQuillComponentStyles.container}>
+						<ReactQuill
+							className={`quill${form.errors.content ? "-error" : ""}`}
+							style={ReactQuillComponentStyles.quill}
+							onChange={(value) => {
+								form.setFieldValue("content", value);
+							}}
+							modules={modules}
+							formats={formats}
+							placeholder={"Article"}
+							{...rest}
+						/>
+
+						<ErrorMessage
+							style={ReactQuillComponentStyles.quillError}
+							name="content"
+							component="div"
+						/>
+					</div>
+				);
+			}}
 		</Field>
-		
 	);
 }
 

@@ -41,8 +41,11 @@ function AdminAddNews() {
 
 	const validationSchema = Yup.object().shape({
 		title: Yup.string().required("Title required!"),
-		date: Yup.date().required("Date required!"),
-		// content: Yup.string().required("Content required!"),
+		date: Yup.date()
+			.required("Date required!")
+			.typeError("Invalid Date!")
+			.min(new Date("2023-01-01"), "Date is too early!"),
+		content: Yup.string().required("Content required!"),
 	});
 
 	const onSubmit = async (values) => {
@@ -109,17 +112,35 @@ function AdminAddNews() {
 			justifyContent: "space-between",
 			height: "60px",
 		},
-		quill: {
-			minHeight: "fit-content",
-			height: "500px",
-			width: "100%",
-			color: "black",
-		},
+
 		image: {
-			backgroundColor: "grey",
+			backgroundColor: theme.palette.fifth.main,
 			height: screenSize === "small" || isMobile ? "200px" : "400px",
-			width: screenSize === "small" || isMobile ? "85%" : "100%",
+			width: screenSize === "small" || isMobile ? "100%" : "100%",
 			borderRadius: "10px",
+			margin:
+				screenSize === "medium-s"
+					? "15px 0px"
+					: screenSize === "small"
+					? "55px 0 0px 0px"
+					: "20px 0px",
+		},
+		quill: {
+			margin:
+				screenSize === "small" || isMobile
+					? "20px 0px"
+					: screenSize === "medium-s"
+					? "20px 0px"
+					: "15px 0px",
+					minHeight: "fit-content",
+					height: "400px",
+					borderRadius: "5px",
+		},
+		tags:{
+
+		},
+		location:{
+
 		},
 		button: {
 			display: "flex",
@@ -174,22 +195,30 @@ function AdminAddNews() {
 												: "40%",
 										transition: "0.3s",
 									}}
+									size={screenSize === "small" || isMobile ? "small" : ""}
 								/>
 							</div>
-							<ReactQuillComponent name="content" />
-							<ErrorMessage name="content" />
+							<div style={AdminAddNewsStyles.image}></div>
+							<div style={AdminAddNewsStyles.quill}>
+								<ReactQuillComponent name="content" />
+							</div>
+							<div style={AdminAddNewsStyles.tags}>
+								
+							</div>
+							<div style={AdminAddNewsStyles.location}>
+								
+							</div>
 
 							<div style={AdminAddNewsStyles.button}>
 								<CustomLoginButton
 									type="submit"
-									// disabled={!isValid}
+									disabled={!isValid}
 									buttonText="Add"
 								/>
 							</div>
 						</Form>
 					)}
 				</Formik>
-				{/* <div style={AdminAddNewsStyles.image}></div> */}
 			</div>
 		</div>
 	);
