@@ -66,10 +66,10 @@ function App() {
 					? "850px"
 					: "100vh",
 			height: "auto",
-			backgroundColor: `${theme.palette.primary.main}`,
+			backgroundColor: theme.palette.primary.main,
 			borderRadius: "16px",
 			border: `1.5px solid ${theme.palette.forth.main}`,
-			boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3)",
+			boxShadow: " 0 10px 30px 10px rgba(0, 0, 0, 0.3)",
 			display: "flex",
 			flexDirection: "column",
 			justifyContent: "flex-start",

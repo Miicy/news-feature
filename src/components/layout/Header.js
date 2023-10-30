@@ -32,7 +32,7 @@ function Header() {
 	const headerStyles = {
 		nav: {
 			position: "relative",
-			background: `${theme.palette.primary.main}`,
+			background: theme.palette.primary.main,
 			height: "80px",
 			width: "100%",
 			minWidth: screenSize === "small" || isMobile ? "300px" : "500px",

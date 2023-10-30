@@ -10,6 +10,7 @@ const getDesignTokens = (mode) => ({
 					primary: {
 						main: grey[50],
 						opacity80: "rgba(250, 250, 250, 0.60)",
+						glass: "rgba(250, 250, 250, 0.80)",
 					},
 					secondary: {
 						main: grey[100],
@@ -47,6 +48,7 @@ const getDesignTokens = (mode) => ({
 					primary: {
 						main: grey[900],
 						opacity80: "rgba(33, 33, 33, 0.60)",
+						glass: "rgba(33, 33, 33, 0.80)",
 					},
 					secondary: {
 						main: grey[800],
