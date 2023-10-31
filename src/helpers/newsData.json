@@ -1,116 +1,130 @@
 [
 	{
-	  "id": 1,
-	  "image": "http://",
-	  "title": "Latest News Title",
-	  "content": "This is the latest news content.",
-	  "date": "2023-10-14"
+		"id": 1,
+		"image": "http://",
+		"title": "Latest News Title",
+		"content": "This is the latest news content.",
+		"date": "2023-10-14",
+		"location": "Spain"
 	},
 	{
-	  "id": 2,
-	  "image": "http://",
-	  "title": "News Title 1",
-	  "content": "This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1.",
-	  "date": "2023-10-13"
+		"id": 2,
+		"image": "http://",
+		"title": "News Title 1",
+		"content": "This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1. This is news content 1.",
+		"date": "2023-10-13",
+		"location": "Belgium"
 	},
 	{
-	  "id": 3,
-	  "image": "http://",
-	  "title": "News Title 2",
-	  "content": "This is news content 2.",
-	  "date": "2023-10-12"
+		"id": 3,
+		"image": "http://",
+		"title": "News Title 2",
+		"content": "This is news content 2.",
+		"date": "2023-10-12",
+		"location": "France"
 	},
 	{
-	  "id": 4,
-	  "image": "http://",
-	  "title": "News Title 2",
-	  "content": "This is news content 2.",
-	  "date": "2023-10-12"
+		"id": 4,
+		"image": "http://",
+		"title": "News Title 2",
+		"content": "This is news content 2.",
+		"date": "2023-10-12",
+		"location": "Germany"
 	},
 	{
-	  "id": 5,
-	  "image": "http://",
-	  "title": "News Title 2",
-	  "content": "This is news content 2.",
-	  "date": "2023-10-12"
+		"id": 5,
+		"image": "http://",
+		"title": "News Title 2",
+		"content": "This is news content 2.",
+		"date": "2023-10-12",
+		"location": "Italy"
 	},
 	{
-	  "id": 6,
-	  "image": "http://",
-	  "title": "News Title 2",
-	  "content": "This is news content 2.",
-	  "date": "2023-10-12"
+		"id": 6,
+		"image": "http://",
+		"title": "News Title 2",
+		"content": "This is news content 2.",
+		"date": "2023-10-12",
+		"location": "Netherlands"
 	},
 	{
 		"id": 7,
 		"image": "http://",
 		"title": "News Title 2",
 		"content": "This is news content 2.",
-		"date": "2023-10-12"
-	  },
-	  {
+		"date": "2023-10-12",
+		"location": "Spain"
+	},
+	{
 		"id": 8,
 		"image": "http://",
 		"title": "News Title 2",
 		"content": "This is news content 2.",
-		"date": "2023-10-12"
-	  },
-	  {
+		"date": "2023-10-12",
+		"location": "Belgium"
+	},
+	{
 		"id": 9,
 		"image": "http://",
 		"title": "News Title 2",
 		"content": "This is news content 2.",
-		"date": "2023-10-12"
-	  },
-	  {
+		"date": "2023-10-12",
+		"location": "France"
+	},
+	{
 		"id": 10,
 		"image": "http://",
 		"title": "News Title 2",
 		"content": "This is news content 2.",
-		"date": "2023-10-12"
-	  },
-	  {
+		"date": "2023-10-12",
+		"location": "Germany"
+	},
+	{
 		"id": 11,
 		"image": "http://",
 		"title": "News Title 2",
 		"content": "This is news content 2.",
-		"date": "2023-10-12"
-	  },
-	  {
+		"date": "2023-10-12",
+		"location": "Italy"
+	},
+	{
 		"id": 12,
 		"image": "http://",
 		"title": "News Title 2",
 		"content": "This is news content 2.",
-		"date": "2023-10-12"
-	  },
-	  {
+		"date": "2023-10-12",
+		"location": "Netherlands"
+	},
+	{
 		"id": 13,
 		"image": "http://",
 		"title": "News Title 2",
 		"content": "This is news content 2.",
-		"date": "2023-10-12"
-	  },
-	  {
+		"date": "2023-10-12",
+		"location": "Spain"
+	},
+	{
 		"id": 14,
 		"image": "http://",
 		"title": "News Title 2",
 		"content": "This is news content 2.",
-		"date": "2023-10-12"
-	  },
-	  {
+		"date": "2023-10-12",
+		"location": "Belgium"
+	},
+	{
 		"id": 15,
 		"image": "http://",
 		"title": "News Title 2",
 		"content": "This is news content 2.",
-		"date": "2023-10-12"
-	  },
-	  {
+		"date": "2023-10-12",
+		"location": "France"
+	},
+	{
 		"id": 16,
 		"image": "http://",
 		"title": "News Title 2",
 		"content": "This is news content 2.",
-		"date": "2023-10-12"
-	  }
-
-
-  ]
+		"date": "2023-10-12",
+		"location": "Germany"
+	}
+]

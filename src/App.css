@@ -7,15 +7,6 @@
 	font-family: "montserrat";
 }
 
-.hover:hover {
-	color: grey;
-	transition: "color 0.3s";
-}
-.hoverBackground:hover {
-	background-color: grey;
-	transition: "color 0.3s";
-}
-
 /*scroll*/
 
 body::-webkit-scrollbar {

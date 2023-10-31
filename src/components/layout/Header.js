@@ -13,6 +13,7 @@ import {
 import ModeLightIcon from "@mui/icons-material/Brightness4";
 import ModeDarkIcon from "@mui/icons-material/Brightness7";
 import { selectScreenSize } from "../../store/reducers/layoutSlice";
+import "../../pages/pages.css";
 
 function Header() {
 	const navigate = useNavigate();
@@ -63,7 +64,7 @@ function Header() {
 			display: "inline-block",
 			width: "10%",
 			cursor: "pointer",
-			color: `${theme.palette.opposite.main}`,
+			color: theme.palette.opposite.main,
 			fontWeight: "700",
 			fontSize:
 				screenSize === "large"
@@ -95,7 +96,7 @@ function Header() {
 			? "0"
 			: "0",
 			cursor: "pointer",
-			color: `${theme.palette.opposite.main}`,
+			color: theme.palette.opposite.main,
 			fontWeight: "450",
 			width: "100px",
 			display: "flex",
@@ -104,7 +105,7 @@ function Header() {
 		},
 		linkActive: {
 			transition: "0.1s",
-			color: `${theme.palette.red.main}`,
+			color: theme.palette.red.main,
 			fontWeight: "600",
 			display: "flex",
 			justifyContent: "center",
@@ -120,7 +121,7 @@ function Header() {
 		},
 		icon: {
 			marginRight: "5%",
-			color: `${theme.palette.opposite.main}`,
+			color: theme.palette.opposite.main,
 			cursor: "pointer",
 		},
 		modal: {
@@ -132,13 +133,10 @@ function Header() {
 		},
 		modeContainer: {
 			m: "10px",
-			"&:hover": {
-				color: theme.palette.text.secondary,
-			},
 		},
 		mode: {
 			cursor: "pointer",
-			color: `${theme.palette.opposite.main}`,
+			color: theme.palette.opposite.main,
 		},
 	};
 
@@ -193,9 +191,9 @@ function Header() {
 								>
 									<div onClick={() => dispatch(setThemeMode())}>
 										{themeMode === "light" ? (
-											<ModeLightIcon style={headerStyles.mode} />
+											<ModeLightIcon style={headerStyles.mode} className="hover"/>
 										) : (
-											<ModeDarkIcon style={headerStyles.mode} />
+											<ModeDarkIcon style={headerStyles.mode} className="hover"/>
 										)}
 									</div>
 								</Tooltip>

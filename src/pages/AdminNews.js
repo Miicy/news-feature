@@ -5,13 +5,18 @@ import { isMobile } from "react-device-detect";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import useGetAllNews from "../helpers/hooks/getAllNews";
-import NewsContainer from "../components/common/NewsContainer";
 import { selectScreenSize } from "../store/reducers/layoutSlice";
 import { useSelector } from "react-redux";
+import NewsAdminContainer from "../components/common/NewsAdminContainer";
+import { useTheme } from "@emotion/react";
+import "./pages.css";
+import { selectActiveTheme } from "../store/reducers/userSlice";
 
 function AdminNews() {
 	const navigate = useNavigate();
 	const screenSize = useSelector(selectScreenSize);
+	const theme = useTheme();
+	const themeMode = useSelector(selectActiveTheme);
 
 	const allNews = useGetAllNews();
 
@@ -22,23 +27,62 @@ function AdminNews() {
 			width: "95%",
 			minHeight: "30vh",
 			height: "auto",
-			borderRadius: "15px",
+			borderTopLeftRadius: "15px",
+			borderTopRightRadius: "15px",
 			display: "flex",
 			flexDirection: "column",
 			alignItems: "center",
+			borderBottom: `1px solid ${theme.palette.fifth.secondary}`,
+			borderRight: `1px solid ${theme.palette.fifth.secondary}`,
+			borderLeft: `1px solid ${theme.palette.fifth.secondary}`,
+			overflow: "auto",
+			backgroundColor: theme.palette.secondary.secondary,
 		},
 		addNews: {
-			width: "100%",
-			height: isMobile && screenSize === "small" ? "40px" : "60px",
+			width: "99%",
+			height: isMobile || screenSize === "small" ? "30px" : "60px",
 			display: "flex",
 			justifyContent: "center",
 			alignItems: "center",
-			backgroundColor: "lightGrey",
+			backgroundColor: theme.palette.third.secondary,
 			borderRadius: "5px",
 			cursor: "pointer",
-			marginBottom: "10px",
+			margin: "10px",
+			boxShadow: "0px -1px 12px 1px rgba(0,0,0,0.15) inset",
+			border: `1px solid ${theme.palette.fifth.secondary}`,
+			":hover": {
+				backgroundColor: "red",
+				color: "#757575",
+			},
 		},
-		addIcon: {},
+		addIcon: {
+			color: theme.palette.opposite.secondary,
+		},
+		heading: {
+			display: "grid",
+			gridTemplateColumns:
+				isMobile || screenSize === "small"
+					? "0.2fr 0.8fr 0.5fr 0.5fr 0.2fr"
+					: "0.2fr 0.8fr 0.5fr 0.5fr 1fr 1.5fr 0.2fr",
+			gridTemplateRows: "1fr",
+			gap: "5px 10px",
+			width: "100%",
+			height: "70px",
+			backgroundColor: theme.palette.third.secondary,
+			border: `1px solid ${theme.palette.fifth.secondary}`,
+			color: theme.palette.opposite.secondary,
+			borderTopLeftRadius: "5px",
+			borderTopRightRadius: "5px",
+			boxShadow: "0px -1px 12px 1px rgba(0,0,0,0.15) inset",
+		},
+		headingSingle: {
+			display: "flex",
+			alignItems: "center",
+			fontSize: isMobile || screenSize === "small" ? "0.7em" : "1em",
+			fontWeight: "bold",
+			justifyContent: "flex-start",
+			fontWeight: "450",
+		},
 	};
 	if (!allNews) return null;
 
@@ -52,22 +96,42 @@ function AdminNews() {
 				/>
 			</div>
 			<div style={adminNewsStyles.allNews}>
+				<div style={adminNewsStyles.heading}>
+					<div
+						style={{
+							...adminNewsStyles.headingSingle,
+							marginLeft: "10px",
+						}}
+					>
+						Num
+					</div>
+					<div style={adminNewsStyles.headingSingle}>Title</div>
+					<div style={adminNewsStyles.headingSingle}>Date</div>
+					<div style={adminNewsStyles.headingSingle}>Location</div>
+					{screenSize !== "small" && !isMobile && (
+						<div style={adminNewsStyles.headingSingle}>Tags</div>
+					)}
+					{screenSize !== "small" && !isMobile && (
+						<div style={adminNewsStyles.headingSingle}>Content</div>
+					)}
+					<div style={adminNewsStyles.headingSingle}></div>
+				</div>
 				<Tooltip title={`Add News`}>
 					<div
 						style={adminNewsStyles.addNews}
+						className={"hover-button"}
 						onClick={() => navigate("/admin/admin-panel/add-news")}
 					>
-						<AddIcon sx={adminNewsStyles.addIcon} className="hover" />
+						<AddIcon sx={adminNewsStyles.addIcon} />
 					</div>
 				</Tooltip>
 				{allNews.map((news, index) => (
-					<NewsContainer
+					<NewsAdminContainer
 						key={news.id}
 						news={news}
 						index={index}
 						isRestOfNewsOdd={false}
-						layoutColumn={true}
-						margin={"2px 0"}
+						margin={"3px 0"}
 						borderRadius={"0"}
 						readMore={false}
 						admin={true}

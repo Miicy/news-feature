@@ -19,16 +19,16 @@ function BreadcrumbsPage({ second, secondUrl, third, thirdUrl, link }) {
 						: "1em",
 			}}
 		>
-			<Link color="inherit" href="/">
+			<Link color="inherit" href="/" className="hover">
 				Home
 			</Link>
 			{second && (
-				<Link color="inherit" href={`/${secondUrl}`}>
+				<Link color="inherit" href={`/${secondUrl}`} className="hover">
 					{second}
 				</Link>
 			)}
 			{third && (
-				<Link color="inherit" href={`/${thirdUrl}`}>
+				<Link color="inherit" href={`/${thirdUrl}`} className="hover">
 					{third}
 				</Link>
 			)}

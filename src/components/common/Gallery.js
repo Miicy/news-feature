@@ -156,7 +156,7 @@ function Gallery() {
 							cursor: "pointer",
 							transition: "color 0.3s",
 						}}
-						className="hover-style"
+						className="hover"
 						onClick={handlePreviosClick}
 					/>
 				</div>
@@ -173,7 +173,7 @@ function Gallery() {
 							cursor: "pointer",
 							transition: "color 0.3s",
 						}}
-						className="hover-style"
+						className="hover"
 						onClick={handleNextClick}
 					/>
 				</div>
@@ -199,7 +199,7 @@ function Gallery() {
 									transition: "color 0.3s",
 									color: theme.palette.primary.main,
 								}}
-								className="hover-style"
+								className="hover"
 								onClick={() => handleSquareClick(slideIndex)}
 							/>
 						)}

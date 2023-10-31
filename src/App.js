@@ -38,6 +38,7 @@ function App() {
 			backgroundImage: backgroundImage,
 			minHeight: "100vh",
 			height: "auto",
+			minWidth: "100wh",
 			width: "100%",
 			transition: "0.2s",
 			margin: "0",

@@ -6,7 +6,6 @@ const getDesignTokens = (mode) => ({
 		mode,
 		...(mode === "light"
 			? {
-					// palette values for light mode
 					primary: {
 						main: grey[50],
 						opacity80: "rgba(250, 250, 250, 0.60)",
@@ -14,15 +13,18 @@ const getDesignTokens = (mode) => ({
 					},
 					secondary: {
 						main: grey[100],
+						secondary: grey[50],
 					},
 					third: {
 						main: grey[200],
+						secondary: grey[200],
 					},
 					forth: {
 						main: grey[300],
 					},
 					fifth: {
 						main: grey[400],
+						secondary: grey[400],
 					},
 					oppositeLighter: {
 						main: grey[500],
@@ -30,6 +32,7 @@ const getDesignTokens = (mode) => ({
 					},
 					opposite: {
 						main: grey[900],
+						secondary: grey[900],
 					},
 					divider: grey[400],
 					text: {
@@ -44,7 +47,6 @@ const getDesignTokens = (mode) => ({
 					
 			  }
 			: {
-					// palette values for dark mode
 					primary: {
 						main: grey[900],
 						opacity80: "rgba(33, 33, 33, 0.60)",
@@ -52,18 +54,22 @@ const getDesignTokens = (mode) => ({
 					},
 					secondary: {
 						main: grey[800],
+						secondary: grey[100],
 					},
 					third: {
 						main: grey[700],
+						secondary: grey[200],
 					},
 					forth: {
 						main: grey[600],
 					},
 					fifth: {
-						main: grey[700],
+						main: grey[500],
+						seondary:grey[400],
 					},
 					opposite: {
 						main: grey[50],
+						secondary: grey[900],
 					},
 					oppositeLighter: {
 						main: grey[500],
