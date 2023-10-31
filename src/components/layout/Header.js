@@ -150,7 +150,7 @@ function Header() {
 					<ul style={headerStyles.navUl}>
 						<li style={headerStyles.navLi}>
 							<p
-								className="hover"
+								className={ window.location.pathname === "/" ? "" : "hover"}
 								onClick={() => navigate("/")}
 								style={{
 									...(window.location.pathname === "/" &&
@@ -162,7 +162,7 @@ function Header() {
 						</li>
 						<li style={headerStyles.navLi}>
 							<p
-								className="hover"
+								className={ window.location.pathname === "/news" ? "" : "hover"}
 								onClick={() => navigate("/news")}
 								style={{
 									...(window.location.pathname === "/news" &&
@@ -174,7 +174,7 @@ function Header() {
 						</li>
 						<li style={headerStyles.navLi}>
 							<p
-								className="hover"
+								className={ window.location.pathname === "/contact" ? "" : "hover"}
 								onClick={() => navigate("/contact")}
 								style={{
 									...(window.location.pathname === "/contact" &&

@@ -12,7 +12,8 @@ function NewsAdminContainer({ news, index, margin, borderRadius, admin }) {
 	const screenSize = useSelector(selectScreenSize);
 	const theme = useTheme();
 
-	const maxCharacters = 200;
+	const maxCharacters =
+		screenSize === "medium" ? 60 : screenSize === "medium-s" ? 35 : 100;
 	const content = news.content;
 	const truncatedContent =
 		content.length > maxCharacters
@@ -56,24 +57,26 @@ function NewsAdminContainer({ news, index, margin, borderRadius, admin }) {
 			<div style={newsContainerStyles.rest}>{news.title}</div>
 			<div style={newsContainerStyles.rest}>{news.date}</div>
 			<div style={newsContainerStyles.rest}>{news.location}</div>
-            {screenSize !== "small" && !isMobile && <div style={newsContainerStyles.rest}>{news.tags}</div>}
-            {screenSize !== "small" && !isMobile && (
-					<div
-						style={{
-							...newsContainerStyles.rest,
-							fontSize: screenSize === "small" || isMobile ? "0.7em" : "0.8em",
-							whiteSpace: "normal",
-							textOverflow: "ellipsis",
-							overflow: "hidden",
-							display: "flex",
-							justifyContent: "flex-start",
-							alignItems: "flex-start",
-							padding: "5px",
-						}}
-					>
-						{truncatedContent}
-					</div>
-				)}
+			{screenSize !== "small" && !isMobile && (
+				<div style={newsContainerStyles.rest}>{news.tags}</div>
+			)}
+			{screenSize !== "small" && !isMobile && (
+				<div
+					style={{
+						...newsContainerStyles.rest,
+						fontSize: screenSize === "small" || isMobile ? "0.7em" : "0.8em",
+						whiteSpace: "normal",
+						textOverflow: "ellipsis",
+						overflow: "hidden",
+						display: "flex",
+						justifyContent: "flex-start",
+						alignItems: "flex-start",
+						padding: "5px",
+					}}
+				>
+					{truncatedContent}
+				</div>
+			)}
 			{admin && (
 				<div style={newsContainerStyles.rest}>
 					<Tooltip title={`Edit news`}>

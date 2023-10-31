@@ -3,6 +3,7 @@ import { Breadcrumbs } from "@mui/material";
 import { isMobile } from "react-device-detect";
 import { selectScreenSize } from "../../store/reducers/layoutSlice";
 import { useSelector } from "react-redux";
+import "../../pages/pages.css"
 
 function BreadcrumbsPage({ second, secondUrl, third, thirdUrl, link }) {
 	const screenSize = useSelector(selectScreenSize);

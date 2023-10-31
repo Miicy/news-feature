@@ -22,8 +22,7 @@ function AdminNews() {
 
 	const adminNewsStyles = {
 		allNews: {
-			marginTop: isMobile && screenSize === "small" ? "10px" : "20px",
-			marginBottom: isMobile && screenSize === "small" ? "10px" : "20px",
+			margin: isMobile && screenSize === "small" ? "10px 0" : "20px 0 40px 0",
 			width: "95%",
 			minHeight: "30vh",
 			height: "auto",
@@ -31,15 +30,12 @@ function AdminNews() {
 			borderTopRightRadius: "15px",
 			display: "flex",
 			flexDirection: "column",
-			alignItems: "center",
-			borderBottom: `1px solid ${theme.palette.fifth.secondary}`,
-			borderRight: `1px solid ${theme.palette.fifth.secondary}`,
-			borderLeft: `1px solid ${theme.palette.fifth.secondary}`,
+			alignItems: "stretch",
+			border: `1px solid ${theme.palette.fifth.secondary}`,
 			overflow: "auto",
 			backgroundColor: theme.palette.secondary.secondary,
 		},
 		addNews: {
-			width: "99%",
 			height: isMobile || screenSize === "small" ? "30px" : "60px",
 			display: "flex",
 			justifyContent: "center",
@@ -50,10 +46,6 @@ function AdminNews() {
 			margin: "10px",
 			boxShadow: "0px -1px 12px 1px rgba(0,0,0,0.15) inset",
 			border: `1px solid ${theme.palette.fifth.secondary}`,
-			":hover": {
-				backgroundColor: "red",
-				color: "#757575",
-			},
 		},
 		addIcon: {
 			color: theme.palette.opposite.secondary,
@@ -69,7 +61,7 @@ function AdminNews() {
 			width: "100%",
 			height: "70px",
 			backgroundColor: theme.palette.third.secondary,
-			border: `1px solid ${theme.palette.fifth.secondary}`,
+			borderBottom: `1px solid ${theme.palette.fifth.secondary}`,
 			color: theme.palette.opposite.secondary,
 			borderTopLeftRadius: "5px",
 			borderTopRightRadius: "5px",
@@ -82,6 +74,7 @@ function AdminNews() {
 			fontWeight: "bold",
 			justifyContent: "flex-start",
 			fontWeight: "450",
+			cursor: "pointer",
 		},
 	};
 	if (!allNews) return null;
@@ -109,10 +102,10 @@ function AdminNews() {
 					<div style={adminNewsStyles.headingSingle}>Date</div>
 					<div style={adminNewsStyles.headingSingle}>Location</div>
 					{screenSize !== "small" && !isMobile && (
-						<div style={adminNewsStyles.headingSingle}>Tags</div>
+						<div style={{...adminNewsStyles.headingSingle, cursor:""}}>Tags</div>
 					)}
 					{screenSize !== "small" && !isMobile && (
-						<div style={adminNewsStyles.headingSingle}>Content</div>
+						<div style={{...adminNewsStyles.headingSingle,cursor:""}}>Content</div>
 					)}
 					<div style={adminNewsStyles.headingSingle}></div>
 				</div>
