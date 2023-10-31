@@ -53,7 +53,7 @@ function App() {
 		pageContainer: {
 			margin:
 				screenSize === "medium-s"
-					? "25px 0"
+					? "20px 0"
 					: screenSize === "small"
 					? "30px 0"
 					: "50px 0",
@@ -65,7 +65,7 @@ function App() {
 					? "1000px"
 					: screenSize === "small"
 					? "850px"
-					: "100vh",
+					: "90vh",
 			height: "auto",
 			backgroundColor: theme.palette.primary.main,
 			borderRadius: "16px",
@@ -73,10 +73,11 @@ function App() {
 			boxShadow: " 0 10px 30px 10px rgba(0, 0, 0, 0.3)",
 			display: "flex",
 			flexDirection: "column",
-			justifyContent: "flex-start",
+			justifyContent: "center",
 			alignItems: "center",
 			zIndex: 10,
 			transition: "0.2s",
+			transition: "minHeight 0.4s ease-in-out",
 		},
 	};
 

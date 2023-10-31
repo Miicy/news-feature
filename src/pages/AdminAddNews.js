@@ -1,40 +1,40 @@
-import React, { useEffect, useMemo, useState } from "react";
-import BreadcrumbsPage from "../components/common/Breadcrumbs";
+import "../pages/pages.css";
+import { useTheme } from "@emotion/react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectScreenSize } from "../store/reducers/layoutSlice";
+import { useNavigate } from "react-router-dom";
 import { isMobile } from "react-device-detect";
-import CustomField from "../components/common/LoginField";
-import { Formik, Form, Field, useFormikContext, ErrorMessage } from "formik";
+import { selectScreenSize } from "../store/reducers/layoutSlice";
+
+import dayjs from "dayjs";
+import * as Yup from "yup";
+import { Formik, Form } from "formik";
+import FormikField from "../components/common/FormikField";
+import FormikDatePicker from "../components/common/FormikDatePicker";
+import ReactQuillComponent from "../components/common/ReactQuillComponent";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
+import CustomButton from "../components/common/CustomButton";
+import BreadcrumbsPage from "../components/common/Breadcrumbs";
+
 import {
 	DATA_STATE,
 	NOTIFICATION_TYPES,
 	SERVER_URL,
 } from "../helpers/app.constants";
-import * as Yup from "yup";
+
 import {
 	displayNotification,
 	setDataState,
 } from "../store/reducers/notificationSlice";
-import { useNavigate } from "react-router-dom";
-
-import CustomLoginButton from "../components/common/CustomButton";
-
-import FormikField from "../components/common/FormikField";
-import FormikDatePicker from "../components/common/FormikDatePicker";
-import { useTheme } from "@emotion/react";
-
-import dayjs from "dayjs";
-import ReactQuillComponent from "../components/common/ReactQuillComponent";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import "../pages/pages.css";
 
 function AdminAddNews() {
-	const screenSize = useSelector(selectScreenSize);
+	const today = dayjs();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const theme = useTheme();
-	const today = dayjs();
+	const screenSize = useSelector(selectScreenSize);
 
 	const [expanded, setExpanded] = useState({
 		title: false,
@@ -97,17 +97,28 @@ function AdminAddNews() {
 			display: "flex",
 			flexDirection: "column",
 			width: "95%",
-			alignItems: screenSize === "small" || isMobile ? "center" : "flex-start",
 			borderTopLeftRadius: "15px",
 			borderTopRightRadius: "15px",
 			border: `1px solid ${theme.palette.fifth.secondary}`,
 			display: "flex",
-			flexDirection: "column",
-			alignItems: "center",
+			backgroundColor: theme.palette.fifth.third,
+			marginBottom: "40px",
+			minHeight: "75vh",
+			overflow: "auto",
 		},
 		form: {
 			height: "fit-content",
 			width: "100%",
+			minHeight: "100%",
+			display: "flex",
+			minHeight: "75vh",
+			flexDirection: "column",
+			justifyContent: "space-between",
+			alignItems: "center",
+		},
+		formFields: {
+			width: "100%",
+			height: "fit-content",
 			display: "flex",
 			flexDirection: "column",
 			alignItems: "center",
@@ -121,6 +132,7 @@ function AdminAddNews() {
 			alignItems: "center",
 			boxShadow: "0px -1px 12px 1px rgba(0,0,0,0.15) inset",
 			borderBottom: `1px solid ${theme.palette.fifth.secondary}`,
+			backgroundColor: theme.palette.third.secondary,
 			cursor: "pointer",
 		},
 		expandIcon: {
@@ -129,22 +141,34 @@ function AdminAddNews() {
 		expandedTitle: {
 			marginLeft: "10px",
 		},
-		titleDate: {
-			display: "flex",
-			flexDirection: screenSize === "small" || isMobile ? "column" : "row",
-			width: "98%",
+		fieldMargin: {
 			marginTop:
+				screenSize === "medium-s"
+					? "15p"
+					: screenSize === "small"
+					? "10px"
+					: "20px",
+			marginBottom:
 				screenSize === "medium-s"
 					? "15px"
 					: screenSize === "small"
 					? "10px"
 					: "20px",
+			width: screenSize === "small" || isMobile ? "90%" : "98%",
+		},
+		titleDate: {
+			display: "flex",
+			flexDirection: screenSize === "small" || isMobile ? "column" : "row",
+			marginBottom:
+				screenSize === "medium-s"
+					? "15px"
+					: screenSize === "small"
+					? "55px"
+					: "20px",
 			justifyContent: "space-between",
 			height: "60px",
-			marginBottom: "15px",
 			animation: "expandAnimation 0.2s ease 0s 1 normal forwards",
 		},
-
 		image: {
 			backgroundColor: theme.palette.fifth.main,
 			height: screenSize === "small" || isMobile ? "200px" : "400px",
@@ -177,7 +201,7 @@ function AdminAddNews() {
 			display: "flex",
 			marginTop: "70px",
 			cursor: "pointer",
-			width: "20%",
+			width: "100%",
 		},
 	};
 
@@ -200,94 +224,140 @@ function AdminAddNews() {
 				>
 					{({ isValid, values, touched, errors }) => (
 						<Form style={AdminAddNewsStyles.form}>
-							<div
-								style={{
-									...AdminAddNewsStyles.expanded,
-									borderTopLeftRadius: "15px",
-									borderTopRightRadius: "15px",
-								}}
-								onClick={() => toggleExpanded("title")}
-							>
+							<div style={AdminAddNewsStyles.formFields}>
 								<div
 									style={{
-										...AdminAddNewsStyles.expandedTitle,
-										color: errors.title && touched.title ? "red" : "",
+										...AdminAddNewsStyles.expanded,
+										borderTopLeftRadius: "15px",
+										borderTopRightRadius: "15px",
 									}}
+									className={"hover-button"}
+									onClick={() => toggleExpanded("title")}
 								>
-									Title & Date
-								</div>
-								{expanded.title ? (
-									<ExpandLessIcon sx={AdminAddNewsStyles.expandIcon} />
-								) : (
-									<ExpandMoreIcon sx={AdminAddNewsStyles.expandIcon} />
-								)}
-							</div>
-							{!expanded.title && (
-								<div style={AdminAddNewsStyles.titleDate}>
-									<FormikField
-										name="title"
-										label="Title"
-										type="text"
-										sx={{
-											width:
-												screenSize === "small" || isMobile ? "100%" : "50%",
+									<div
+										style={{
+											...AdminAddNewsStyles.expandedTitle,
+											color:
+												(errors.title || errors.date) &&
+												(touched.title || touched.date)
+													? theme.palette.red.error
+													: "",
 										}}
-										size={screenSize === "small" || isMobile ? "small" : ""}
-									/>
-
-									<FormikDatePicker
-										name="date"
-										label="Date"
-										today={today}
-										sx={{
-											width:
-												screenSize === "small" || isMobile
-													? "100%"
-													: screenSize === "medium"
-													? "60%"
-													: screenSize === "medium-s"
-													? "60%"
-													: "40%",
-											transition: "0.3s",
-										}}
-										size={screenSize === "small" || isMobile ? "small" : ""}
-									/>
-								</div>
-							)}
-							<div
-								style={AdminAddNewsStyles.expanded}
-								onClick={() => toggleExpanded("coverImage")}
-							>
-								<div
-									style={{
-										...AdminAddNewsStyles.expandedTitle,
-										color: errors.title && touched.title ? "red" : "",
-									}}
-								>
-									Cover Image
-									
-								</div>
-								{expanded.coverImage ? (
-										<ExpandLessIcon sx={AdminAddNewsStyles.expandIcon} />
-									) : (
+									>
+										Title & Date
+									</div>
+									{expanded.title ? (
 										<ExpandMoreIcon sx={AdminAddNewsStyles.expandIcon} />
+									) : (
+										<ExpandLessIcon sx={AdminAddNewsStyles.expandIcon} />
 									)}
-							</div>
-							{!expanded.coverImage && (
-								<div style={AdminAddNewsStyles.image}></div>
-							)}
+								</div>
+								{!expanded.title && (
+									<div
+										style={{
+											...AdminAddNewsStyles.fieldMargin,
+											...AdminAddNewsStyles.titleDate,
+										}}
+									>
+										<FormikField
+											name="title"
+											label="Title"
+											type="text"
+											sx={{
+												width:
+													screenSize === "small" || isMobile ? "100%" : "50%",
+											}}
+											size={screenSize === "small" || isMobile ? "small" : ""}
+										/>
 
-							<div style={AdminAddNewsStyles.quill}>
-								<ReactQuillComponent name="content" />
-							</div>
-							<div style={AdminAddNewsStyles.tags}></div>
-							<div style={AdminAddNewsStyles.location}></div>
+										<FormikDatePicker
+											name="date"
+											label="Date"
+											today={today}
+											sx={{
+												width:
+													screenSize === "small" || isMobile
+														? "100%"
+														: screenSize === "medium"
+														? "60%"
+														: screenSize === "medium-s"
+														? "60%"
+														: "40%",
+												transition: "0.3s",
+											}}
+											size={screenSize === "small" || isMobile ? "small" : ""}
+										/>
+									</div>
+								)}
+								<div
+									style={AdminAddNewsStyles.expanded}
+									className={"hover-button"}
+									onClick={() => toggleExpanded("coverImage")}
+								>
+									<div
+										style={{
+											...AdminAddNewsStyles.expandedTitle,
+											color:
+												errors.image && touched.image
+													? theme.palette.red.error
+													: "",
+										}}
+									>
+										Cover Image
+									</div>
+									{expanded.coverImage ? (
+										<ExpandMoreIcon sx={AdminAddNewsStyles.expandIcon} />
+									) : (
+										<ExpandLessIcon sx={AdminAddNewsStyles.expandIcon} />
+									)}
+								</div>
+								{!expanded.coverImage && (
+									<div
+										style={{
+											...AdminAddNewsStyles.image,
+											...AdminAddNewsStyles.fieldMargin,
+										}}
+									></div>
+								)}
+								<div
+									style={AdminAddNewsStyles.expanded}
+									onClick={() => toggleExpanded("content")}
+									className={"hover-button"}
+								>
+									<div
+										style={{
+											...AdminAddNewsStyles.expandedTitle,
+											color:
+												errors.content && touched.content
+													? theme.palette.red.error
+													: "",
+										}}
+									>
+										Content
+									</div>
+									{expanded.content ? (
+										<ExpandMoreIcon sx={AdminAddNewsStyles.expandIcon} />
+									) : (
+										<ExpandLessIcon sx={AdminAddNewsStyles.expandIcon} />
+									)}
+								</div>
+								{!expanded.content && (
+									<div style={AdminAddNewsStyles.quill}>
+										<ReactQuillComponent name="content" />
+									</div>
+								)}
 
+								<div style={AdminAddNewsStyles.tags}></div>
+								<div style={AdminAddNewsStyles.location}></div>
+							</div>
 							<div style={AdminAddNewsStyles.button}>
-								<CustomLoginButton
+								<CustomButton
 									type="submit"
 									disabled={!isValid}
-									buttonText="Add"
+									text="Add"
+									className="hover-button"
+									width={"100%"}
+									borderRadius={0}
 								/>
 							</div>
 						</Form>

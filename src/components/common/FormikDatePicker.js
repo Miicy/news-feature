@@ -49,6 +49,7 @@ const FormikDatePicker = ({
 	return (
 		<Field name={name}>
 			{({ form }) => {
+				const { error, touched } = form.getFieldMeta(name);
 				return (
 					<LocalizationProvider dateAdapter={AdapterDayjs}>
 						<div style={DatePickerStyles.container}>
@@ -60,8 +61,15 @@ const FormikDatePicker = ({
 								value={today}
 								format="LL"
 								slotProps={{
-									textField: { variant: "outlined", color: "opposite", label: "Date", size:size },
+									textField: {
+										variant: "outlined",
+										color: "opposite",
+										label: "Date",
+										size: size,
+									},
 								}}
+								error={!!error && touched}
+								helperText={touched ? error : helperText}
 							/>
 							<ErrorMessage
 								style={DatePickerStyles.error}

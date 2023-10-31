@@ -23,7 +23,7 @@ function ReactQuillComponent(name, helperText, ...rest) {
 		},
 		quillError: {
 			color: theme.palette.red.error,
-			margin: "3px 14px 0 14px",
+			margin: "3px 50px 0 14px",
 		},
 	};
 	const modules = {
@@ -51,24 +51,6 @@ function ReactQuillComponent(name, helperText, ...rest) {
 		"image",
 		"video",
 	];
-
-	if (THEME_MODES === "light") {
-		document.documentElement.style.setProperty(
-			"--text-color-light",
-			"grey[900]",
-		);
-		document.documentElement.style.setProperty(
-			"--text-color-dark", "grey[50]");
-	} else {
-		document.documentElement.style.setProperty(
-			"--text-color-light",
-			"grey[50]",
-		);
-		document.documentElement.style.setProperty(
-			"--text-color-dark",
-			"grey[900]",
-		);
-	}
 
 	return (
 		<Field name={name}>

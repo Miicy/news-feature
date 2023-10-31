@@ -3,11 +3,11 @@ import { Breadcrumbs } from "@mui/material";
 import { isMobile } from "react-device-detect";
 import { selectScreenSize } from "../../store/reducers/layoutSlice";
 import { useSelector } from "react-redux";
-import "../../pages/pages.css"
+import "../../pages/pages.css";
 
 function BreadcrumbsPage({ second, secondUrl, third, thirdUrl, link }) {
 	const screenSize = useSelector(selectScreenSize);
-	
+
 	return (
 		<Breadcrumbs
 			aria-label="breadcrumb"
@@ -18,6 +18,7 @@ function BreadcrumbsPage({ second, secondUrl, third, thirdUrl, link }) {
 						: screenSize === "medium"
 						? "0.95em"
 						: "1em",
+				marginBottom: isMobile && screenSize === "small" ? "10px" : "15px",
 			}}
 		>
 			<Link color="inherit" href="/" className="hover">

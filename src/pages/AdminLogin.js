@@ -20,6 +20,7 @@ import LoginField from "../components/common/LoginField";
 import { selectScreenSize } from "../store/reducers/layoutSlice";
 
 function AdminLogin() {
+	const theme = useTheme();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const screenSize = useSelector(selectScreenSize);
@@ -79,20 +80,22 @@ function AdminLogin() {
 	const adminLoginStyles = {
 		container: {
 			width: "100%",
-			height: "100vh",
+			height: "75vh",
 			display: "flex",
 			justifyContent: "center",
 			alignItems: "center",
 		},
 		loginContainer: {
-			width: !isMobile && screenSize !== "small" ? "60%" : "90%",
+			width: !isMobile && screenSize !== "small" ? "50%" : "90%",
 			height: !isMobile && screenSize !== "small" ? "60%" : "90%",
-			backgroundColor: "lightgrey",
+			backgroundColor: theme.palette.fifth.third,
 			borderRadius: "15px",
 			display: "flex",
 			flexDirection: "column",
 			justifyContent: "center",
 			alignItems: "center",
+			color: theme.palette.text.primary,
+			boxShadow: "0px 1px 15px 4px rgba(0,0,0,0.25)"
 		},
 
 		form: {
@@ -107,7 +110,7 @@ function AdminLogin() {
 			display: "flex",
 			justifyContent: "center",
 			alignItems: "center",
-			width: "35%",
+			width: "100%",
 			marginTop: isMobile && screenSize === "small" ? "10px" : "20px",
 		},
 		fieldContainer:{
@@ -148,7 +151,10 @@ function AdminLogin() {
 								<CustomButton
 									disabled={!formik.values.username || !formik.values.password}
 									onClick={formik.handleSubmit}
-									buttonText={"Login"}
+									text={"Login"}
+									width={"70%"}
+									borderRadius={2}
+									color={theme.palette.text.oppositeDark}
 								/>
 							</div>
 						</Form>

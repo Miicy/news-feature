@@ -21,10 +21,12 @@ const getDesignTokens = (mode) => ({
 					},
 					forth: {
 						main: grey[300],
+						secondary: grey[300],
 					},
 					fifth: {
 						main: grey[400],
 						secondary: grey[400],
+						third:grey[200],
 					},
 					oppositeLighter: {
 						main: grey[500],
@@ -36,6 +38,7 @@ const getDesignTokens = (mode) => ({
 					},
 					divider: grey[400],
 					text: {
+						oppositeDark: grey[900],
 						primary: grey[900],
 						secondary: grey[700],
 					},
@@ -62,10 +65,12 @@ const getDesignTokens = (mode) => ({
 					},
 					forth: {
 						main: grey[600],
+						secondary: grey[300],
 					},
 					fifth: {
 						main: grey[500],
 						seondary:grey[400],
+						third:grey[600],
 					},
 					opposite: {
 						main: grey[50],
@@ -76,6 +81,7 @@ const getDesignTokens = (mode) => ({
 					},
 					divider: grey[400],
 					text: {
+						oppositeDark: grey[900],
 						primary: grey[50],
 						secondary: grey[400],
 					},
@@ -114,14 +120,17 @@ export const themeCreation = (mode) =>
 					},
 				},
 			},
-			MuiFormLabel: {
+			MuiOutlinedInput: {
 				styleOverrides: {
-					root: {
-						// "&.MuiInputLabel-root.Mui-focused": {
-						// 	color: mode === "light" ? grey[900] : grey[50],
-						// },
+				  input: {
+					'&:-webkit-autofill': {
+					  '-webkit-box-shadow': `0 0 0 100px ${mode === "light" ? grey[100] : grey[500]}  inset`, 
+					  '-webkit-text-fill-color': mode === "light" ? grey[900] : grey[50], 
+					  'caret-color': '#your-caret-color', 
+					  'border-radius': 'inherit', 
 					},
+				  },
 				},
-			},
+			  },
 		},
 	});

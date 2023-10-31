@@ -21,8 +21,7 @@ function AdminNews() {
 	const allNews = useGetAllNews();
 
 	const adminNewsStyles = {
-		allNews: {
-			margin: isMobile && screenSize === "small" ? "10px 0" : "20px 0 40px 0",
+		container: {
 			width: "95%",
 			minHeight: "30vh",
 			height: "auto",
@@ -34,6 +33,7 @@ function AdminNews() {
 			border: `1px solid ${theme.palette.fifth.secondary}`,
 			overflow: "auto",
 			backgroundColor: theme.palette.secondary.secondary,
+			marginBottom:"40px"
 		},
 		addNews: {
 			height: isMobile || screenSize === "small" ? "30px" : "60px",
@@ -88,7 +88,7 @@ function AdminNews() {
 					link={"Admin News"}
 				/>
 			</div>
-			<div style={adminNewsStyles.allNews}>
+			<div style={adminNewsStyles.container}>
 				<div style={adminNewsStyles.heading}>
 					<div
 						style={{
