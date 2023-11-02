@@ -26,7 +26,7 @@ const getDesignTokens = (mode) => ({
 					fifth: {
 						main: grey[400],
 						secondary: grey[400],
-						third:grey[200],
+						third: grey[200],
 					},
 					oppositeLighter: {
 						main: grey[500],
@@ -45,9 +45,7 @@ const getDesignTokens = (mode) => ({
 					red: {
 						main: red[700],
 						error: "#d32f2f",
-						
 					},
-					
 			  }
 			: {
 					primary: {
@@ -69,8 +67,8 @@ const getDesignTokens = (mode) => ({
 					},
 					fifth: {
 						main: grey[500],
-						seondary:grey[400],
-						third:grey[600],
+						seondary: grey[400],
+						third: grey[200],
 					},
 					opposite: {
 						main: grey[50],
@@ -116,21 +114,27 @@ export const themeCreation = (mode) =>
 					root: {
 						"& .MuiOutlinedInput-root": {
 							borderRadius: 10,
+							backgroundColor: mode === "light" ? grey[100] : grey[200],
+							color: grey[900],
+
 						},
 					},
 				},
 			},
 			MuiOutlinedInput: {
 				styleOverrides: {
-				  input: {
-					'&:-webkit-autofill': {
-					  '-webkit-box-shadow': `0 0 0 100px ${mode === "light" ? grey[100] : grey[500]}  inset`, 
-					  '-webkit-text-fill-color': mode === "light" ? grey[900] : grey[50], 
-					  'caret-color': '#your-caret-color', 
-					  'border-radius': 'inherit', 
+					input: {
+						"&:-webkit-autofill": {
+							"-webkit-box-shadow": `0 0 0 100px ${
+								mode === "light" ? grey[100] : grey[200]
+							}  inset`,
+							"-webkit-text-fill-color":
+								mode === "light" ? grey[900] : grey[900],
+							"caret-color": "#your-caret-color",
+							"border-radius": "inherit",
+						},
 					},
-				  },
 				},
-			  },
+			},
 		},
 	});

@@ -21,14 +21,12 @@ function Header() {
 	const dispatch = useDispatch();
 	const screenSize = useSelector(selectScreenSize);
 	const themeMode = useSelector(selectActiveTheme);
-	
+
 	const [menuOpen, setMenuOpen] = useState(false);
 
 	const toggleMenu = () => {
 		setMenuOpen((prevMenuOpen) => !prevMenuOpen);
 	};
-
-	
 
 	const headerStyles = {
 		nav: {
@@ -88,13 +86,14 @@ function Header() {
 			alignItems: "center",
 		},
 		navLi: {
-			margin: screenSize === "large"
-			? "0 30px"
-			: screenSize === "medium"
-			? "0 25px"
-			: screenSize === "medium-s"
-			? "0"
-			: "0",
+			margin:
+				screenSize === "large"
+					? "0 30px"
+					: screenSize === "medium"
+					? "0 25px"
+					: screenSize === "medium-s"
+					? "0"
+					: "0",
 			cursor: "pointer",
 			color: theme.palette.opposite.main,
 			fontWeight: "450",
@@ -150,7 +149,7 @@ function Header() {
 					<ul style={headerStyles.navUl}>
 						<li style={headerStyles.navLi}>
 							<p
-								className={ window.location.pathname === "/" ? "" : "hover"}
+								className={window.location.pathname === "/" ? "" : "hover"}
 								onClick={() => navigate("/")}
 								style={{
 									...(window.location.pathname === "/" &&
@@ -162,7 +161,7 @@ function Header() {
 						</li>
 						<li style={headerStyles.navLi}>
 							<p
-								className={ window.location.pathname === "/news" ? "" : "hover"}
+								className={window.location.pathname === "/news" ? "" : "hover"}
 								onClick={() => navigate("/news")}
 								style={{
 									...(window.location.pathname === "/news" &&
@@ -174,14 +173,16 @@ function Header() {
 						</li>
 						<li style={headerStyles.navLi}>
 							<p
-								className={ window.location.pathname === "/contact" ? "" : "hover"}
-								onClick={() => navigate("/contact")}
+								className={
+									window.location.pathname === "/admin" ? "" : "hover"
+								}
+								onClick={() => navigate("/admin")}
 								style={{
-									...(window.location.pathname === "/contact" &&
+									...(window.location.pathname === "/admin"&&
 										headerStyles.linkActive),
 								}}
 							>
-								Contact
+								Admin
 							</p>
 						</li>
 						<li style={headerStyles.navLi}>
@@ -191,9 +192,15 @@ function Header() {
 								>
 									<div onClick={() => dispatch(setThemeMode())}>
 										{themeMode === "light" ? (
-											<ModeLightIcon style={headerStyles.mode} className="hover"/>
+											<ModeLightIcon
+												style={headerStyles.mode}
+												className="hover"
+											/>
 										) : (
-											<ModeDarkIcon style={headerStyles.mode} className="hover"/>
+											<ModeDarkIcon
+												style={headerStyles.mode}
+												className="hover"
+											/>
 										)}
 									</div>
 								</Tooltip>

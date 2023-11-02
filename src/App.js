@@ -5,7 +5,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/layout/Header";
 import Home from "./pages/Home";
 import News from "./pages/News";
-import Contact from "./pages/Contact";
 import LoadingModal from "./components/other/LoadingModal";
 import NotificationContainer from "./components/other/NotificationContainer";
 import NewsDetailed from "./pages/NewsDetailed";
@@ -19,6 +18,7 @@ import backgroundLight from "./media/background-light.svg";
 import backgroundDark from "./media/background-dark.svg";
 import { selectScreenSize } from "./store/reducers/layoutSlice";
 import AdminAddNews from "./pages/AdminAddNews";
+import Portfolio from "./pages/Portfolio";
 
 function App() {
 	const [theme, setTheme] = useState(themeCreation());
@@ -88,10 +88,10 @@ function App() {
 				<div style={appStyles.background}>
 					<div style={appStyles.pageContainer}>
 						<Routes>
-							<Route path="/*" element={<Home />} />
+							<Route path="/" element={<Home />} />
 							<Route path="/news" element={<News />} />
 							<Route path="/news/:id" element={<NewsDetailed />} />
-							<Route path="/contact" element={<Contact />} />
+							{/* <Route path="/news/contact" element={<Contact />} /> */}
 							<Route path="/admin" element={<AdminLogin />} />
 							<Route path="/admin/admin-panel" element={<AdminNews />} />
 							<Route

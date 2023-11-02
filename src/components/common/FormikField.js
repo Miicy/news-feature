@@ -16,7 +16,7 @@ const FormikField = ({ size, name, label, type, sx, helperText, ...rest }) => {
 						{...rest}
 						sx={sx || null}
 						variant="outlined"
-						color="opposite"
+						color="text"
 						size={size}
 						error={!!error && touched}
 						helperText={touched ? error : helperText}

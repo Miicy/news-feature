@@ -79,8 +79,8 @@ function AdminLogin() {
 
 	const adminLoginStyles = {
 		container: {
-			width: "100%",
-			height: "75vh",
+			width: "80%",
+			height: "90vh",
 			display: "flex",
 			justifyContent: "center",
 			alignItems: "center",
@@ -94,7 +94,7 @@ function AdminLogin() {
 			flexDirection: "column",
 			justifyContent: "center",
 			alignItems: "center",
-			color: theme.palette.text.primary,
+			color: theme.palette.text.oppositeDark,
 			boxShadow: "0px 1px 15px 4px rgba(0,0,0,0.25)"
 		},
 
