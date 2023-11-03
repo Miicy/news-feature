@@ -12,7 +12,7 @@ import pic2 from "../../media/background-light.jpg";
 import pic3 from "../../media/pic1.jpg";
 import pic4 from "../../media/pic2.jpg";
 import pic5 from "../../media/pic3.jpg";
-import useGetAllNews from "../../helpers/hooks/getAllNews";
+
 import { selectScreenSize } from "../../store/reducers/layoutSlice";
 
 function Gallery() {
@@ -20,16 +20,10 @@ function Gallery() {
 	const timeRef = useRef(null);
 	const [slides, setSlides] = useState([]);
     const screenSize = useSelector(selectScreenSize);
-    const allNews = useGetAllNews();
 
 	const images = [pic1, pic2, pic3, pic4, pic5];
 
 	useEffect(() => {
-		// dispatch(dispatchGetAllGalleryImages()).then((data) => {
-		// 	const galleryImagesArray = data.galleryImages;
-		// 	console.log(galleryImagesArray);
-		// 	setSlides(galleryImagesArray.map((image) => image.imageURL));
-		// });
 		setSlides(images.map((image) => image));
 	}, [dispatch]);
 
@@ -80,6 +74,7 @@ function Gallery() {
 			backgroundSize: "cover",
 			borderRadius: "15px",
 			position: "relative",
+			animation: "myAnim 1s ease 0s 1 normal forwards"
             
 		},
 		arrowContainer: {
@@ -147,7 +142,7 @@ function Gallery() {
 	};
 
 	return (
-		<div style={galleryStyles.container}>
+		<div style={galleryStyles.container} id="myAnim">
 			{/* <div style={gallery.arrow}>
 				<div style={gallery.arrowContainer}>
 					<NavigateBeforeIcon

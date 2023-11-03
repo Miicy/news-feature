@@ -18,7 +18,6 @@ import backgroundLight from "./media/background-light.svg";
 import backgroundDark from "./media/background-dark.svg";
 import { selectScreenSize } from "./store/reducers/layoutSlice";
 import AdminAddNews from "./pages/AdminAddNews";
-import Portfolio from "./pages/Portfolio";
 
 function App() {
 	const [theme, setTheme] = useState(themeCreation());
@@ -73,7 +72,7 @@ function App() {
 			boxShadow: " 0 10px 30px 10px rgba(0, 0, 0, 0.3)",
 			display: "flex",
 			flexDirection: "column",
-			justifyContent: "center",
+			justifyContent: "flex-start",
 			alignItems: "center",
 			zIndex: 10,
 			transition: "0.2s",
@@ -91,7 +90,6 @@ function App() {
 							<Route path="/" element={<Home />} />
 							<Route path="/news" element={<News />} />
 							<Route path="/news/:id" element={<NewsDetailed />} />
-							{/* <Route path="/news/contact" element={<Contact />} /> */}
 							<Route path="/admin" element={<AdminLogin />} />
 							<Route path="/admin/admin-panel" element={<AdminNews />} />
 							<Route

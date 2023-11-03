@@ -41,7 +41,7 @@ function AdminLogin() {
 
 			const { username, password } = values;
 
-			if (username === "admin" && password === "555admin") {
+			if (username === "admin" && password === "admin") {
 				// const userResponse = await axios.post(
 				// 	`${SERVER_URL}user/getadminuserdata`,
 				// );
@@ -136,6 +136,7 @@ function AdminLogin() {
 								size={!isMobile && screenSize !== "small" ? "big" : "small"}
 								error={true}
 								password={false}
+								placeholder={"admin"}
 								style={adminLoginStyles.fieldContainer}
 							/>
 							<LoginField
@@ -144,6 +145,7 @@ function AdminLogin() {
 								size={!isMobile && screenSize !== "small"? "big" : "small"}
 								error={true}
 								password={true}
+								placeholder={"admin"}
 								style={adminLoginStyles.fieldContainer}
 								
 							/>

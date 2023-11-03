@@ -15,6 +15,7 @@ const LoginField = ({
 	password,
 	value,
 	style,
+	placeholder,
 	...rest
 }) => {
 	const screenSize = useSelector(selectScreenSize);
@@ -37,7 +38,7 @@ const LoginField = ({
 			<Field
 				as={TextField}
 				{...rest}
-				placeholder={label}
+				placeholder={placeholder}
 				variant="outlined"
 				size={size}
 				fullWidth

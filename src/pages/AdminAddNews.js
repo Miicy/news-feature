@@ -1,3 +1,4 @@
+import { v4 } from "uuid";
 import "../pages/pages.css";
 import { useTheme } from "@emotion/react";
 import React, { useState } from "react";
@@ -8,7 +9,7 @@ import { selectScreenSize } from "../store/reducers/layoutSlice";
 
 import dayjs from "dayjs";
 import * as Yup from "yup";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 import FormikField from "../components/common/FormikField";
 import FormikDatePicker from "../components/common/FormikDatePicker";
 import ReactQuillComponent from "../components/common/ReactQuillComponent";
@@ -28,6 +29,7 @@ import {
 	displayNotification,
 	setDataState,
 } from "../store/reducers/notificationSlice";
+import ImageUploader from "../components/common/ImageUploader";
 
 function AdminAddNews() {
 	const today = dayjs();
@@ -35,7 +37,7 @@ function AdminAddNews() {
 	const navigate = useNavigate();
 	const theme = useTheme();
 	const screenSize = useSelector(selectScreenSize);
-
+	const [image, setImage] = useState(null);
 	const [expanded, setExpanded] = useState({
 		title: false,
 		coverImage: false,
@@ -53,6 +55,7 @@ function AdminAddNews() {
 		title: "",
 		date: today,
 		content: "",
+		image: "",
 	};
 
 	const validationSchema = Yup.object().shape({
@@ -62,6 +65,7 @@ function AdminAddNews() {
 			.typeError("Invalid Date!")
 			.min(new Date("2023-01-01"), "Date is too early!"),
 		content: Yup.string().required("Content required!"),
+		image: Yup.string().required("Image required!"),
 	});
 
 	const onSubmit = async (values) => {
@@ -75,8 +79,12 @@ function AdminAddNews() {
 				...values,
 				date: formattedDate,
 			};
-
 			console.log("Form Values:", values);
+			const notificationPayload = {
+				text: "News Added!",
+				type: NOTIFICATION_TYPES.SUCCESS,
+			};
+			dispatch(displayNotification(notificationPayload));
 		} catch (error) {
 			if (
 				error.response &&
@@ -91,6 +99,7 @@ function AdminAddNews() {
 		}
 		dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
 	};
+
 
 	const AdminAddNewsStyles = {
 		formCotainer: {
@@ -222,7 +231,7 @@ function AdminAddNews() {
 					validationSchema={validationSchema}
 					onSubmit={onSubmit}
 				>
-					{({ isValid, values, touched, errors }) => (
+					{({ isValid, touched, errors }) => (
 						<Form style={AdminAddNewsStyles.form}>
 							<div style={AdminAddNewsStyles.formFields}>
 								<div
@@ -317,7 +326,10 @@ function AdminAddNews() {
 											...AdminAddNewsStyles.image,
 											...AdminAddNewsStyles.fieldMargin,
 										}}
-									></div>
+									>
+										<div></div>
+										
+									</div>
 								)}
 								<div
 									style={AdminAddNewsStyles.expanded}
@@ -354,7 +366,7 @@ function AdminAddNews() {
 								<CustomButton
 									type="submit"
 									disabled={!isValid}
-									text="Add"
+									text="Add News"
 									className="hover-button"
 									width={"100%"}
 									borderRadius={0}
