@@ -60,20 +60,6 @@ function ModalMenu({ headerStyles, menuOpen, toggleMenu }) {
 					<p
 						className="hover"
 						onClick={() => {
-							navigate("/");
-							toggleMenu();
-						}}
-						style={{
-							...(window.location.pathname === "/" && headerStyles.linkActive),
-						}}
-					>
-						Home
-					</p>
-				</li>
-				<li style={modalMenuStyles.navLi}>
-					<p
-						className="hover"
-						onClick={() => {
 							navigate("/news");
 							toggleMenu();
 						}}
@@ -102,22 +88,6 @@ function ModalMenu({ headerStyles, menuOpen, toggleMenu }) {
 				</li>
 				
 			</ul>
-			<Divider orientation="horizontal" sx={{ width: "100%" }} />
-				<div style={modalMenuStyles.modeContainer} onClick={() => dispatch(setThemeMode())}>
-				<p style={modalMenuStyles.modeText}>
-					{themeMode === "light"
-						? "Switch to Dark mode"
-						: "Switch to Light mode"}
-				</p>
-				<div style={modalMenuStyles.navLi} >
-						{themeMode === "light" ? (
-							<ModeLightIcon style={headerStyles.mode} />
-						) : (
-							<ModeDarkIcon style={headerStyles.mode} />
-						)}
-				</div>
-				</div>
-				<Divider orientation="horizontal" sx={{ width: "100%" }} />
 		</div>
 	);
 }

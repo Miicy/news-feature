@@ -42,6 +42,7 @@ function AdminAddNews() {
 		title: false,
 		coverImage: false,
 		content: false,
+		location: false,
 	});
 
 	const toggleExpanded = (property) => {
@@ -56,6 +57,8 @@ function AdminAddNews() {
 		date: today,
 		content: "",
 		image: "",
+		location: "",
+		tags: [],
 	};
 
 	const validationSchema = Yup.object().shape({
@@ -99,7 +102,6 @@ function AdminAddNews() {
 		}
 		dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
 	};
-
 
 	const AdminAddNewsStyles = {
 		formCotainer: {
@@ -301,6 +303,59 @@ function AdminAddNews() {
 								<div
 									style={AdminAddNewsStyles.expanded}
 									className={"hover-button"}
+									onClick={() => toggleExpanded("location")}
+								>
+									<div
+										style={{
+											...AdminAddNewsStyles.expandedTitle,
+											color:
+												(errors.location || errors.tags) &&
+												(touched.location || touched.tags)
+													? theme.palette.red.error
+													: "",
+										}}
+									>
+										Location & Tags
+									</div>
+									{expanded.location ? (
+										<ExpandMoreIcon sx={AdminAddNewsStyles.expandIcon} />
+									) : (
+										<ExpandLessIcon sx={AdminAddNewsStyles.expandIcon} />
+									)}
+								</div>
+								{!expanded.location && (
+									<div
+										style={{
+											...AdminAddNewsStyles.fieldMargin,
+											...AdminAddNewsStyles.titleDate,
+										}}
+									>
+										<FormikField
+											name="location"
+											label="Location"
+											type="text"
+											sx={{
+												width:
+													screenSize === "small" || isMobile ? "100%" : "33%",
+											}}
+											size={screenSize === "small" || isMobile ? "small" : ""}
+										/>
+
+										<FormikField
+											name="tags"
+											label="Tags"
+											type="text"
+											sx={{
+												width:
+													screenSize === "small" || isMobile ? "100%" : "27%",
+											}}
+											size={screenSize === "small" || isMobile ? "small" : ""}
+										/>
+									</div>
+								)}
+								<div
+									style={AdminAddNewsStyles.expanded}
+									className={"hover-button"}
 									onClick={() => toggleExpanded("coverImage")}
 								>
 									<div
@@ -328,7 +383,6 @@ function AdminAddNews() {
 										}}
 									>
 										<div></div>
-										
 									</div>
 								)}
 								<div

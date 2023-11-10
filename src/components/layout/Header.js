@@ -2,16 +2,9 @@ import { Tooltip, useMediaQuery } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { isMobile } from "react-device-detect";
-import MenuIcon from "@mui/icons-material/Menu";
-import ModalMenu from "../common/ModalMenu";
 import { useTheme } from "@emotion/react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-	selectActiveTheme,
-	setThemeMode,
-} from "../../store/reducers/userSlice";
-import ModeLightIcon from "@mui/icons-material/Brightness4";
-import ModeDarkIcon from "@mui/icons-material/Brightness7";
+
 import { selectScreenSize } from "../../store/reducers/layoutSlice";
 import "../../pages/pages.css";
 
@@ -20,14 +13,6 @@ function Header() {
 	const theme = useTheme();
 	const dispatch = useDispatch();
 	const screenSize = useSelector(selectScreenSize);
-	const themeMode = useSelector(selectActiveTheme);
-
-	const [menuOpen, setMenuOpen] = useState(false);
-
-	const toggleMenu = () => {
-		setMenuOpen((prevMenuOpen) => !prevMenuOpen);
-	};
-
 	const headerStyles = {
 		nav: {
 			position: "relative",
@@ -53,7 +38,7 @@ function Header() {
 			transition: "0.2s",
 		},
 		navContainer: {
-			width: "95%",
+			width: "90%",
 			display: "flex",
 			justifyContent: "space-between",
 			alignItems: "center",
@@ -113,30 +98,6 @@ function Header() {
 			height: screenSize === "small" || isMobile ? "initial" : "80px",
 			borderBottom: `2.5px solid ${theme.palette.red.main}`,
 		},
-		iconContainer: {
-			width: "100%",
-			display: "flex",
-			justifyContent: "flex-end",
-		},
-		icon: {
-			marginRight: "5%",
-			color: theme.palette.opposite.main,
-			cursor: "pointer",
-		},
-		modal: {
-			height: "100%",
-			width: "100%",
-			position: "absolute",
-			marginTop: "125px",
-			zIndex: 1,
-		},
-		modeContainer: {
-			m: "10px",
-		},
-		mode: {
-			cursor: "pointer",
-			color: theme.palette.opposite.main,
-		},
 	};
 
 	return (
@@ -145,87 +106,33 @@ function Header() {
 				<p style={headerStyles.logo} onClick={() => navigate("/")}>
 					LOGO
 				</p>
-				{screenSize !== "small" || isMobile ? (
-					<ul style={headerStyles.navUl}>
-						<li style={headerStyles.navLi}>
-							<p
-								className={window.location.pathname === "/" ? "" : "hover"}
-								onClick={() => navigate("/")}
-								style={{
-									...(window.location.pathname === "/" &&
-										headerStyles.linkActive),
-								}}
-							>
-								Home
-							</p>
-						</li>
-						<li style={headerStyles.navLi}>
-							<p
-								className={window.location.pathname === "/news" ? "" : "hover"}
-								onClick={() => navigate("/news")}
-								style={{
-									...(window.location.pathname === "/news" &&
-										headerStyles.linkActive),
-								}}
-							>
-								News
-							</p>
-						</li>
-						<li style={headerStyles.navLi}>
-							<p
-								className={
-									window.location.pathname === "/admin" ? "" : "hover"
-								}
-								onClick={() => navigate("/admin")}
-								style={{
-									...(window.location.pathname === "/admin"&&
-										headerStyles.linkActive),
-								}}
-							>
-								Admin
-							</p>
-						</li>
-						<li style={headerStyles.navLi}>
-							<div style={headerStyles.modeContainer}>
-								<Tooltip
-									title={themeMode === "light" ? "Dark Mode" : "Light Mode"}
-								>
-									<div onClick={() => dispatch(setThemeMode())}>
-										{themeMode === "light" ? (
-											<ModeLightIcon
-												style={headerStyles.mode}
-												className="hover"
-											/>
-										) : (
-											<ModeDarkIcon
-												style={headerStyles.mode}
-												className="hover"
-											/>
-										)}
-									</div>
-								</Tooltip>
-							</div>
-						</li>
-					</ul>
-				) : (
-					<div style={headerStyles.iconContainer}>
-						<MenuIcon
-							className="hover"
-							sx={headerStyles.icon}
-							onClick={() => setMenuOpen((prevMenuOpen) => !prevMenuOpen)}
-						/>
-					</div>
-				)}
+				<ul style={headerStyles.navUl}>
+					<li style={headerStyles.navLi}>
+						<p
+							className={window.location.pathname === "/news" ? "" : "hover"}
+							onClick={() => navigate("/news")}
+							style={{
+								...(window.location.pathname === "/news" &&
+									headerStyles.linkActive),
+							}}
+						>
+							News
+						</p>
+					</li>
+					<li style={headerStyles.navLi}>
+						<p
+							className={window.location.pathname === "/admin" ? "" : "hover"}
+							onClick={() => navigate("/admin")}
+							style={{
+								...(window.location.pathname === "/admin" &&
+									headerStyles.linkActive),
+							}}
+						>
+							Admin
+						</p>
+					</li>
+				</ul>
 			</div>
-			{menuOpen && screenSize === "small" && (
-				<div style={headerStyles.modal}>
-					<ModalMenu
-						headerStyles={headerStyles}
-						menuOpen={menuOpen}
-						toggleMenu={toggleMenu}
-					/>
-				</div>
-			)}
 		</nav>
 	);
 }

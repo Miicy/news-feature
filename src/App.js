@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/layout/Header";
-import Home from "./pages/Home";
 import News from "./pages/News";
 import LoadingModal from "./components/other/LoadingModal";
 import NotificationContainer from "./components/other/NotificationContainer";
@@ -87,7 +86,6 @@ function App() {
 				<div style={appStyles.background}>
 					<div style={appStyles.pageContainer}>
 						<Routes>
-							<Route path="/" element={<Home />} />
 							<Route path="/news" element={<News />} />
 							<Route path="/news/:id" element={<NewsDetailed />} />
 							<Route path="/admin" element={<AdminLogin />} />
