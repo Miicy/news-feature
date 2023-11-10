@@ -60,7 +60,7 @@ function Header() {
 			transition: "0.3s",
 			marginLeft: screenSize === "small" || isMobile ? "30px" : "0",
 			display: "flex",
-			justifyContent: "center",
+			justifyContent: "flex-start",
 			marginLeft: "20px",
 		},
 		navUl: {

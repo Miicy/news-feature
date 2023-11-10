@@ -50,7 +50,7 @@ function NewsAdminContainer({ news, index, margin, borderRadius, admin }) {
 	};
 	console.log(news);
 	return (
-		<div style={newsContainerStyles.singleNews}>
+		<div style={newsContainerStyles.singleNews}className = "hover-button">
 			<div style={{ ...newsContainerStyles.rest, marginLeft: "10px" }}>
 				{news.id}
 			</div>
@@ -80,7 +80,7 @@ function NewsAdminContainer({ news, index, margin, borderRadius, admin }) {
 			{admin && (
 				<div style={newsContainerStyles.rest}>
 					<Tooltip title={`Edit news`}>
-						<EditIcon sx={newsContainerStyles.adminIcon} />
+						<EditIcon sx={newsContainerStyles.adminIcon} className="hover"/>
 					</Tooltip>
 					<Tooltip title={`Delete news`}>
 						<DeleteIcon sx={newsContainerStyles.adminIcon} className="hover" />
