@@ -116,7 +116,6 @@ export const themeCreation = (mode) =>
 							borderRadius: 10,
 							backgroundColor: mode === "light" ? grey[100] : grey[200],
 							color: grey[900],
-
 						},
 					},
 				},
@@ -125,13 +124,12 @@ export const themeCreation = (mode) =>
 				styleOverrides: {
 					input: {
 						"&:-webkit-autofill": {
-							"-webkit-box-shadow": `0 0 0 100px ${
+							WebkitBoxShadow: `0 0 0 100px ${
 								mode === "light" ? grey[100] : grey[200]
 							}  inset`,
-							"-webkit-text-fill-color":
-								mode === "light" ? grey[900] : grey[900],
-							"caret-color": "#your-caret-color",
-							"border-radius": "inherit",
+							WebkitTextFillColor: mode === "light" ? grey[900] : grey[900],
+							caretColor: "#your-caret-color",
+							borderRadius: "inherit",
 						},
 					},
 				},

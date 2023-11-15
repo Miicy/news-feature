@@ -38,11 +38,6 @@ const FormikDatePicker = ({
 					: "38.5%",
 		},
 		container: {
-			width: "100%",
-			display: "flex",
-			flexDirection: "column",
-			alignItems: "flex-end",
-			margin: screenSize === "small" || isMobile ? "20px 0" : "0",
 		},
 	};
 

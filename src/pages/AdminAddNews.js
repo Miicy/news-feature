@@ -1,4 +1,3 @@
-import { v4 } from "uuid";
 import "../pages/pages.css";
 import { useTheme } from "@emotion/react";
 import React, { useState } from "react";
@@ -29,7 +28,10 @@ import {
 	displayNotification,
 	setDataState,
 } from "../store/reducers/notificationSlice";
-import ImageUploader from "../components/common/ImageUploader";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { STORAGE } from "../firebase";
+import Select from "react-select";
+import LocationSelect from "../components/common/LocationSelect";
 
 function AdminAddNews() {
 	const today = dayjs();
@@ -38,11 +40,11 @@ function AdminAddNews() {
 	const theme = useTheme();
 	const screenSize = useSelector(selectScreenSize);
 	const [image, setImage] = useState(null);
+	const [coverImage, setCoverImage] = useState(null);
 	const [expanded, setExpanded] = useState({
 		title: false,
 		coverImage: false,
 		content: false,
-		location: false,
 	});
 
 	const toggleExpanded = (property) => {
@@ -50,6 +52,29 @@ function AdminAddNews() {
 			...prevState,
 			[property]: !prevState[property],
 		}));
+	};
+
+	const storageRef = getStorage();
+
+	const handleFileChange = (event) => {
+		const file = event.currentTarget.files[0];
+		const imageRef = ref(STORAGE, `coverImages/${file.name}`);
+		dispatch(setDataState(DATA_STATE.DATA_STATE_LOADING));
+		uploadBytes(imageRef, file)
+			.then((snapshot) => {
+				return getDownloadURL(snapshot.ref);
+			})
+			.then((downloadURL) => {
+				setImage(downloadURL);
+				setCoverImage(downloadURL);
+				dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
+			})
+
+			.catch((error) => {
+				console.error("Error uploading file:", error);
+				// Set the image to null in case of an error
+				setImage(null);
+			});
 	};
 
 	const initialValues = {
@@ -67,8 +92,9 @@ function AdminAddNews() {
 			.required("Date required!")
 			.typeError("Invalid Date!")
 			.min(new Date("2023-01-01"), "Date is too early!"),
+		location: Yup.string().required("Location required!"),
 		content: Yup.string().required("Content required!"),
-		image: Yup.string().required("Image required!"),
+		image: Yup.mixed().required("Image required!"),
 	});
 
 	const onSubmit = async (values) => {
@@ -81,8 +107,11 @@ function AdminAddNews() {
 			const updatedValues = {
 				...values,
 				date: formattedDate,
+				coverImage: coverImage,
 			};
 			console.log("Form Values:", values);
+			console.log("Updated Values:", updatedValues);
+
 			const notificationPayload = {
 				text: "News Added!",
 				type: NOTIFICATION_TYPES.SUCCESS,
@@ -111,7 +140,6 @@ function AdminAddNews() {
 			borderTopLeftRadius: "15px",
 			borderTopRightRadius: "15px",
 			border: `1px solid ${theme.palette.fifth.secondary}`,
-			display: "flex",
 			backgroundColor: theme.palette.fifth.third,
 			marginBottom: "40px",
 			minHeight: "75vh",
@@ -120,7 +148,6 @@ function AdminAddNews() {
 		form: {
 			height: "fit-content",
 			width: "100%",
-			minHeight: "100%",
 			display: "flex",
 			minHeight: "75vh",
 			flexDirection: "column",
@@ -157,7 +184,7 @@ function AdminAddNews() {
 				screenSize === "medium-s"
 					? "15p"
 					: screenSize === "small"
-					? "10px"
+					? "30px"
 					: "20px",
 			marginBottom:
 				screenSize === "medium-s"
@@ -169,19 +196,20 @@ function AdminAddNews() {
 		},
 		titleDate: {
 			display: "flex",
-			flexDirection: screenSize === "small" || isMobile ? "column" : "row",
+			flexDirection: "column",
 			marginBottom:
 				screenSize === "medium-s"
 					? "15px"
 					: screenSize === "small"
-					? "55px"
+					? "30px"
 					: "20px",
 			justifyContent: "space-between",
-			height: "60px",
+			height: "100px",
 			animation: "expandAnimation 0.2s ease 0s 1 normal forwards",
+			height: "fit-content",
 		},
+		generalField: {},
 		image: {
-			backgroundColor: theme.palette.fifth.main,
 			height: screenSize === "small" || isMobile ? "200px" : "400px",
 			width: screenSize === "small" || isMobile ? "98%" : "98%",
 			borderRadius: "10px",
@@ -192,6 +220,29 @@ function AdminAddNews() {
 					? "55px 0 0px 0px"
 					: "20px 0px",
 			animation: "expandAnimation 0.2s ease 0s 1 normal forwards",
+			backgroundColor: coverImage ? "none" : theme.palette.forth.secondary,
+			backgroundImage: coverImage ? `url(${coverImage})` : "none",
+			backgroundSize: "cover",
+			backgroundPosition: "center",
+			display: "flex",
+			justifyContent: "center",
+			alignItems: "center",
+			zIndex: 2,
+		},
+		imageInner: {
+			width: "20%",
+			minWidth: "200px",
+			height: "25%",
+			minHeight: "100px",
+			boxShadow: "0px -1px 12px 1px rgba(0,0,0,0.15) inset",
+			border: `1px solid ${theme.palette.fifth.secondary}`,
+			backgroundColor: theme.palette.third.secondary,
+			borderRadius: "10px",
+			display: "flex",
+			flexDirection: "column",
+			justifyContent: image ? "center" : "space-evenly",
+			alignItems: "center",
+			zIndex: 5,
 		},
 		quill: {
 			margin:
@@ -213,6 +264,9 @@ function AdminAddNews() {
 			marginTop: "70px",
 			cursor: "pointer",
 			width: "100%",
+		},
+		error: {
+			color: theme.palette.red.error,
 		},
 	};
 
@@ -270,89 +324,47 @@ function AdminAddNews() {
 											...AdminAddNewsStyles.titleDate,
 										}}
 									>
-										<FormikField
-											name="title"
-											label="Title"
-											type="text"
-											sx={{
-												width:
-													screenSize === "small" || isMobile ? "100%" : "50%",
-											}}
-											size={screenSize === "small" || isMobile ? "small" : ""}
-										/>
-
-										<FormikDatePicker
-											name="date"
-											label="Date"
-											today={today}
-											sx={{
-												width:
-													screenSize === "small" || isMobile
-														? "100%"
-														: screenSize === "medium"
-														? "60%"
-														: screenSize === "medium-s"
-														? "60%"
-														: "40%",
-												transition: "0.3s",
-											}}
-											size={screenSize === "small" || isMobile ? "small" : ""}
-										/>
+										<div style={AdminAddNewsStyles.generalField}>
+											<FormikField
+												name="title"
+												label="Title"
+												type="text"
+												size={screenSize === "small" || isMobile ? "small" : ""}
+											/>
+										</div>
+										<div style={AdminAddNewsStyles.generalField}>
+											<FormikDatePicker
+												name="date"
+												label="Date"
+												today={today}
+												size={screenSize === "small" || isMobile ? "small" : ""}
+											/>
+										</div>
+										<div style={AdminAddNewsStyles.generalField}>
+											<Field
+												name="location"
+												style={AdminAddNewsStyles.location}
+											>
+												{({ field, form }) => (
+													<LocationSelect field={field} form={form} />
+												)}
+											</Field>
+										</div>
+										<div style={AdminAddNewsStyles.generalField}>
+											<FormikField
+												name="tags"
+												label="Tags"
+												type="text"
+												sx={{
+													width:
+														screenSize === "small" || isMobile ? "100%" : "27%",
+												}}
+												size={screenSize === "small" || isMobile ? "small" : ""}
+											/>
+										</div>
 									</div>
 								)}
-								<div
-									style={AdminAddNewsStyles.expanded}
-									className={"hover-button"}
-									onClick={() => toggleExpanded("location")}
-								>
-									<div
-										style={{
-											...AdminAddNewsStyles.expandedTitle,
-											color:
-												(errors.location || errors.tags) &&
-												(touched.location || touched.tags)
-													? theme.palette.red.error
-													: "",
-										}}
-									>
-										Location & Tags
-									</div>
-									{expanded.location ? (
-										<ExpandMoreIcon sx={AdminAddNewsStyles.expandIcon} />
-									) : (
-										<ExpandLessIcon sx={AdminAddNewsStyles.expandIcon} />
-									)}
-								</div>
-								{!expanded.location && (
-									<div
-										style={{
-											...AdminAddNewsStyles.fieldMargin,
-											...AdminAddNewsStyles.titleDate,
-										}}
-									>
-										<FormikField
-											name="location"
-											label="Location"
-											type="text"
-											sx={{
-												width:
-													screenSize === "small" || isMobile ? "100%" : "33%",
-											}}
-											size={screenSize === "small" || isMobile ? "small" : ""}
-										/>
 
-										<FormikField
-											name="tags"
-											label="Tags"
-											type="text"
-											sx={{
-												width:
-													screenSize === "small" || isMobile ? "100%" : "27%",
-											}}
-											size={screenSize === "small" || isMobile ? "small" : ""}
-										/>
-									</div>
-								)}
 								<div
 									style={AdminAddNewsStyles.expanded}
 									className={"hover-button"}
@@ -382,7 +394,24 @@ function AdminAddNews() {
 											...AdminAddNewsStyles.fieldMargin,
 										}}
 									>
-										<div></div>
+										<div style={AdminAddNewsStyles.imageInner}>
+											<Field
+												type="file"
+												name="image"
+												id="image"
+												label="Cover Image"
+												onChange={handleFileChange}
+												style={{ display: "none" }}
+											/>
+											<label htmlFor="image" style={{ cursor: "pointer" }}>
+												{image ? "Change Cover Image" : "Select Cover Image"}
+											</label>
+											{!image && (
+												<div style={AdminAddNewsStyles.error}>
+													{errors.image}
+												</div>
+											)}
+										</div>
 									</div>
 								)}
 								<div
@@ -412,9 +441,6 @@ function AdminAddNews() {
 										<ReactQuillComponent name="content" />
 									</div>
 								)}
-
-								<div style={AdminAddNewsStyles.tags}></div>
-								<div style={AdminAddNewsStyles.location}></div>
 							</div>
 							<div style={AdminAddNewsStyles.button}>
 								<CustomButton
