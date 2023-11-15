@@ -60,11 +60,11 @@ function ModalMenu({ headerStyles, menuOpen, toggleMenu }) {
 					<p
 						className="hover"
 						onClick={() => {
-							navigate("/news");
+							navigate("/");
 							toggleMenu();
 						}}
 						style={{
-							...(window.location.pathname === "/news" &&
+							...(window.location.pathname === "/" &&
 								headerStyles.linkActive),
 						}}
 					>

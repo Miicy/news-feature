@@ -86,8 +86,8 @@ function App() {
 				<div style={appStyles.background}>
 					<div style={appStyles.pageContainer}>
 						<Routes>
-							<Route path="/news" element={<News />} />
-							<Route path="/news/:id" element={<NewsDetailed />} />
+							<Route path="/" element={<News />} />
+							<Route path="/:id" element={<NewsDetailed />} />
 							<Route path="/admin" element={<AdminLogin />} />
 							<Route path="/admin/admin-panel" element={<AdminNews />} />
 							<Route

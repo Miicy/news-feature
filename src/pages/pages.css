@@ -31,6 +31,10 @@
 	cursor: pointer;
 }
 
+.error{
+	margin-left: 10px!important;
+}
+
 @keyframes expandAnimation {
 	0% {
 		opacity: 0;

@@ -123,8 +123,8 @@ export default function NewsContainer({
 					{readMore && (
 						<p
 							style={{ textDecoration: "underline", cursor: "pointer" }}
-							// onClick={() => navigate(`/news/${news._id}`)} for database
-							onClick={() => navigate(`/news/${news.id}`)}
+							// onClick={() => navigate(`/${news._id}`)} for database
+							onClick={() => navigate(`/${news.id}`)}
 						>
 							Read more
 						</p>

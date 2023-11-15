@@ -109,10 +109,10 @@ function Header() {
 				<ul style={headerStyles.navUl}>
 					<li style={headerStyles.navLi}>
 						<p
-							className={window.location.pathname === "/news" ? "" : "hover"}
-							onClick={() => navigate("/news")}
+							className={window.location.pathname === "/" ? "" : "hover"}
+							onClick={() => navigate("/")}
 							style={{
-								...(window.location.pathname === "/news" &&
+								...(window.location.pathname === "/" &&
 									headerStyles.linkActive),
 							}}
 						>

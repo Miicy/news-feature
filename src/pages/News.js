@@ -187,7 +187,7 @@ function News() {
 				<div
 					style={newsPageStyles.latest}
 					onClick={() => {
-						navigate(`/news/${latestNews.id}`);
+						navigate(`/${latestNews.id}`);
 					}}
 				>
 					<div style={newsPageStyles.textContainer}>
