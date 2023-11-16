@@ -15,13 +15,8 @@
 	align-items: center;
 }
 
-:root {
-	--text-color-dark: #9e9e9e;
-	--text-color-light: #757575;
-}
-
 .hover:hover {
-	color: var(--text-color-light)!important;
+	color: #757575!important;
 	transition: "color 0.3s";
 }
 
@@ -34,6 +29,7 @@
 .error{
 	margin-left: 10px!important;
 }
+
 
 @keyframes expandAnimation {
 	0% {

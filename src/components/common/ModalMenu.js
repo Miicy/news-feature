@@ -1,16 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import ModeLightIcon from "@mui/icons-material/Brightness4";
-import ModeDarkIcon from "@mui/icons-material/Brightness7";
-import {
-	selectActiveTheme,
-	setThemeMode,
-} from "../../store/reducers/userSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { Divider, Tooltip } from "@mui/material";
+import { useDispatch} from "react-redux";
 import { useTheme } from "@emotion/react";
 
 function ModalMenu({ headerStyles, menuOpen, toggleMenu }) {
-	const themeMode = useSelector(selectActiveTheme);
 	const dispatch = useDispatch();
 	const theme = useTheme();
 
@@ -38,16 +30,6 @@ function ModalMenu({ headerStyles, menuOpen, toggleMenu }) {
 			...headerStyles.navLi,
 			margin: "40px 0",
 			fontWeight: "400",
-		},
-		modeContainer:{
-			backgroundColor: `${theme.palette.primary.main}`,
-			width:"100%",
-			display:"flex",
-			flexDirection: "column",
-			alignItems: "center",
-		},
-		modeText:{
-			color: `${theme.palette.opposite.main}`,
 		},
 	};
 

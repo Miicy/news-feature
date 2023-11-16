@@ -10,26 +10,17 @@ import NewsDetailed from "./pages/NewsDetailed";
 import AdminLogin from "./pages/AdminLogin";
 import AdminNews from "./pages/AdminNews";
 import { themeCreation } from "./theme/themeDesign";
-import { selectActiveTheme } from "./store/reducers/userSlice";
 import { useSelector } from "react-redux";
 import ScreenSizeListener from "./helpers/ScreenSizeListener";
 import backgroundLight from "./media/background-light.svg";
-import backgroundDark from "./media/background-dark.svg";
 import { selectScreenSize } from "./store/reducers/layoutSlice";
 import AdminAddNews from "./pages/AdminAddNews";
+import { isMobile } from "react-device-detect";
 
 function App() {
 	const [theme, setTheme] = useState(themeCreation());
-	const themeMode = useSelector(selectActiveTheme);
 	const screenSize = useSelector(selectScreenSize);
-	const backgroundImage =
-		themeMode === "light"
-			? `url(${backgroundLight})`
-			: `url(${backgroundDark})`;
-
-	useEffect(() => {
-		setTheme(themeCreation(themeMode));
-	}, [themeMode]);
+	const backgroundImage = `url(${backgroundLight})`;
 
 	const appStyles = {
 		background: {
@@ -45,7 +36,7 @@ function App() {
 			backgroundAttachment: "fixed",
 			display: "flex",
 			justifyContent: "center",
-			alignItems: "center",
+			alignItems: screenSize === "small" || isMobile ? "flex-start" : "center",
 			zIndex: 1,
 		},
 		pageContainer: {
@@ -53,7 +44,7 @@ function App() {
 				screenSize === "medium-s"
 					? "20px 0"
 					: screenSize === "small"
-					? "30px 0"
+					? "60px 0"
 					: "50px 0",
 			position: "relative",
 			minWidth: "300px",
@@ -62,7 +53,7 @@ function App() {
 				screenSize === "medium-s"
 					? "1000px"
 					: screenSize === "small"
-					? "850px"
+					? "600px"
 					: "90vh",
 			height: "auto",
 			backgroundColor: theme.palette.primary.main,
@@ -71,7 +62,8 @@ function App() {
 			boxShadow: " 0 10px 30px 10px rgba(0, 0, 0, 0.3)",
 			display: "flex",
 			flexDirection: "column",
-			justifyContent: "flex-start",
+			justifyContent:
+				screenSize === "small" || isMobile ? "center" : "flex-start",
 			alignItems: "center",
 			zIndex: 10,
 			transition: "0.2s",
@@ -83,20 +75,17 @@ function App() {
 		<ThemeProvider theme={theme}>
 			<BrowserRouter>
 				<Header />
-				<div style={appStyles.background}>
-					<div style={appStyles.pageContainer}>
-						<Routes>
-							<Route path="/" element={<News />} />
-							<Route path="/:id" element={<NewsDetailed />} />
+				<Routes>
+					<Route path="/" element={<News />} />
+					<Route path="/:id" element={<NewsDetailed />} />
+					{!isMobile || screenSize !== "small" ? (
+						<>
 							<Route path="/admin" element={<AdminLogin />} />
 							<Route path="/admin/admin-panel" element={<AdminNews />} />
-							<Route
-								path="/admin/admin-panel/add-news"
-								element={<AdminAddNews />}
-							/>
-						</Routes>
-					</div>
-				</div>
+						</>
+					) : null}
+
+				</Routes>
 				<LoadingModal />
 				<NotificationContainer />
 				<ScreenSizeListener />

@@ -28,7 +28,7 @@ function LocationSelect({ field, form }) {
         border: "1px solid black",
       },
       backgroundColor:"#f5f5f5",
-      height:screenSize === "small" || isMobile ? "40px" : "60px",
+      height:"60px",
       
     }),
     option: (provided, state) => ({

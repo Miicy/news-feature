@@ -59,12 +59,13 @@ const FormikDatePicker = ({
 									textField: {
 										variant: "outlined",
 										color: "opposite",
-										label: "Date",
 										size: size,
+										shrink: true,
 									},
 								}}
 								error={!!error && touched}
 								helperText={touched ? error : helperText}
+								
 							/>
 							<ErrorMessage
 								style={DatePickerStyles.error}

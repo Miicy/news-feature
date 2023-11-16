@@ -16,7 +16,6 @@ function Header() {
 	const headerStyles = {
 		nav: {
 			position: "relative",
-			background: theme.palette.primary.main,
 			height: "80px",
 			width: "100%",
 			minWidth: screenSize === "small" || isMobile ? "300px" : "500px",
@@ -40,7 +39,7 @@ function Header() {
 		navContainer: {
 			width: "90%",
 			display: "flex",
-			justifyContent: "space-between",
+			justifyContent: "center",
 			alignItems: "center",
 		},
 		logo: {
@@ -103,9 +102,6 @@ function Header() {
 	return (
 		<nav style={headerStyles.nav}>
 			<div style={headerStyles.navContainer}>
-				<p style={headerStyles.logo} onClick={() => navigate("/")}>
-					LOGO
-				</p>
 				<ul style={headerStyles.navUl}>
 					<li style={headerStyles.navLi}>
 						<p
@@ -121,10 +117,10 @@ function Header() {
 					</li>
 					<li style={headerStyles.navLi}>
 						<p
-							className={window.location.pathname === "/admin" ? "" : "hover"}
+							className={ window.location.pathname.startsWith("/admin") ? "" : "hover"}
 							onClick={() => navigate("/admin")}
 							style={{
-								...(window.location.pathname === "/admin" &&
+								...(window.location.pathname.startsWith("/admin") &&
 									headerStyles.linkActive),
 							}}
 						>

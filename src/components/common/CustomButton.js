@@ -1,23 +1,24 @@
 import { useTheme } from "@emotion/react";
 import { Button } from "@mui/material";
 
-const CustomButton = ({ color,text, disabled, onClick, width, borderRadius }) => {
+const CustomButton = ({ color,text, disabled, onClick, width, borderRadius,height }) => {
 	const theme = useTheme();
 
 	const buttonStyles = {
 		boxShadow: "0px -1px 12px 1px rgba(0,0,0,0.15) inset",
-		border: `1px solid ${theme.palette.fifth.main}`,
-		backgroundColor: theme.palette.third.secondary,
+		fontWeight: "bold",
+		backgroundColor: theme.palette.red.secondary,
 		"&:hover": {
-			backgroundColor: theme.palette.forth.secondary,
+			backgroundColor: theme.palette.red.main,
 		},
 		"&:disabled": {
-			backgroundColor: "lightgrey",
-			color: "white",
+			backgroundColor: theme.palette.forth.secondary,
+			color: "grey",
 			cursor: "default",
 		},
 		width: width,
 		borderRadius: borderRadius,
+		height: height,
     color: color,
 	};
 

@@ -78,6 +78,11 @@ body::-webkit-scrollbar {
 
 @media (min-width: 600px) {
 	.css-b62m3t-container {
-		width: 33%;
+		width: "100%",
 	  }
   }
+
+  
+.hover-red:hover{
+	color: #ef5350;
+}

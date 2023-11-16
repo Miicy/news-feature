@@ -7,7 +7,6 @@ import { selectScreenSize } from "../../store/reducers/layoutSlice";
 import { useSelector } from "react-redux";
 import { isMobile } from "react-device-detect";
 import { useTheme } from "@emotion/react";
-import { THEME_MODES } from "../../store/reducers/userSlice";
 
 function ReactQuillComponent(name, helperText, ...rest) {
 	const screenSize = useSelector(selectScreenSize);

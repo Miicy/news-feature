@@ -21,10 +21,11 @@ const LoginField = ({
 	const screenSize = useSelector(selectScreenSize);
 	const theme = useTheme();
 	const errorMessageStyles = {
-		color: "red",
+		color: theme.palette.red.main,
 		fontSize: isMobile && screenSize === "small" ? "0.8em" : "1em",
 		height: "20px",
 		transition: "0.3",
+		fontWeight: "500",
 	};
 
 	const [showPassword, setShowPassword] = useState(false);
@@ -47,15 +48,15 @@ const LoginField = ({
 				value={value}
 				InputProps={{
 					endAdornment: password && (
-						<InputAdornment position="end" sx={{ marginRight: -1}}>
+						<InputAdornment position="end" sx={{ marginRight: -1 }}>
 							<IconButton onClick={handleTogglePassword}>
 								{showPassword ? (
 									<VisibilityOffIcon
-										sx={{ color: theme.palette.text.oppositeDark }}
+										sx={{ color: theme.palette.secondary.main }}
 									/>
 								) : (
 									<VisibilityIcon
-										sx={{ color: theme.palette.text.oppositeDark }}
+										sx={{ color: theme.palette.secondary.main }}
 									/>
 								)}
 							</IconButton>

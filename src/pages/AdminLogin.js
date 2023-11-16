@@ -48,7 +48,7 @@ function AdminLogin() {
 
 				// dispatch(adminLogin(userResponse.data));
 
-				dispatch(adminLogin(true))
+				dispatch(adminLogin(true));
 
 				const notificationPayload = {
 					text: "Admin login successful!",
@@ -79,90 +79,76 @@ function AdminLogin() {
 
 	const adminLoginStyles = {
 		container: {
-			width: "80%",
-			height: "90vh",
-			display: "flex",
-			justifyContent: "center",
-			alignItems: "center",
-		},
-		loginContainer: {
-			width: !isMobile && screenSize !== "small" ? "50%" : "90%",
-			height: !isMobile && screenSize !== "small" ? "60%" : "90%",
-			backgroundColor: theme.palette.fifth.third,
-			borderRadius: "15px",
+			width: "100%",
+			height: "92vh",
 			display: "flex",
 			flexDirection: "column",
 			justifyContent: "center",
 			alignItems: "center",
-			color: theme.palette.text.oppositeDark,
-			boxShadow: "0px 1px 15px 4px rgba(0,0,0,0.25)"
+			minWidth: "300px",
+			backgroundColor: theme.palette.opposite.main,
 		},
-
 		form: {
-			height: "70%",
-			width: "70%",
+			height: "55%",
+			width: isMobile && screenSize == "small" ? "60%" : "30%",
+			minWidth: "450px",
 			display: "flex",
 			flexDirection: "column",
 			alignItems: "center",
-			justifyContent: "center",
+			justifyContent: "space-evenly",
 		},
 		button: {
 			display: "flex",
 			justifyContent: "center",
 			alignItems: "center",
 			width: "100%",
-			marginTop: isMobile && screenSize === "small" ? "10px" : "20px",
 		},
-		fieldContainer:{
+		fieldContainer: {
 			width: isMobile && screenSize === "small" ? "90%" : "70%",
-			margin: !isMobile && screenSize !== "small" ? "20px" : "10px"
-		}
+			margin: !isMobile && screenSize !== "small" ? "20px" : "10px",
+		},
 	};
 
 	return (
 		<div style={adminLoginStyles.container}>
-			<div style={adminLoginStyles.loginContainer}>
-				<h1>Admin Login</h1>
-				<Formik
-					initialValues={initialValues}
-					validationSchema={validationSchema}
-					onSubmit={handleSubmit}
-				>
-					{(formik) => (
-						<Form style={adminLoginStyles.form}>
-							<LoginField
-								name="username"
-								label="Username"
-								size={!isMobile && screenSize !== "small" ? "big" : "small"}
-								error={true}
-								password={false}
-								placeholder={"admin"}
-								style={adminLoginStyles.fieldContainer}
+			<Formik
+				initialValues={initialValues}
+				validationSchema={validationSchema}
+				onSubmit={handleSubmit}
+			>
+				{(formik) => (
+					<Form style={adminLoginStyles.form}>
+						<h1 style={{ color: "white" }}>Admin Login</h1>
+						<LoginField
+							name="username"
+							label="Username"
+							error={true}
+							password={false}
+							placeholder={"admin"}
+							style={adminLoginStyles.fieldContainer}
+						/>
+						<LoginField
+							name="password"
+							label="Password"
+							error={true}
+							password={true}
+							placeholder={"admin"}
+							style={adminLoginStyles.fieldContainer}
+						/>
+						<div style={adminLoginStyles.button}>
+							<CustomButton
+								disabled={!formik.values.username || !formik.values.password}
+								onClick={formik.handleSubmit}
+								text={"Login"}
+								width={"70%"}
+								height={isMobile && screenSize == "small" ? "40px" : "50px"}
+								borderRadius={2}
+								color={theme.palette.red.oppositeDark}
 							/>
-							<LoginField
-								name="password"
-								label="Password"
-								size={!isMobile && screenSize !== "small"? "big" : "small"}
-								error={true}
-								password={true}
-								placeholder={"admin"}
-								style={adminLoginStyles.fieldContainer}
-								
-							/>
-							<div style={adminLoginStyles.button}>
-								<CustomButton
-									disabled={!formik.values.username || !formik.values.password}
-									onClick={formik.handleSubmit}
-									text={"Login"}
-									width={"70%"}
-									borderRadius={2}
-									color={theme.palette.text.oppositeDark}
-								/>
-							</div>
-						</Form>
-					)}
-				</Formik>
-			</div>
+						</div>
+					</Form>
+				)}
+			</Formik>
 		</div>
 	);
 }

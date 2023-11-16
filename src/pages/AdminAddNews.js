@@ -182,10 +182,10 @@ function AdminAddNews() {
 		fieldMargin: {
 			marginTop:
 				screenSize === "medium-s"
-					? "15p"
+					? "10p"
 					: screenSize === "small"
-					? "30px"
-					: "20px",
+					? "20px"
+					: "5px",
 			marginBottom:
 				screenSize === "medium-s"
 					? "15px"
@@ -194,6 +194,12 @@ function AdminAddNews() {
 					: "20px",
 			width: screenSize === "small" || isMobile ? "90%" : "98%",
 		},
+		generalContainer: {
+			display: "flex",
+			width: "95%",
+			flexDirection: screenSize === "small" || isMobile ? "column" : "row",
+			transition: "0.3s",
+		},
 		titleDate: {
 			display: "flex",
 			flexDirection: "column",
@@ -201,24 +207,41 @@ function AdminAddNews() {
 				screenSize === "medium-s"
 					? "15px"
 					: screenSize === "small"
-					? "30px"
-					: "20px",
+					? "20px"
+					: "15px",
 			justifyContent: "space-between",
 			height: "100px",
 			animation: "expandAnimation 0.2s ease 0s 1 normal forwards",
 			height: "fit-content",
+			width: "50%",
 		},
-		generalField: {},
-		image: {
-			height: screenSize === "small" || isMobile ? "200px" : "400px",
-			width: screenSize === "small" || isMobile ? "98%" : "98%",
-			borderRadius: "10px",
+		generalField: {
 			margin:
 				screenSize === "medium-s"
-					? "15px 0px"
+					? "10px 0px"
 					: screenSize === "small"
-					? "55px 0 0px 0px"
+					? "30px 0 0px 0px"
 					: "20px 0px",
+		},
+		label: {
+			display: "flex",
+			flexDirection: "column",
+		},
+		labelp: {
+			marginBottom: "3px",
+		},
+		imageContainer:{
+			width: "50%",
+			display: "flex",
+			justifyContent: "center",
+			alignItems: "center",
+		},
+		image: {
+			height: screenSize === "small" || isMobile ? "200px" : "460px",
+			width: "95%",
+			marginLeft: screenSize === "small" || isMobile ? "none" : "40px",
+			marginTop: screenSize === "small" || isMobile ? "none" : "30px",
+			borderRadius: "10px",
 			animation: "expandAnimation 0.2s ease 0s 1 normal forwards",
 			backgroundColor: coverImage ? "none" : theme.palette.forth.secondary,
 			backgroundImage: coverImage ? `url(${coverImage})` : "none",
@@ -271,16 +294,6 @@ function AdminAddNews() {
 	};
 
 	return (
-		<div className="innerPageContainer">
-			<div className="breadcrumbsContainer">
-				<BreadcrumbsPage
-					second={"Admin"}
-					secondUrl={"admin"}
-					third={"Admin News"}
-					thirdUrl={"admin/admin-panel"}
-					link={"Add News"}
-				/>
-			</div>
 			<div style={AdminAddNewsStyles.formCotainer}>
 				<Formik
 					initialValues={initialValues}
@@ -309,7 +322,7 @@ function AdminAddNews() {
 													: "",
 										}}
 									>
-										Title & Date
+										General
 									</div>
 									{expanded.title ? (
 										<ExpandMoreIcon sx={AdminAddNewsStyles.expandIcon} />
@@ -318,102 +331,94 @@ function AdminAddNews() {
 									)}
 								</div>
 								{!expanded.title && (
-									<div
-										style={{
-											...AdminAddNewsStyles.fieldMargin,
-											...AdminAddNewsStyles.titleDate,
-										}}
-									>
-										<div style={AdminAddNewsStyles.generalField}>
-											<FormikField
-												name="title"
-												label="Title"
-												type="text"
-												size={screenSize === "small" || isMobile ? "small" : ""}
-											/>
+									<div style={AdminAddNewsStyles.generalContainer}>
+										<div
+											style={{
+												...AdminAddNewsStyles.fieldMargin,
+												...AdminAddNewsStyles.titleDate,
+											}}
+										>
+											<div style={AdminAddNewsStyles.generalField}>
+												<label htmlFor="title" style={AdminAddNewsStyles.label}>
+													<p style={AdminAddNewsStyles.labelp}>Title</p>
+													<FormikField
+														name="title"
+														type="text"
+														sx={{
+															width: "100%",
+															height: "50px",
+														}}
+													/>
+												</label>
+											</div>
+											<div style={AdminAddNewsStyles.generalField}>
+												<label htmlFor="date" style={AdminAddNewsStyles.label}>
+													<p style={AdminAddNewsStyles.labelp}>Date</p>
+													<FormikDatePicker
+														name="date"
+														today={today}
+														sx={{
+															width: "100%",
+															height: "50px",
+														}}
+													/>
+												</label>
+											</div>
+											<div style={AdminAddNewsStyles.generalField}>
+												<Field
+													name="location"
+													style={AdminAddNewsStyles.location}
+												>
+													{({ field, form }) => (
+														<label
+															htmlFor="location"
+															style={AdminAddNewsStyles.label}
+														>
+															<p style={AdminAddNewsStyles.labelp}>Location</p>
+															<LocationSelect field={field} form={form} />
+														</label>
+													)}
+												</Field>
+											</div>
+											<div style={AdminAddNewsStyles.generalField}>
+												<label htmlFor="tags" style={AdminAddNewsStyles.label}>
+													<p style={AdminAddNewsStyles.labelp}>Tags</p>
+													<FormikField
+														name="tags"
+														type="text"
+														sx={{
+															width: "100%",
+															height: "50px",
+														}}
+													/>
+												</label>
+											</div>
 										</div>
-										<div style={AdminAddNewsStyles.generalField}>
-											<FormikDatePicker
-												name="date"
-												label="Date"
-												today={today}
-												size={screenSize === "small" || isMobile ? "small" : ""}
-											/>
-										</div>
-										<div style={AdminAddNewsStyles.generalField}>
-											<Field
-												name="location"
-												style={AdminAddNewsStyles.location}
-											>
-												{({ field, form }) => (
-													<LocationSelect field={field} form={form} />
+										<div style={AdminAddNewsStyles.imageContainer}>
+										<div style={AdminAddNewsStyles.image}>
+											<div style={AdminAddNewsStyles.imageInner}>
+												<Field
+													type="file"
+													name="image"
+													id="image"
+													label="Cover Image"
+													onChange={handleFileChange}
+													style={{ display: "none" }}
+												/>
+												<label htmlFor="image" style={{ cursor: "pointer" }}>
+													{image ? "Change Cover Image" : "Select Cover Image"}
+												</label>
+												{!image && (
+													<div style={AdminAddNewsStyles.error}>
+														{errors.image}
+													</div>
 												)}
-											</Field>
+											</div>
 										</div>
-										<div style={AdminAddNewsStyles.generalField}>
-											<FormikField
-												name="tags"
-												label="Tags"
-												type="text"
-												sx={{
-													width:
-														screenSize === "small" || isMobile ? "100%" : "27%",
-												}}
-												size={screenSize === "small" || isMobile ? "small" : ""}
-											/>
 										</div>
 									</div>
 								)}
 
-								<div
-									style={AdminAddNewsStyles.expanded}
-									className={"hover-button"}
-									onClick={() => toggleExpanded("coverImage")}
-								>
-									<div
-										style={{
-											...AdminAddNewsStyles.expandedTitle,
-											color:
-												errors.image && touched.image
-													? theme.palette.red.error
-													: "",
-										}}
-									>
-										Cover Image
-									</div>
-									{expanded.coverImage ? (
-										<ExpandMoreIcon sx={AdminAddNewsStyles.expandIcon} />
-									) : (
-										<ExpandLessIcon sx={AdminAddNewsStyles.expandIcon} />
-									)}
-								</div>
-								{!expanded.coverImage && (
-									<div
-										style={{
-											...AdminAddNewsStyles.image,
-											...AdminAddNewsStyles.fieldMargin,
-										}}
-									>
-										<div style={AdminAddNewsStyles.imageInner}>
-											<Field
-												type="file"
-												name="image"
-												id="image"
-												label="Cover Image"
-												onChange={handleFileChange}
-												style={{ display: "none" }}
-											/>
-											<label htmlFor="image" style={{ cursor: "pointer" }}>
-												{image ? "Change Cover Image" : "Select Cover Image"}
-											</label>
-											{!image && (
-												<div style={AdminAddNewsStyles.error}>
-													{errors.image}
-												</div>
-											)}
-										</div>
-									</div>
-								)}
 								<div
 									style={AdminAddNewsStyles.expanded}
 									onClick={() => toggleExpanded("content")}
@@ -456,7 +461,6 @@ function AdminAddNews() {
 					)}
 				</Formik>
 			</div>
-		</div>
 	);
 }
 
