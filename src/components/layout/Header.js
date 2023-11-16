@@ -1,17 +1,14 @@
-import { Tooltip, useMediaQuery } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { isMobile } from "react-device-detect";
 import { useTheme } from "@emotion/react";
-import { useDispatch, useSelector } from "react-redux";
-
+import { useSelector } from "react-redux";
 import { selectScreenSize } from "../../store/reducers/layoutSlice";
 import "../../pages/pages.css";
 
 function Header() {
 	const navigate = useNavigate();
 	const theme = useTheme();
-	const dispatch = useDispatch();
 	const screenSize = useSelector(selectScreenSize);
 	const headerStyles = {
 		nav: {
@@ -43,7 +40,6 @@ function Header() {
 			alignItems: "center",
 		},
 		logo: {
-			display: "inline-block",
 			width: "10%",
 			cursor: "pointer",
 			color: theme.palette.opposite.main,
@@ -57,7 +53,6 @@ function Header() {
 					? "1.5em"
 					: "1.3em",
 			transition: "0.3s",
-			marginLeft: screenSize === "small" || isMobile ? "30px" : "0",
 			display: "flex",
 			justifyContent: "flex-start",
 			marginLeft: "20px",
@@ -105,7 +100,9 @@ function Header() {
 				<ul style={headerStyles.navUl}>
 					<li style={headerStyles.navLi}>
 						<p
-							className={window.location.pathname.startsWith( "/news")? "" : "hover"}
+							className={
+								window.location.pathname.startsWith("/news") ? "" : "hover"
+							}
 							onClick={() => navigate("/news")}
 							style={{
 								...(window.location.pathname.startsWith("/news") &&
@@ -117,7 +114,9 @@ function Header() {
 					</li>
 					<li style={headerStyles.navLi}>
 						<p
-							className={ window.location.pathname.startsWith("/admin") ? "" : "hover"}
+							className={
+								window.location.pathname.startsWith("/admin") ? "" : "hover"
+							}
 							onClick={() => navigate("/admin")}
 							style={{
 								...(window.location.pathname.startsWith("/admin") &&

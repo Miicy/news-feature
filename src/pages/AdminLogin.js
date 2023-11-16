@@ -1,15 +1,13 @@
 import { useTheme } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form } from "formik";
-import { isMobile } from "react-device-detect";
-import axios from "axios";
 import * as Yup from "yup";
 import {
 	DATA_STATE,
 	NOTIFICATION_TYPES,
 	SERVER_URL,
 } from "../helpers/app.constants";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
 	displayNotification,
 	setDataState,
@@ -17,13 +15,11 @@ import {
 import { adminLogin } from "../store/reducers/adminSlice";
 import CustomButton from "../components/common/CustomButton";
 import LoginField from "../components/common/LoginField";
-import { selectScreenSize } from "../store/reducers/layoutSlice";
 
 function AdminLogin() {
 	const theme = useTheme();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const screenSize = useSelector(selectScreenSize);
 
 	const initialValues = {
 		username: "",
@@ -90,7 +86,7 @@ function AdminLogin() {
 		},
 		form: {
 			height: "55%",
-			width: isMobile && screenSize == "small" ? "60%" : "30%",
+			width: "30%",
 			minWidth: "450px",
 			display: "flex",
 			flexDirection: "column",
@@ -104,8 +100,8 @@ function AdminLogin() {
 			width: "100%",
 		},
 		fieldContainer: {
-			width: isMobile && screenSize === "small" ? "90%" : "70%",
-			margin: !isMobile && screenSize !== "small" ? "20px" : "10px",
+			width:"70%",
+			margin: "10px",
 		},
 	};
 
@@ -141,7 +137,7 @@ function AdminLogin() {
 								onClick={formik.handleSubmit}
 								text={"Login"}
 								width={"70%"}
-								height={isMobile && screenSize == "small" ? "40px" : "50px"}
+								height={"50px"}
 								borderRadius={2}
 								color={theme.palette.red.oppositeDark}
 							/>

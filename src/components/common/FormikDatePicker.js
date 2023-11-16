@@ -1,12 +1,7 @@
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DateField, DesktopDatePicker } from "@mui/x-date-pickers";
-
+import { DesktopDatePicker } from "@mui/x-date-pickers";
 import { ErrorMessage, Field } from "formik";
-import { TextField } from "@mui/material";
-import { useSelector } from "react-redux";
-import { selectScreenSize } from "../../store/reducers/layoutSlice";
-import { isMobile } from "react-device-detect";
 import { useTheme } from "@emotion/react";
 
 const FormikDatePicker = ({
@@ -19,13 +14,11 @@ const FormikDatePicker = ({
 	sx,
 	...rest
 }) => {
-	const screenSize = useSelector(selectScreenSize);
 	const theme = useTheme();
 
 	const DatePickerStyles = {
 		error: {
 			color: theme.palette.red.error,
-			fontSize: "0.8em",
 			display: "flex",
 			justifyContent: "flex-start",
 			marginLeft: "20px",

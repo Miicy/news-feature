@@ -5,11 +5,9 @@ import AdminPanel from "./AdminPanel";
 import { useTheme } from "@emotion/react";
 import { Divider } from "@mui/material";
 import "../pages/pages.css";
-import { useNavigate } from "react-router-dom";
 
 function AdminNews() {
 	const theme = useTheme();
-	const navigate = useNavigate();
 
 	const [adminRoutes, setAdminRoutes] = useState({
 		addNews: false,

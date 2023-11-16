@@ -1,4 +1,4 @@
-import { Tooltip, useMediaQuery } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import { isMobile } from "react-device-detect";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
@@ -22,7 +22,6 @@ export default function NewsContainer({
 	const newsContainerStyles = {
 		singleNews: {
 			margin: margin,
-			width: "100%",
 			backgroundColor: "white",
 			height: layoutColumn ? "250px" : "190px",
 			borderRadius: borderRadius,

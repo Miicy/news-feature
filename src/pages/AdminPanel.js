@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { selectScreenSize } from "../store/reducers/layoutSlice";
 import { useTheme } from "@emotion/react";
 import useGetAllNews from "../helpers/hooks/getAllNews";
@@ -9,7 +8,6 @@ import { isMobile } from "react-device-detect";
 import NewsAdminContainer from "../components/common/NewsAdminContainer";
 
 function AdminPanel() {
-	const navigate = useNavigate();
 	const screenSize = useSelector(selectScreenSize);
 	const theme = useTheme();
 	const allNews = useGetAllNews();
@@ -79,13 +77,10 @@ function AdminPanel() {
 					: locationB.localeCompare(locationA);
 			}
 
-			return 0; // Default return if no specific sorting is applied
+			return 0; 
 		});
 	}
 
-	const toggleSortOrder = () => {
-		setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
-	};
 
 	const adminPanelStyles = {
 		container: {

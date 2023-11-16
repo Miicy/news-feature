@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
-import { selectScreenSize } from "../../store/reducers/layoutSlice";
-import { useSelector } from "react-redux";
-import { isMobile } from "react-device-detect";
 
 function LocationSelect({ field, form, border }) {
 	const [countries, setCountries] = useState([]);
 	const [selectedCountry, setSelectedCountry] = useState(null);
-	const screenSize = useSelector(selectScreenSize);
 	useEffect(() => {
 		fetch(
 			"https://valid.layercode.workers.dev/list/countries?format=select&flags=true&value=code",
@@ -22,7 +18,6 @@ function LocationSelect({ field, form, border }) {
 	const customStyles = {
 		control: (provided) => ({
 			...provided,
-			border: "1px solid #c1c1c1",
 			borderRadius: "10px",
 			minHeight: "40px",
 			boxShadow: "none",

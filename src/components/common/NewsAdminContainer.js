@@ -1,6 +1,4 @@
-import { Tooltip, useMediaQuery } from "@mui/material";
-import { isMobile } from "react-device-detect";
-import { useNavigate } from "react-router-dom";
+import { Tooltip} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useSelector } from "react-redux";
@@ -15,7 +13,6 @@ function NewsAdminContainer({
 	admin,
 	columnClicked,
 }) {
-	const navigate = useNavigate();
 	const screenSize = useSelector(selectScreenSize);
 	const theme = useTheme();
 

@@ -1,4 +1,3 @@
-import { useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import ViewHeadlineIcon from "@mui/icons-material/ViewHeadline";
@@ -20,22 +19,25 @@ function News() {
 	const theme = useTheme();
 
 	const allNews = useGetAllNews();
-
-	//load more limit
 	const [newsLimit, setNewsLimit] = useState(7);
 
-	//news layout
 	const toggleLayoutColumn = () => {
-		if (screenSize !== "medium-s" && !isMobile && screenSize !== "small") {
-			setLayoutColumn(!layoutColumn);
+		const isSmallScreen = screenSize === "small";
+		const isMediumSScreen = screenSize === "medium-s";
+
+		if (!isMobile && !isSmallScreen && !isMediumSScreen) {
+			setLayoutColumn((prevLayoutColumn) => !prevLayoutColumn);
 		}
 	};
 
 	useEffect(() => {
-		if (isMobile || screenSize === "small" || screenSize === "medium-s") {
+		const isSmallScreen = screenSize === "small";
+		const isMediumSScreen = screenSize === "medium-s";
+
+		if (isMobile || isSmallScreen || isMediumSScreen) {
 			setLayoutColumn(true);
 		}
-	}, [isMobile, screenSize === "small", screenSize === "medium-s"]);
+	}, [screenSize]);
 
 	const latestNews = allNews && allNews.length > 0 ? allNews[0] : null;
 	const restOfNews = allNews ? allNews.slice(1) : [];
@@ -50,7 +52,8 @@ function News() {
 	const newsPageStyles = {
 		breadcrumbsContainerMobile: {
 			flexDirection: screenSize === "small" || isMobile ? "column" : "row",
-			justifyContent: screenSize === "small" || isMobile ? "center" : "space-between",
+			justifyContent:
+				screenSize === "small" || isMobile ? "center" : "space-between",
 		},
 		layout: {
 			width: "65px",
@@ -112,11 +115,11 @@ function News() {
 					? "1.7em"
 					: "1.3em",
 			fontWeight: "bold",
-			transsition:" 0.2s"
+			transsition: " 0.2s",
 		},
 		date: {
 			fontSize:
-			screenSize === "large"
+				screenSize === "large"
 					? "1.2em"
 					: screenSize === "medium"
 					? "1em"

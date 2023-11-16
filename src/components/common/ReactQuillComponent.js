@@ -1,15 +1,11 @@
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-import React, { useState } from "react";
+import React from "react";
 import { ErrorMessage, Field } from "formik";
-import { selectScreenSize } from "../../store/reducers/layoutSlice";
-import { useSelector } from "react-redux";
-import { isMobile } from "react-device-detect";
 import { useTheme } from "@emotion/react";
 
 function ReactQuillComponent(name, helperText, ...rest) {
-	const screenSize = useSelector(selectScreenSize);
 	const theme = useTheme();
 	const ReactQuillComponentStyles = {
 		container: {

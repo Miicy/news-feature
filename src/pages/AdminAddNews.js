@@ -3,7 +3,6 @@ import { useTheme } from "@emotion/react";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { isMobile } from "react-device-detect";
 import { selectScreenSize } from "../store/reducers/layoutSlice";
 
 import dayjs from "dayjs";
@@ -14,23 +13,18 @@ import FormikDatePicker from "../components/common/FormikDatePicker";
 import ReactQuillComponent from "../components/common/ReactQuillComponent";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
 import CustomButton from "../components/common/CustomButton";
-import BreadcrumbsPage from "../components/common/Breadcrumbs";
-
 import {
 	DATA_STATE,
 	NOTIFICATION_TYPES,
 	SERVER_URL,
 } from "../helpers/app.constants";
-
 import {
 	displayNotification,
 	setDataState,
 } from "../store/reducers/notificationSlice";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { STORAGE } from "../firebase";
-import Select from "react-select";
 import LocationSelect from "../components/common/LocationSelect";
 import FormikFieldTag from "../components/common/FormikFieldTag";
 
@@ -256,7 +250,6 @@ function AdminAddNews() {
 			flexDirection: "column",
 			marginBottom: "30px",
 			justifyContent: "space-between",
-			height: "100px",
 			animation: "expandAnimation 0.2s ease 0s 1 normal forwards",
 			height: "fit-content",
 			width: "50%",
