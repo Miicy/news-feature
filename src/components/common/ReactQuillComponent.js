@@ -16,9 +16,9 @@ function ReactQuillComponent(name, helperText, ...rest) {
 			color: theme.palette.opposite.main,
 		},
 		quill: {
-			minHeight: "fit-content",
-			height: "400px",
+			height: "500px",
 			borderRadius: "5px",
+			zIndex: 100,
 		},
 		quillError: {
 			color: theme.palette.red.error,
@@ -57,7 +57,6 @@ function ReactQuillComponent(name, helperText, ...rest) {
 				return (
 					<div style={ReactQuillComponentStyles.container}>
 						<ReactQuill
-							className={`quill${form.errors.content ? "-error" : ""}`}
 							style={ReactQuillComponentStyles.quill}
 							onChange={(value) => {
 								form.setFieldValue("content", value);

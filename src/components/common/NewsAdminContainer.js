@@ -7,7 +7,14 @@ import { useSelector } from "react-redux";
 import { selectScreenSize } from "../../store/reducers/layoutSlice";
 import { useTheme } from "@emotion/react";
 
-function NewsAdminContainer({ news, index, margin, borderRadius, admin }) {
+function NewsAdminContainer({
+	news,
+	index,
+	margin,
+	borderRadius,
+	admin,
+	columnClicked,
+}) {
 	const navigate = useNavigate();
 	const screenSize = useSelector(selectScreenSize);
 	const theme = useTheme();
@@ -23,10 +30,7 @@ function NewsAdminContainer({ news, index, margin, borderRadius, admin }) {
 	const newsContainerStyles = {
 		singleNews: {
 			display: "grid",
-			gridTemplateColumns:
-				isMobile || screenSize === "small"
-					? "0.2fr 0.8fr 0.5fr 0.5fr 0.2fr"
-					: "0.2fr 0.8fr 0.5fr 0.5fr 1fr 1.5fr 0.2fr",
+			gridTemplateColumns: "0.2fr 0.8fr 0.5fr 0.5fr 1fr 1.5fr 0.2fr",
 			gap: "5px 10px",
 			gridTemplateRows: "1fr",
 			margin: margin,
@@ -37,50 +41,85 @@ function NewsAdminContainer({ news, index, margin, borderRadius, admin }) {
 			overflow: "hidden",
 		},
 		rest: {
-			display: "flex",
-			justifyContent: "flex-start",
 			alignItems: "center",
-			fontSize: screenSize === "small" || isMobile ? "0.6em" : "0.9em",
+			fontSize: "0.9em",
+			display: "flex",
+			justifyContent: "center",
 		},
 		adminIcon: {
 			cursor: "pointer",
-			marginRight: screenSize === "small" || isMobile ? "5px" : "10px",
-			fontSize: screenSize === "small" || isMobile ? "1.3em" : "1.5em",
+			marginRight: "10px",
+			fontSize: "1.5em",
 		},
 	};
-	console.log(news);
 	return (
-		<div style={newsContainerStyles.singleNews}className = "hover-button">
-			<div style={{ ...newsContainerStyles.rest, marginLeft: "10px" }}>
+		<div style={{...newsContainerStyles.singleNews, cursor:"default"}} className="hover-button">
+			<div
+				style={{
+					...newsContainerStyles.rest,
+					marginLeft: "10px",
+					backgroundColor: columnClicked.num && "#d1d1d1",
+				}}
+			>
 				{news.id}
 			</div>
-			<div style={newsContainerStyles.rest}>{news.title}</div>
-			<div style={newsContainerStyles.rest}>{news.date}</div>
-			<div style={newsContainerStyles.rest}>{news.location}</div>
-			{screenSize !== "small" && !isMobile && (
-				<div style={newsContainerStyles.rest}>{news.tags}</div>
-			)}
-			{screenSize !== "small" && !isMobile && (
-				<div
-					style={{
-						...newsContainerStyles.rest,
-						fontSize: screenSize === "small" || isMobile ? "0.7em" : "0.8em",
-						whiteSpace: "normal",
-						textOverflow: "ellipsis",
-						overflow: "hidden",
-						display: "flex",
-						justifyContent: "flex-start",
-						alignItems: "flex-start",
-						padding: "5px",
-					}}
-				>
-					{truncatedContent}
-				</div>
-			)}
+			<div
+				style={{
+					...newsContainerStyles.rest,
+					marginLeft: "20px",
+					justifyContent: "flex-start",
+					backgroundColor: columnClicked.title && "#d1d1d1",
+				}}
+			>
+				{news.title}
+			</div>
+			<div
+				style={{
+					...newsContainerStyles.rest,
+					backgroundColor: columnClicked.date && "#d1d1d1",
+				}}
+			>
+				{news.date}
+			</div>
+			<div
+				style={{
+					...newsContainerStyles.rest,
+					justifyContent: "flex-start",
+					backgroundColor: columnClicked.location && "#d1d1d1",
+				}}
+			>
+				{news.location}
+			</div>
+			<div
+				style={{ ...newsContainerStyles.rest, justifyContent: "flex-start" }}
+			>
+				{news.tags.map((tag, index) => (
+					<span key={index}>
+						#{tag}
+						{index !== news.tags.length - 1 && <>&nbsp;</>}
+					</span>
+				))}
+			</div>
+
+			<div
+				style={{
+					...newsContainerStyles.rest,
+					fontSize: "0.8em",
+					whiteSpace: "normal",
+					textOverflow: "ellipsis",
+					overflow: "hidden",
+					display: "flex",
+					justifyContent: "flex-start",
+					alignItems: "flex-start",
+					padding: "5px",
+				}}
+			>
+				{truncatedContent}
+			</div>
 			{admin && (
 				<div style={newsContainerStyles.rest}>
 					<Tooltip title={`Edit news`}>
-						<EditIcon sx={newsContainerStyles.adminIcon} className="hover"/>
+						<EditIcon sx={newsContainerStyles.adminIcon} className="hover" />
 					</Tooltip>
 					<Tooltip title={`Delete news`}>
 						<DeleteIcon sx={newsContainerStyles.adminIcon} className="hover" />

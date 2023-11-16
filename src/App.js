@@ -76,8 +76,8 @@ function App() {
 			<BrowserRouter>
 				<Header />
 				<Routes>
-					<Route path="/" element={<News />} />
-					<Route path="/:id" element={<NewsDetailed />} />
+					<Route path="/news" element={<News />} />
+					<Route path="/news/:id" element={<NewsDetailed />} />
 					{!isMobile || screenSize !== "small" ? (
 						<>
 							<Route path="/admin" element={<AdminLogin />} />

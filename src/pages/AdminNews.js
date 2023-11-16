@@ -35,12 +35,14 @@ function AdminNews() {
 
 	const AdminSidebarStyles = {
 		container: {
-			height:"100vh",
-			width: "15%",
+			height: "100vh",
+			width: "15%", 
 			minWidth: "150px",
 			backgroundColor: theme.palette.opposite.main,
 			display: "flex",
 			flexDirection: "column",
+			overflowY: "auto",
+			zIndex:555,
 		},
 		options: {
 			height: "80px",
@@ -94,7 +96,7 @@ function AdminNews() {
             orientation="horizontal"
             variant="middle"
           />
-          {renderOption('other', 'Other')}
+          {/* {renderOption('other', 'Other')} */}
         </div>
         <Divider
           sx={{
@@ -105,7 +107,7 @@ function AdminNews() {
           variant="middle"
         />
       </div>
-      <div style={{ backgroundColor: 'grey', width: '100%', height: '100%' }}>
+      <div style={{ backgroundColor: theme.palette.secondary.secondary, width: '100%', height: '100%',overflowY: "auto", }}>
         {adminRoutes.addNews && <AdminAddNews />}
         {adminRoutes.adminPanelRender && <AdminPanel />}
         {adminRoutes.other && <div>Other</div>}

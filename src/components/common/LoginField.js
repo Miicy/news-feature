@@ -43,7 +43,7 @@ const LoginField = ({
 				variant="outlined"
 				size={size}
 				fullWidth
-				color="primary"
+				color="opposite"
 				type={password ? (showPassword ? "text" : "password") : "text"}
 				value={value}
 				InputProps={{
@@ -52,11 +52,11 @@ const LoginField = ({
 							<IconButton onClick={handleTogglePassword}>
 								{showPassword ? (
 									<VisibilityOffIcon
-										sx={{ color: theme.palette.secondary.main }}
+										sx={{ color: theme.palette.opposite.main }}
 									/>
 								) : (
 									<VisibilityIcon
-										sx={{ color: theme.palette.secondary.main }}
+										sx={{ color: theme.palette.opposite.main }}
 									/>
 								)}
 							</IconButton>

@@ -28,17 +28,12 @@ const FormikDatePicker = ({
 			fontSize: "0.8em",
 			display: "flex",
 			justifyContent: "flex-start",
-			width:
-				screenSize === "small" || isMobile
-					? "98.5%"
-					: screenSize === "medium"
-					? "58.5%"
-					: screenSize === "medium-s"
-					? "58.5%"
-					: "38.5%",
+			marginLeft: "20px",
+			fontSize: "0.8em",
+			marginTop: "5px",
+			position: "absolute",
 		},
-		container: {
-		},
+		container: {},
 	};
 
 	return (
@@ -55,17 +50,16 @@ const FormikDatePicker = ({
 								onChange={(value) => form.setFieldValue("date", value)}
 								value={today}
 								format="LL"
+								shrink="true"
 								slotProps={{
 									textField: {
 										variant: "outlined",
 										color: "opposite",
 										size: size,
-										shrink: true,
 									},
 								}}
 								error={!!error && touched}
 								helperText={touched ? error : helperText}
-								
 							/>
 							<ErrorMessage
 								style={DatePickerStyles.error}

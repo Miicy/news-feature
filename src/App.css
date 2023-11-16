@@ -51,9 +51,6 @@ body::-webkit-scrollbar {
 	border-top-right-radius: 10px;
 }
 
-.quill-error > * {
-	border: 1px solid #d32f2f !important;
-}
 .ql-toolbar.ql-snow + .ql-container.ql-snow{
 	border-bottom-right-radius: 10px;
 	border-bottom-left-radius: 10px;

@@ -86,7 +86,7 @@ function AdminLogin() {
 			justifyContent: "center",
 			alignItems: "center",
 			minWidth: "300px",
-			backgroundColor: theme.palette.opposite.main,
+			backgroundColor: theme.palette.secondary.secondary,
 		},
 		form: {
 			height: "55%",
@@ -118,7 +118,7 @@ function AdminLogin() {
 			>
 				{(formik) => (
 					<Form style={adminLoginStyles.form}>
-						<h1 style={{ color: "white" }}>Admin Login</h1>
+						<h1 style={{ color: "black" }}>Admin Login</h1>
 						<LoginField
 							name="username"
 							label="Username"

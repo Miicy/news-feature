@@ -124,7 +124,7 @@ export default function NewsContainer({
 						<p
 							style={{ textDecoration: "underline", cursor: "pointer" }}
 							// onClick={() => navigate(`/${news._id}`)} for database
-							onClick={() => navigate(`/${news.id}`)}
+							onClick={() => navigate(`/news/${news.id}`)}
 						>
 							Read more
 						</p>

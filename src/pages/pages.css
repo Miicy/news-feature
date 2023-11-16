@@ -16,20 +16,24 @@
 }
 
 .hover:hover {
-	color: #757575!important;
+	color: #757575 !important;
 	transition: "color 0.3s";
-}
-
-.hover-button:hover {
-	background-color: #e0e0e0!important;
-	transition: 0.3s;
 	cursor: pointer;
 }
 
-.error{
-	margin-left: 10px!important;
+.hover-button:hover {
+	background-color: #9b9999 !important;
+	transition: 0.3s;
+	cursor: pointer;
 }
-
+.hover-button-darker:hover{
+	background-color: #757575 !important;
+	transition: 0.3s;
+	cursor: pointer;
+}
+.error {
+	margin-left: 10px !important;
+}
 
 @keyframes expandAnimation {
 	0% {

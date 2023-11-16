@@ -6,6 +6,7 @@ const getDesignTokens = () => ({
 		primary: {
 			main: grey[50],
 			opacity80: "rgba(250, 250, 250, 0.60)",
+			opacity40: "rgba(250, 250, 250, 0.40)",
 			glass: "rgba(250, 250, 250, 0.80)",
 		},
 		secondary: {
@@ -72,10 +73,10 @@ export const themeCreation = () =>
 					root: {
 						"& .MuiOutlinedInput-root": {
 							borderRadius: 10,
-							color: grey[50],
+							color: grey[900],
 						},
 						"& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline":{
-							borderColor: grey[50]
+							borderColor: grey[900],
 						  }
 					},
 					
@@ -85,9 +86,9 @@ export const themeCreation = () =>
 				styleOverrides: {
 					input: {
 						"&:-webkit-autofill": {
-							WebkitBoxShadow: `0 0 0 100px ${grey[900]}  inset`,
-							WebkitTextFillColor: grey[50],
-							caretColor: "black",
+							WebkitBoxShadow: `0 0 0 100px ${grey[50]}  inset`,
+							WebkitTextFillColor: grey[900],
+							caretColor: "white",
 							borderRadius: "0px",
 						},
 					},
