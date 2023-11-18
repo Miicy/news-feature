@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import BreadcrumbsPage from "../components/common/Breadcrumbs";
 import { useParams } from "react-router-dom";
 import useGetAllNews from "../helpers/hooks/getAllNews";
-import { useMediaQuery } from "@mui/material";
 import { isMobile } from "react-device-detect";
 import { selectScreenSize } from "../store/reducers/layoutSlice";
 import { useSelector } from "react-redux";
@@ -22,7 +21,6 @@ function NewsDetailed() {
 			}
 		}
 	}, [allNews, id]);
-	console.log(newsDetails);
 
 	const newsDetailedStyles = {
 		container: {

@@ -101,11 +101,11 @@ function Header() {
 					<li style={headerStyles.navLi}>
 						<p
 							className={
-								window.location.pathname.startsWith("/news") ? "" : "hover"
+								window.location.pathname.startsWith("/") ? "" : "hover"
 							}
-							onClick={() => navigate("/news")}
+							onClick={() => navigate("/")}
 							style={{
-								...(window.location.pathname.startsWith("/news") &&
+								...(window.location.pathname.startsWith("/") &&
 									headerStyles.linkActive),
 							}}
 						>

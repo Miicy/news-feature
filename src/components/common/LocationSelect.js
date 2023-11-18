@@ -42,8 +42,6 @@ function LocationSelect({ field, form, border }) {
 	const handleCountryChange = (selectedOption) => {
 		setSelectedCountry(selectedOption);
 		form.setFieldValue(field.name, selectedOption.value);
-
-		// console.log(field.name, selectedOption.value)
 	};
 
 	return (

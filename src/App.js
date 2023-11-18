@@ -24,7 +24,7 @@ function App() {
 			<BrowserRouter>
 				<Header />
 				<Routes>
-					<Route path="/news" element={<News />} />
+					<Route path="/" element={<News />} />
 					<Route path="/news/:id" element={<NewsDetailed />} />
 					{!isMobile || screenSize !== "small" ? (
 						<>

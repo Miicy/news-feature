@@ -172,8 +172,6 @@ function News() {
 
 	if (!allNews) return null;
 
-	console.log(latestNews);
-
 	return (
 		<div className="innerPageContainer">
 			<div
