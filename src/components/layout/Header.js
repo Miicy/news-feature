@@ -112,20 +112,23 @@ function Header() {
 							News
 						</p>
 					</li>
-					<li style={headerStyles.navLi}>
-						<p
-							className={
-								window.location.pathname.startsWith("/admin") ? "" : "hover"
-							}
-							onClick={() => navigate("/admin")}
-							style={{
-								...(window.location.pathname.startsWith("/admin") &&
-									headerStyles.linkActive),
-							}}
-						>
-							Admin
-						</p>
-					</li>
+					{!screenSize === "small" ||
+						(!isMobile && (
+							<li style={headerStyles.navLi}>
+								<p
+									className={
+										window.location.pathname.startsWith("/admin") ? "" : "hover"
+									}
+									onClick={() => navigate("/admin")}
+									style={{
+										...(window.location.pathname.startsWith("/admin") &&
+											headerStyles.linkActive),
+									}}
+								>
+									Admin
+								</p>
+							</li>
+						))}
 				</ul>
 			</div>
 		</nav>

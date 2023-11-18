@@ -85,13 +85,13 @@ function AdminPanel() {
 	const adminPanelStyles = {
 		container: {
 			width: "100%",
+			minWidth: "1000px",
 			minHeight: "99.7vh",
 			display: "flex",
 			flexDirection: "column",
 			alignItems: "stretch",
 			overflow: "auto",
 			backgroundColor: theme.palette.secondary.secondary,
-			marginBottom: "40px",
 		},
 		heading: {
 			display: "grid",

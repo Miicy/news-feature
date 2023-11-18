@@ -29,7 +29,9 @@ export default function NewsContainer({
 			width: layoutColumn ? "100%" : "auto",
 		},
 		singleNewsImage: {
-			backgroundColor: "lightgrey",
+			backgroundImage: news ? `url(${news.image})` : "none",
+			backgroundSize: "cover",
+			backgroundPosition: "center top",
 			minWidth: "100px",
 			width: layoutColumn ? "30%" : "40%",
 			height: layoutColumn ? "100%" : "100%",
@@ -45,14 +47,16 @@ export default function NewsContainer({
 			width: "80%",
 			height: "100%",
 			paddingLeft: "10px",
+			display:"flex",
+			justifyContent: "center",
+			alignItems: "center",
+			flexDirection: "column"
 		},
 		readMore: {
-			width: "98%",
+			width: "95%",
 			display: "flex",
 			justifyContent: "space-between",
 			alignItems: "center",
-			marginLeft: admin && "10px",
-			marginRight: isMobile || screenSize === "small" ? "5px" : "10px",
 			fontSize: layoutColumn
 				? (isMobile && screenSize === "small") || screenSize === "medium"
 					? "0.7em"
@@ -68,7 +72,6 @@ export default function NewsContainer({
 			minWidth: "100px",
 		},
 		singleNewsContent: {
-			marginLeft: "10px",
 			width: "90%",
 			height: layoutColumn
 				? (isMobile && screenSize === "small") || screenSize === "medium"
@@ -116,7 +119,7 @@ export default function NewsContainer({
 						</div>
 					)}
 				</div>
-				<p style={newsContainerStyles.singleNewsContent}>{news.content}</p>
+				<div style={newsContainerStyles.singleNewsContent}>{news.content}</div>
 				<div style={newsContainerStyles.readMore}>
 					{news.date}
 					{readMore && (

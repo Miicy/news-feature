@@ -1,6 +1,7 @@
 {
   "projects": {
-    "news": "news-9eb28"
+    "news": "news-9eb28",
+    "default": "news-9eb28"
   },
   "targets": {},
   "etags": {}

@@ -289,8 +289,7 @@ function AdminAddNews() {
 		imageInner: {
 			width: "20%",
 			minWidth: "150px",
-			height: "25%",
-			minHeight: "100px",
+			height: "80px",
 			boxShadow: "0px -1px 12px 1px rgba(0,0,0,0.15) inset",
 			border: `1px solid ${theme.palette.fifth.secondary}`,
 			backgroundColor: theme.palette.third.secondary,
@@ -495,7 +494,7 @@ function AdminAddNews() {
 												: "",
 									}}
 								>
-									Content
+									{errors.content ? "Content Required" : "Content"}
 								</div>
 								{expanded.content ? (
 									<ExpandMoreIcon sx={AdminAddNewsStyles.expandIcon} />

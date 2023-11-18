@@ -11,8 +11,7 @@ function Home() {
 	const screenSize = useSelector(selectScreenSize);
 	const homeStyles = {
 		container: {
-			marginTop: "15px",
-			width: "95%",
+			width: "100%",
 			height: screenSize === "small" || isMobile ? "500px" : "700px",
 		},
 	};

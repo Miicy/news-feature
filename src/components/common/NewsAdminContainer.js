@@ -1,4 +1,4 @@
-import { Tooltip} from "@mui/material";
+import { Tooltip } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useSelector } from "react-redux";
@@ -19,10 +19,14 @@ function NewsAdminContainer({
 	const maxCharacters =
 		screenSize === "medium" ? 60 : screenSize === "medium-s" ? 35 : 100;
 	const content = news.content;
+	const title = news.title;
 	const truncatedContent =
 		content.length > maxCharacters
 			? content.substring(0, maxCharacters) + "..."
 			: content;
+
+	const truncatedTitle =
+		title.length > 30 ? title.substring(0, maxCharacters) + "..." : title;
 
 	const newsContainerStyles = {
 		singleNews: {
@@ -50,7 +54,10 @@ function NewsAdminContainer({
 		},
 	};
 	return (
-		<div style={{...newsContainerStyles.singleNews, cursor:"default"}} className="hover-button">
+		<div
+			style={{ ...newsContainerStyles.singleNews, cursor: "default" }}
+			className="hover-button"
+		>
 			<div
 				style={{
 					...newsContainerStyles.rest,
@@ -66,9 +73,10 @@ function NewsAdminContainer({
 					marginLeft: "20px",
 					justifyContent: "flex-start",
 					backgroundColor: columnClicked.title && "#d1d1d1",
+					paddingLeft: "4px",
 				}}
 			>
-				{news.title}
+				{truncatedTitle}
 			</div>
 			<div
 				style={{
@@ -83,19 +91,24 @@ function NewsAdminContainer({
 					...newsContainerStyles.rest,
 					justifyContent: "flex-start",
 					backgroundColor: columnClicked.location && "#d1d1d1",
+					paddingLeft: "4px",
 				}}
 			>
 				{news.location}
 			</div>
 			<div
-				style={{ ...newsContainerStyles.rest, justifyContent: "flex-start" }}
+				style={{
+					...newsContainerStyles.rest,
+					justifyContent: "flex-start",
+				}}
 			>
-				{news.tags.map((tag, index) => (
+				{news.tags.slice(0, 2).map((tag, index) => (
 					<span key={index}>
 						#{tag}
-						{index !== news.tags.length - 1 && <>&nbsp;</>}
+						{index !== 1 && <>&nbsp;</>}
 					</span>
 				))}
+				{news.tags.length > 2 && <span>&nbsp;...</span>}
 			</div>
 
 			<div

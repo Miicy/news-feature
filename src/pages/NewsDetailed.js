@@ -22,13 +22,12 @@ function NewsDetailed() {
 			}
 		}
 	}, [allNews, id]);
+	console.log(newsDetails);
 
 	const newsDetailedStyles = {
 		container: {
-			marginTop: "5px",
 			width: "95%",
 			height: "100%",
-			// backgroundColor: "yellow",
 			display: "flex",
 			flexDirection: "column",
 		},
@@ -36,31 +35,45 @@ function NewsDetailed() {
 			display: "flex",
 			flexDirection: "column",
 			alignItems: screenSize === "small" || isMobile ? "center" : "flex-start",
+			justifyContent: "space-between",
 		},
 		title: {
-			fontSize: screenSize === "small" || isMobile ? "1em" : "2em",
+			fontSize: screenSize === "small" || isMobile ? "1em" : "2.3em",
 			marginLeft: screenSize === "small" || isMobile ? "2px" : "5px",
 			fontWeight: "bold",
 		},
+		location:{
+			display:"flex",
+			fontSize: screenSize === "small" || isMobile ? "0.8em" : "1.3em",
+			marginLeft:"10px"
+		},
 		image: {
-			backgroundColor: "grey",
-			height: screenSize === "small" || isMobile ? "200px" : "400px",
-			width: screenSize === "small" || isMobile ? "85%" : "100%",
-			borderRadius: "10px",
+			backgroundImage: newsDetails ? `url(${newsDetails.image})` : "none",
+			backgroundSize: "cover",
+			backgroundPosition: "center center",
+			height: screenSize === "small" || isMobile ? "200px" : "500px",
+			width: screenSize === "small" || isMobile ? "100%" : "100%",
 		},
 
 		content: {
 			fontSize: screenSize === "small" || isMobile ? "0.9em" : "1.2em",
 			margin: screenSize === "small" || isMobile ? "20px 0" : "35px 0",
-			minHeight:screenSize === "small" || isMobile ? "200px" : "200px",
+			minHeight: screenSize === "small" || isMobile ? "200px" : "200px",
+			marginLeft:"10px"
 		},
-		date:{
-			width: "100%",
+		bottomContainer:{
+			display:"flex",
+			width:"100%",
+			justifyContent:"space-between",
+
+		},
+		date: {
 			display: "flex",
 			justifyContent: "flex-end",
-			marginBottom:"20px",
+			marginBottom: "20px",
 			fontSize: screenSize === "small" || isMobile ? "0.85em" : "1em",
-		}
+		},
+		
 	};
 	if (!allNews) return null;
 	if (!newsDetails) return null;
@@ -68,15 +81,33 @@ function NewsDetailed() {
 	return (
 		<div className="innerPageContainer">
 			<div className="breadcrumbsContainer">
-				<BreadcrumbsPage second={"News"} secondUrl={"news"} link={newsDetails.title} />
+				<BreadcrumbsPage
+					second={"News"}
+					secondUrl={"news"}
+					link={newsDetails.title}
+				/>
 			</div>
 			<div style={newsDetailedStyles.container}>
 				<div style={newsDetailedStyles.titleContainer}>
 					<p style={newsDetailedStyles.title}> {newsDetails.title}</p>
-					<div style={newsDetailedStyles.image}></div>
+					<p style={newsDetailedStyles.location}>
+					 Location: <div style={{fontWeight: "bold"}}>&nbsp;{newsDetails.location}</div>
+					</p>
 				</div>
+				<div style={newsDetailedStyles.image}></div>
 				<p style={newsDetailedStyles.content}>{newsDetails.content}</p>
+				<div style={newsDetailedStyles.bottomContainer}>
+				<div style={newsDetailedStyles.tags}>
+					{newsDetails.tags.map((tag, index) => (
+						<span key={index} style={newsDetailedStyles.tags}>
+							#{tag}&nbsp;
+						</span>
+					))}
+				</div>
 				<div style={newsDetailedStyles.date}>{newsDetails.date}</div>
+				
+				</div>
+				
 			</div>
 		</div>
 	);
