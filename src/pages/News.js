@@ -20,6 +20,7 @@ function News() {
 
 	const allNews = useGetAllNews();
 	const [newsLimit, setNewsLimit] = useState(7);
+	const [filteredNews, setFilteredNews] = useState([]);
 
 	const toggleLayoutColumn = () => {
 		const isSmallScreen = screenSize === "small";
@@ -47,6 +48,23 @@ function News() {
 	//news load
 	const loadMoreNews = () => {
 		setNewsLimit(newsLimit + 8);
+	};
+
+	//search
+	const handleSearch = (searchValue) => {
+		console.log("Search value:", searchValue);
+		const filteredNews = allNews.filter((item) => {
+			const matchesTitle = item.title
+				.toLowerCase()
+				.includes(searchValue.toLowerCase());
+			const matchesTag = item.tags.some((tag) =>
+				tag.toLowerCase().includes(searchValue.toLowerCase()),
+			);
+
+			return matchesTitle || matchesTag;
+		});
+		setFilteredNews(filteredNews);
+		console.log("Filtered news:", filteredNews);
 	};
 
 	const newsPageStyles = {
@@ -149,7 +167,7 @@ function News() {
 			gridTemplateRows: "auto",
 			gap: "10px",
 			width: isMobile || screenSize === "small" ? "90%" : "80%",
-			transsition: "all 0.3s"
+			transsition: "all 0.3s",
 		},
 		loadMore: {
 			width: "100%",
@@ -179,7 +197,7 @@ function News() {
 				style={newsPageStyles.breadcrumbsContainerMobile}
 			>
 				<BreadcrumbsPage link={"News"} />
-				<SearchInput />
+				<SearchInput onSearch={handleSearch} filteredNews={filteredNews} />
 				{!isMobile && screenSize !== "small" && (
 					<div style={newsPageStyles.layout} onClick={toggleLayoutColumn}>
 						{layoutColumn ? (

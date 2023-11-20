@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 48 48" id="news">
+    <path fill="#b9d5ea"
+        d="M42,14V38.84A3.12,3.12,0,0,1,39.16,42,3,3,0,0,1,36,39V13h5A1,1,0,0,1,42,14Z"></path>
+    <path fill="#ebf3fe"
+        d="M39,42H9a3,3,0,0,1-3-3V7A1,1,0,0,1,7,6H35a1,1,0,0,1,1,1V39A3,3,0,0,0,39,42Z"></path>
+    <rect width="22" height="9" x="10" y="12" fill="#48bdff" rx="1" ry="1"></rect>
+    <rect width="8" height="8" x="24" y="25" fill="#48bdff" rx="1" ry="1"></rect>
+    <path fill="#2d96f2"
+        d="M20 26H10a1 1 0 0 1 0-2H20a1 1 0 0 1 0 2zM20 30H10a1 1 0 0 1 0-2H20a1 1 0 0 1 0 2zM20 34H10a1 1 0 0 1 0-2H20a1 1 0 0 1 0 2z"></path>
+    <path fill="#b9d5ea" d="M33,38a1,1,0,0,1-1,1H6V37H32A1,1,0,0,1,33,38Z"></path>
+</svg>

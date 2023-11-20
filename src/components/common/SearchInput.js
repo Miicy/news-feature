@@ -6,16 +6,32 @@ import SearchIcon from "@mui/icons-material/SearchOutlined";
 import ClearIcon from "@mui/icons-material/Clear";
 import { selectScreenSize } from "../../store/reducers/layoutSlice";
 import { useSelector } from "react-redux";
-import { useTheme } from "@emotion/react";
-import { isMobile } from "react-device-detect";
+import SearchModal from "./SearchModal";
 
-function SearchInput() {
+function SearchInput({ onSearch, filteredNews  }) {
 	const [value, setValue] = useState("");
-	const theme = useTheme();
 	const screenSize = useSelector(selectScreenSize);
+	const [keyPressed, setKeyPressed] = useState(false);
+	
+	const handleSearch = () => {
+		onSearch(value);
+	};
+
+	const clearInput = () => {
+		setValue("");
+		setKeyPressed(false);
+	};
+
+	const handleKeyPress = () => {
+		onSearch(value);
+		if (!keyPressed) {
+			setKeyPressed(true);
+		}
+	};
 
 	const SearchInputStyles = {
 		container: {
+			position:"relative",
 			minWidth:
 				screenSize === "large"
 					? "350px"
@@ -36,22 +52,17 @@ function SearchInput() {
 				onChange={(e) => setValue(e.target.value)}
 				value={value}
 				color="opposite"
+				onKeyDown={handleKeyPress}
 				InputProps={{
 					sx: { width: screenSize === "small" ? "240px" : "100%" },
-					endAdornment: [
-						value && (
-							<InputAdornment>
+					endAdornment: (
+						<InputAdornment position="end">
+							{value && (
 								<ClearIcon
-									onClick={() => setValue("")}
-									sx={{ fontSize: "1em" }}
+									onClick={clearInput}
+									sx={{ fontSize: "1em", cursor: "pointer" }}
 								/>
-							</InputAdornment>
-						),
-						<InputAdornment
-							key="searchIcon"
-							position="end"
-							sx={{ marginRight: -1, height: "2em" }}
-						>
+							)}
 							<Divider
 								sx={{
 									ml: 0.5,
@@ -60,11 +71,15 @@ function SearchInput() {
 								orientation="vertical"
 								variant="middle"
 							/>
-							<SearchIcon sx={{ fontSize: "1.3em", cursor: "pointer" }} />
-						</InputAdornment>,
-					],
+							<SearchIcon
+								onClick={handleSearch}
+								sx={{ fontSize: "1.3em", cursor: "pointer" }}
+							/>
+						</InputAdornment>
+					),
 				}}
 			/>
+			{keyPressed && value && <SearchModal filteredNews={filteredNews} />}
 		</div>
 	);
 }

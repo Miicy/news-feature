@@ -46,7 +46,7 @@ function ModalMenu({ headerStyles, menuOpen, toggleMenu }) {
 							toggleMenu();
 						}}
 						style={{
-							...(window.location.pathname === "/" &&
+							...(window.location.pathname === "/news" &&
 								headerStyles.linkActive),
 						}}
 					>

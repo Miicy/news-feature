@@ -3,8 +3,18 @@ import { isMobile } from "react-device-detect";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectScreenSize } from "../../store/reducers/layoutSlice";
+import {
+	setDataState,
+	displayNotification,
+} from "../../store/reducers/notificationSlice";
+import {
+	DATA_STATE,
+	NOTIFICATION_TYPES,
+	SERVER_URL,
+} from "../../helpers/app.constants";
+import { useEffect, useState } from "react";
 
 export default function NewsContainer({
 	news,
@@ -17,7 +27,15 @@ export default function NewsContainer({
 	admin,
 }) {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const screenSize = useSelector(selectScreenSize);
+	const [showContent, setShowContent] = useState(false);
+
+	useEffect(() => {
+		if (showContent && news) {
+		  dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
+		}
+	  }, [showContent, news, dispatch]);
 
 	const newsContainerStyles = {
 		singleNews: {
@@ -36,6 +54,7 @@ export default function NewsContainer({
 			width: layoutColumn ? "30%" : "40%",
 			height: layoutColumn ? "100%" : "100%",
 			borderRadius: "5px 0 0 5px",
+			animation: "myAnim 2s ease 0s 1 normal forwards",
 		},
 		singleNewsTextContainer: {
 			width: admin ? "95%" : "98%",
@@ -47,10 +66,10 @@ export default function NewsContainer({
 			width: "80%",
 			height: "100%",
 			paddingLeft: "10px",
-			display:"flex",
+			display: "flex",
 			justifyContent: "center",
 			alignItems: "center",
-			flexDirection: "column"
+			flexDirection: "column",
 		},
 		readMore: {
 			width: "95%",
@@ -94,7 +113,7 @@ export default function NewsContainer({
 		},
 		adminIcon: {
 			cursor: "pointer",
-			marginRight:screenSize === "small" && isMobile ? "5px" : "10px",
+			marginRight: screenSize === "small" && isMobile ? "5px" : "10px",
 			fontSize: screenSize === "small" && isMobile ? "0.8em" : "1.5em",
 		},
 	};

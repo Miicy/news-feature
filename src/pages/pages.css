@@ -19,6 +19,11 @@
 	transition: "color 0.3s";
 	cursor: pointer;
 }
+.hover-text:hover {
+	color: #7c0909 !important;
+	transition: "color 0.3s";
+	cursor: pointer;
+}
 
 .hover-button:hover {
 	background-color: #9b9999 !important;

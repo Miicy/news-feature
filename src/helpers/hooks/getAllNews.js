@@ -22,7 +22,7 @@ const useGetAllNews = () => {
 					const updatedNewsData = await updateImageUrls(newsData);
 					setAllNews(updatedNewsData);
 					dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
-				}, 500);
+				}, 100);
 
 				/* Uncomment the below code for the actual API call to retrieve data from the server */
 
@@ -32,7 +32,7 @@ const useGetAllNews = () => {
 				// dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
 			} catch (error) {
 				const notificationPayload = {
-					text: 'Došlo je do greške!',
+					text: "Došlo je do greške!",
 					type: NOTIFICATION_TYPES.ERROR,
 				};
 				dispatch(displayNotification(notificationPayload));
@@ -43,18 +43,20 @@ const useGetAllNews = () => {
 	}, [dispatch]);
 
 	const updateImageUrls = async (data) => {
-		const updatedData = [];
-		for (const item of data) {
-			if (item.image) {
-				const downloadUrl = await getDownloadURLFromStorage(item.image);
-				updatedData.push({ ...item, image: downloadUrl });
-			} else {
-				updatedData.push(item);
-			}
-		}
+		const updatedData = await Promise.all(
+			data.map(async (item, index) => {
+				if (item.image) {
+					const downloadUrl = await getDownloadURLFromStorage(
+						item.image,
+						index,
+					);
+					return { ...item, image: downloadUrl };
+				}
+				return item;
+			}),
+		);
 		return updatedData;
 	};
-
 	const getDownloadURLFromStorage = async (storageUrl) => {
 		const storageRef = ref(STORAGE, storageUrl);
 		const downloadUrl = await getDownloadURL(storageRef);

@@ -24,10 +24,12 @@ function NewsDetailed() {
 
 	const newsDetailedStyles = {
 		container: {
-			width: "95%",
+			width: "80%",
 			height: "100%",
 			display: "flex",
 			flexDirection: "column",
+			padding: "10px",
+			marginBottom: "50px",
 		},
 		titleContainer: {
 			display: "flex",
@@ -40,10 +42,10 @@ function NewsDetailed() {
 			marginLeft: screenSize === "small" || isMobile ? "2px" : "5px",
 			fontWeight: "bold",
 		},
-		location:{
-			display:"flex",
+		location: {
+			display: "flex",
 			fontSize: screenSize === "small" || isMobile ? "0.8em" : "1.3em",
-			marginLeft:"10px"
+			marginLeft: "10px",
 		},
 		image: {
 			backgroundImage: newsDetails ? `url(${newsDetails.image})` : "none",
@@ -54,16 +56,22 @@ function NewsDetailed() {
 		},
 
 		content: {
+			display: "flex",
+			justifyContent: "center",
+			alignItems: "center",
+		},
+		contentInner: {
+			width: "90%",
 			fontSize: screenSize === "small" || isMobile ? "0.9em" : "1.2em",
 			margin: screenSize === "small" || isMobile ? "20px 0" : "35px 0",
 			minHeight: screenSize === "small" || isMobile ? "200px" : "200px",
-			marginLeft:"10px"
+			marginLeft: "10px",
 		},
-		bottomContainer:{
-			display:"flex",
-			width:"100%",
-			justifyContent:"space-between",
-
+		bottomContainer: {
+			display: "flex",
+			width: "100%",
+			justifyContent: "space-between",
+			margin: "30px 0",
 		},
 		date: {
 			display: "flex",
@@ -71,7 +79,6 @@ function NewsDetailed() {
 			marginBottom: "20px",
 			fontSize: screenSize === "small" || isMobile ? "0.85em" : "1em",
 		},
-		
 	};
 	if (!allNews) return null;
 	if (!newsDetails) return null;
@@ -89,23 +96,34 @@ function NewsDetailed() {
 				<div style={newsDetailedStyles.titleContainer}>
 					<p style={newsDetailedStyles.title}> {newsDetails.title}</p>
 					<p style={newsDetailedStyles.location}>
-					 Location: <div style={{fontWeight: "bold"}}>&nbsp;{newsDetails.location}</div>
+						Location:{" "}
+						<div style={{ fontWeight: "bold" }}>
+							&nbsp;{newsDetails.location}
+						</div>
 					</p>
 				</div>
 				<div style={newsDetailedStyles.image}></div>
-				<p style={newsDetailedStyles.content}>{newsDetails.content}</p>
+				<div style={newsDetailedStyles.content}>
+					<p style={newsDetailedStyles.contentInner}>
+						{newsDetails.content.split("/n").map((paragraph, index) => (
+							<React.Fragment key={index}>
+								<br />
+								{paragraph}
+								<br />
+							</React.Fragment>
+						))}
+					</p>
+				</div>
 				<div style={newsDetailedStyles.bottomContainer}>
-				<div style={newsDetailedStyles.tags}>
-					{newsDetails.tags.map((tag, index) => (
-						<span key={index} style={newsDetailedStyles.tags}>
-							#{tag}&nbsp;
-						</span>
-					))}
+					<div style={newsDetailedStyles.tags}>
+						{newsDetails.tags.map((tag, index) => (
+							<span key={index} style={newsDetailedStyles.tags}>
+								#{tag}&nbsp;
+							</span>
+						))}
+					</div>
+					<div style={newsDetailedStyles.date}>{newsDetails.date}</div>
 				</div>
-				<div style={newsDetailedStyles.date}>{newsDetails.date}</div>
-				
-				</div>
-				
 			</div>
 		</div>
 	);
