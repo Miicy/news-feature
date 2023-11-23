@@ -1,7 +1,15 @@
 import { useTheme } from "@emotion/react";
 import { Button } from "@mui/material";
 
-const CustomButton = ({ color,text, disabled, onClick, width, borderRadius,height }) => {
+const CustomButton = ({
+	color,
+	text,
+	disabled,
+	onClick,
+	width,
+	borderRadius,
+	height,
+}) => {
 	const theme = useTheme();
 
 	const buttonStyles = {
@@ -13,13 +21,13 @@ const CustomButton = ({ color,text, disabled, onClick, width, borderRadius,heigh
 		},
 		"&:disabled": {
 			backgroundColor: theme.palette.forth.secondary,
-			color: "grey",
+			backgroundColor: theme.palette.forth.third,
 			cursor: "default",
 		},
 		width: width,
 		borderRadius: borderRadius,
 		height: height,
-    color: color,
+		color: color,
 	};
 
 	return (

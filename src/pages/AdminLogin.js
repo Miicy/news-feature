@@ -139,7 +139,7 @@ function AdminLogin() {
 								width={"70%"}
 								height={"50px"}
 								borderRadius={2}
-								color={theme.palette.red.oppositeDark}
+								color="black"
 							/>
 						</div>
 					</Form>

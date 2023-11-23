@@ -44,6 +44,7 @@ const LoginField = ({
 				size={size}
 				fullWidth
 				color="opposite"
+				autoComplete="current-password"
 				type={password ? (showPassword ? "text" : "password") : "text"}
 				value={value}
 				InputProps={{
