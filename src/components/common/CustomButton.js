@@ -21,7 +21,6 @@ const CustomButton = ({
 		},
 		"&:disabled": {
 			backgroundColor: theme.palette.forth.secondary,
-			backgroundColor: theme.palette.forth.third,
 			cursor: "default",
 		},
 		width: width,
