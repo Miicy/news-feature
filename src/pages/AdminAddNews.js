@@ -71,20 +71,19 @@ function AdminAddNews() {
 			.then((downloadURL) => {
 				setCoverImage(downloadURL);
 				dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
+
+				dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
 			})
 
 			.catch((error) => {
 				console.error("Error uploading file:", error);
 				setCoverImage(null);
+				const notificationPayload = {
+					text: "!",
+					type: NOTIFICATION_TYPES.ERROR,
+				};
+				dispatch(displayNotification(notificationPayload));
 			});
-			dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
-			const notificationPayload = {
-				text: "Error loading the image!",
-				type: NOTIFICATION_TYPES.ERROR,
-			};
-			dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
-			dispatch(displayNotification(notificationPayload));
-			
 	};
 
 	const initialValues = {
@@ -537,7 +536,7 @@ function AdminAddNews() {
 								width={"40%"}
 								height={"40px"}
 								borderRadius={2}
-								color={theme.palette.red.error}
+								color={"black"}
 							/>
 							<CustomButton
 								onClick={handleModalCancel}
@@ -545,7 +544,7 @@ function AdminAddNews() {
 								width={"40%"}
 								height={"40px"}
 								borderRadius={2}
-								color={theme.palette.red.error}
+								color={"black"}
 							/>
 						</div>
 					</div>
