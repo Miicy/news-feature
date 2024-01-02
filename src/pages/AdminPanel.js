@@ -92,6 +92,7 @@ function AdminPanel() {
 			alignItems: "stretch",
 			overflow: "auto",
 			backgroundColor: theme.palette.secondary.secondary,
+			padding:"0px 0px 20px 0px"
 		},
 		heading: {
 			display: "grid",
