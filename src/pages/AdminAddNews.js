@@ -11,8 +11,6 @@ import { Formik, Form, Field } from "formik";
 import FormikField from "../components/common/FormikField";
 import FormikDatePicker from "../components/common/FormikDatePicker";
 import ReactQuillComponent from "../components/common/ReactQuillComponent";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CustomButton from "../components/common/CustomButton";
 import {
 	DATA_STATE,
