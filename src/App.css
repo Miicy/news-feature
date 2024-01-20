@@ -51,16 +51,25 @@ body::-webkit-scrollbar {
 	border-top-right-radius: 10px;
 }
 
-.ql-toolbar.ql-snow + .ql-container.ql-snow{
+.ql-toolbar.ql-snow + .ql-container.ql-snow {
 	border-bottom-right-radius: 10px;
 	border-bottom-left-radius: 10px;
 }
-.ql-editor p{
+.ql-editor p {
 	color: black !important;
+}
+.ql-editor {
+	border-top: none;
+	border-bottom: 1px solid black;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
 }
 
 .ql-toolbar.ql-snow {
-	background-color: #ededed!important;
+	background-color: #ededed !important;
+	border: 1px solid #000!important;;
 }
 
 @keyframes myAnim {
@@ -75,11 +84,10 @@ body::-webkit-scrollbar {
 
 @media (min-width: 600px) {
 	.css-b62m3t-container {
-		width: "100%",
-	  }
-  }
+		width: "100%";
+	}
+}
 
-  
-.hover-red:hover{
+.hover-red:hover {
 	color: #ef5350;
 }

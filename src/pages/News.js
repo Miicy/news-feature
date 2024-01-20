@@ -52,7 +52,7 @@ function News() {
 
 	//search
 	const handleSearch = (searchValue) => {
-		console.log("Search value:", searchValue);
+		// console.log("Search value:", searchValue);
 		const filteredNews = allNews.filter((item) => {
 			const matchesTitle = item.title
 				.toLowerCase()
@@ -64,7 +64,7 @@ function News() {
 			return matchesTitle || matchesTag;
 		});
 		setFilteredNews(filteredNews);
-		console.log("Filtered news:", filteredNews);
+		// console.log("Filtered news:", filteredNews);
 	};
 
 	const newsPageStyles = {

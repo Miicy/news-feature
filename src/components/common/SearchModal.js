@@ -35,6 +35,16 @@ function SearchModal({ filteredNews }) {
 		},
 	};
 
+	if (filteredNews.length === 0) {
+		return (
+		  <div style={searchModalStyles.container}>
+			<div style={{...searchModalStyles.inner, textAlign:"center"}}>
+			  <p>No matching news found.</p>
+			</div>
+		  </div>
+		);
+	  }
+	  
 	return (
 		<div style={searchModalStyles.container}>
 			<div style={searchModalStyles.inner}>
@@ -52,6 +62,7 @@ function SearchModal({ filteredNews }) {
 								? `${newsItem.title.slice(0, 35)}...`
 								: newsItem.title}
 						</p>
+						
 						{isMobile ||
 							(screenSize === "small" && (
 								<p style={{ fontSize: "0.8em" }}>{newsItem.date}</p>

@@ -1,4 +1,3 @@
-
 import TextField from "@mui/material/TextField";
 import { Field } from "formik";
 
@@ -6,6 +5,11 @@ const FormikField = ({ size, name, label, type, sx, helperText, ...rest }) => {
 	return (
 		<Field name={name}>
 			{({ field, form }) => {
+				const handleKeyDown = (event) => {
+					if (event.key === "Enter") {
+						event.preventDefault();
+					}
+				};
 				const { error, touched } = form.getFieldMeta(name);
 
 				return (
@@ -20,6 +24,7 @@ const FormikField = ({ size, name, label, type, sx, helperText, ...rest }) => {
 						size={size}
 						error={!!error && touched}
 						helperText={touched ? error : helperText}
+						onKeyDown={handleKeyDown}
 					/>
 				);
 			}}

@@ -19,18 +19,20 @@ function FormikFieldTag({ tags: propTags, onTagsChange, name, type, sx, helperTe
 
 	const handleTagAdd = () => {
 		if (inputTag.trim() !== "") {
-			const newTags = [...tags, inputTag.trim()];
-			setTags(newTags);
-			onTagsChange(newTags); // Update parent with new tags
-			setInputTag("");
+		  const newTags = [...tags, inputTag.trim()];
+		  setTags(newTags);
+		  onTagsChange(newTags);
+		  setInputTag("");
 		}
-	};
+	  };
 
 	const handleTagRemove = (index) => {
 		const newTags = tags.filter((_, i) => i !== index);
 		setTags(newTags);
 		onTagsChange(newTags); // Update parent with updated tags
 	};
+
+	// console.log(tags)
 
 	return (
 		<div>
@@ -50,6 +52,7 @@ function FormikFieldTag({ tags: propTags, onTagsChange, name, type, sx, helperTe
 						value={inputTag}
 						onKeyDown={(e) => {
 							if (e.key === "Enter") {
+								e.preventDefault();
 								handleTagAdd();
 							}
 						}}

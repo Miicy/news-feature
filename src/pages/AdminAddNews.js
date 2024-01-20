@@ -35,9 +35,6 @@ function AdminAddNews() {
 	const theme = useTheme();
 	const screenSize = useSelector(selectScreenSize);
 	const [coverImage, setCoverImage] = useState(null);
-	const [expanded, setExpanded] = useState({
-		content: false,
-	});
 	const [tags, setTags] = useState([]);
 	const [modalOpen, setModalOpen] = useState(false);
 
@@ -45,18 +42,7 @@ function AdminAddNews() {
 		setTags(newTags);
 	};
 
-	const toggleExpanded = (property) => {
-		setExpanded((prevState) => ({
-			...prevState,
-			[property]: !prevState[property],
-		}));
-	};
-	const handleLocationClick = () => {
-		setExpanded((prevState) => ({
-			...prevState,
-			content: true,
-		}));
-	};
+	// console.log(tags);
 
 	const storageRef = getStorage();
 
@@ -117,12 +103,11 @@ function AdminAddNews() {
 					date.getMonth() + 1
 				}/${date.getFullYear()}`;
 
-				const { tags, ...valuesWithoutTags } = values;
 				const updatedValues = {
-					...valuesWithoutTags,
+					...values,
 					date: formattedDate,
-					coverImage: coverImage,
-					allTags: tags,
+					coverImage: coverImage || initialValues.coverImage,
+					allTags: tags || initialValues.allTags,
 				};
 				console.log("Updated Values:", updatedValues);
 
@@ -254,7 +239,7 @@ function AdminAddNews() {
 		titleDate: {
 			display: "flex",
 			flexDirection: "column",
-			marginBottom: "30px",
+			marginBottom: "15px",
 			justifyContent: "space-between",
 			animation: "expandAnimation 0.2s ease 0s 1 normal forwards",
 			height: "fit-content",
@@ -307,12 +292,12 @@ function AdminAddNews() {
 			zIndex: 5,
 		},
 		quill: {
-			margin: screenSize === "medium-s" ? "20px 0px" : "15px 0px 50px 0px",
+			margin: screenSize === "medium-s" ? "0px 0px" : "0px 0px 50px 0px",
 			minHeight: "400px",
 			height: "fit-content",
 			borderRadius: "5px",
-			width: "98%",
-			padding:"0px 0px 20px 0px"
+			width: "95%",
+			padding: "0px 0px 20px 0px",
 		},
 		tags: {},
 		location: {},
@@ -410,10 +395,7 @@ function AdminAddNews() {
 											/>
 										</label>
 									</div>
-									<div
-										style={AdminAddNewsStyles.generalField}
-										onClick={() => handleLocationClick()}
-									>
+									<div style={AdminAddNewsStyles.generalField}>
 										<Field name="location" style={AdminAddNewsStyles.location}>
 											{({ field, form }) => (
 												<div>
@@ -486,34 +468,9 @@ function AdminAddNews() {
 									</div>
 								</div>
 							</div>
-
-							<div
-								style={AdminAddNewsStyles.expanded}
-								onClick={() => toggleExpanded("content")}
-								className={"hover-button-darker"}
-							>
-								<div
-									style={{
-										...AdminAddNewsStyles.expandedTitle,
-										color:
-											errors.content && touched.content
-												? theme.palette.red.error
-												: "",
-									}}
-								>
-									{errors.content ? "Content Required" : "Content"}
-								</div>
-								{expanded.content ? (
-									<ExpandMoreIcon sx={AdminAddNewsStyles.expandIcon} />
-								) : (
-									<ExpandLessIcon sx={AdminAddNewsStyles.expandIcon} />
-								)}
+							<div style={AdminAddNewsStyles.quill}>
+								<ReactQuillComponent name="content" />
 							</div>
-							{!expanded.content && (
-								<div style={AdminAddNewsStyles.quill}>
-									<ReactQuillComponent name="content" />
-								</div>
-							)}
 						</div>
 					</Form>
 				)}

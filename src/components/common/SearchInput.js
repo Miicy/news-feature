@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import Divider from "@mui/material/Divider";
@@ -8,11 +8,11 @@ import { selectScreenSize } from "../../store/reducers/layoutSlice";
 import { useSelector } from "react-redux";
 import SearchModal from "./SearchModal";
 
-function SearchInput({ onSearch, filteredNews  }) {
+function SearchInput({ onSearch, filteredNews }) {
 	const [value, setValue] = useState("");
 	const screenSize = useSelector(selectScreenSize);
 	const [keyPressed, setKeyPressed] = useState(false);
-	
+
 	const handleSearch = () => {
 		onSearch(value);
 	};
@@ -21,17 +21,20 @@ function SearchInput({ onSearch, filteredNews  }) {
 		setValue("");
 		setKeyPressed(false);
 	};
-
-	const handleKeyPress = () => {
+	const handleKeyPress = React.useCallback(() => {
 		onSearch(value);
 		if (!keyPressed) {
 			setKeyPressed(true);
 		}
-	};
+	}, [value, keyPressed, onSearch]);
+	useEffect(() => {
+		handleKeyPress();
+		console.log();
+	}, [handleKeyPress]);
 
 	const SearchInputStyles = {
 		container: {
-			position:"relative",
+			position: "relative",
 			minWidth:
 				screenSize === "large"
 					? "350px"
@@ -42,6 +45,7 @@ function SearchInput({ onSearch, filteredNews  }) {
 					: "100px",
 		},
 	};
+
 	return (
 		<div style={SearchInputStyles.container}>
 			<TextField
