@@ -7,6 +7,7 @@ import { useTheme } from "@emotion/react";
 
 function ReactQuillComponent(name, helperText, ...rest) {
 	const theme = useTheme();
+
 	const ReactQuillComponentStyles = {
 		container: {
 			color: theme.palette.opposite.main,
@@ -14,7 +15,6 @@ function ReactQuillComponent(name, helperText, ...rest) {
 		quill: {
 			height: "500px",
 			borderRadius: "5px",
-			zIndex: 100,
 		},
 		quillError: {
 			color: theme.palette.red.error,

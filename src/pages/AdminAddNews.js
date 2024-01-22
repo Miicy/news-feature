@@ -105,8 +105,9 @@ function AdminAddNews() {
 					...values,
 					date: formattedDate,
 					coverImage: coverImage || initialValues.coverImage,
-					allTags: tags || initialValues.allTags,
+					allTags: `${tags}` || initialValues.allTags,
 				};
+				
 				console.log("Updated Values:", updatedValues);
 
 				const notificationPayload = {
@@ -242,6 +243,7 @@ function AdminAddNews() {
 			animation: "expandAnimation 0.2s ease 0s 1 normal forwards",
 			height: "fit-content",
 			width: "50%",
+			zIndex: 150,
 		},
 		generalField: {
 			margin: screenSize === "medium-s" ? "10px 0px" : "10px 0px",
@@ -307,7 +309,7 @@ function AdminAddNews() {
 			width: "100%",
 			height: "50px",
 			backgroundColor: theme.palette.opposite.secondary,
-			zIndex: 1000,
+			zIndex: 100,
 		},
 		error: {
 			color: theme.palette.red.error,
@@ -322,13 +324,13 @@ function AdminAddNews() {
 			display: "flex",
 			justifyContent: "center",
 			alignItems: "center",
-			zIndex: 99998,
+			zIndex: 150,
 		},
 		modal: {
 			position: "absolute",
 			backgroundColor: theme.palette.opposite.secondary,
 			height: "20vh",
-			zIndex: 99999,
+			zIndex: 150,
 			display: "flex",
 			flexDirection: "column",
 			justifyContent: "space-evenly",

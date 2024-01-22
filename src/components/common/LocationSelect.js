@@ -31,11 +31,11 @@ function LocationSelect({ field, form, border }) {
 		option: (provided, state) => ({
 			...provided,
 			color: "black",
-			zIndex: 99999999,
+			zIndex: 50,
 		}),
 		menu: (provided) => ({
 			...provided,
-			zIndex: 99999999,
+			zIndex: 50,
 		}),
 	};
 
@@ -44,12 +44,20 @@ function LocationSelect({ field, form, border }) {
 		form.setFieldValue(field.name, selectedOption.value);
 	};
 
+	const handleKeyDown = (event) => {
+		if (event.key === "Enter") {
+		  event.preventDefault();
+		}
+	  };
+	
+
 	return (
 		<Select
 			options={countries}
 			value={selectedCountry}
 			onChange={handleCountryChange}
 			styles={customStyles}
+			onKeyDown={handleKeyDown}
 		/>
 	);
 }

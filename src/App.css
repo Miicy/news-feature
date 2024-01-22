@@ -72,6 +72,7 @@ body::-webkit-scrollbar {
 	border: 1px solid #000!important;;
 }
 
+
 @keyframes myAnim {
 	0% {
 		opacity: 0;

@@ -28,6 +28,11 @@ const FormikDatePicker = ({
 		},
 		container: {},
 	};
+	const handleKeyDown = (event) => {
+		if (event.key === 'Enter') {
+		  event.preventDefault();
+		}
+	  };
 
 	return (
 		<Field name={name}>
@@ -53,6 +58,7 @@ const FormikDatePicker = ({
 								}}
 								error={!!error && touched}
 								helperText={touched ? error : helperText}
+								onKeyDown={handleKeyDown}
 							/>
 							<ErrorMessage
 								style={DatePickerStyles.error}

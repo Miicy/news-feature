@@ -40,7 +40,7 @@ function AdminNews() {
 			display: "flex",
 			flexDirection: "column",
 			overflowY: "auto",
-			zIndex:555,
+			zIndex:150,
 		},
 		options: {
 			height: "80px",

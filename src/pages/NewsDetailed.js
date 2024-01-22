@@ -71,7 +71,6 @@ function NewsDetailed() {
 			display: "flex",
 			width: "100%",
 			justifyContent: "space-between",
-			margin: "30px 0",
 		},
 		date: {
 			display: "flex",

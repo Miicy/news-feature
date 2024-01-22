@@ -17,7 +17,7 @@ function SearchModal({ filteredNews }) {
 			height: "fit-content",
 			position: "absolute",
 			backgroundColor: "white",
-			zIndex: 99999,
+			zIndex: 100,
 			color: theme.palette.text.secondary,
 			display: "flex",
 			justifyContent: "center",
