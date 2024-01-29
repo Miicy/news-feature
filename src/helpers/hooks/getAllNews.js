@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import {
 	setDataState,
 	displayNotification,
@@ -9,61 +9,60 @@ import { DATA_STATE, NOTIFICATION_TYPES, SERVER_URL } from "../app.constants";
 import newsData from "../../helpers/newsData.json";
 import { STORAGE } from "../../firebase";
 import { getDownloadURL, ref } from "firebase/storage";
+import { setAllNews } from "../../store/reducers/userSlice";
 
 const useGetAllNews = () => {
 	const dispatch = useDispatch();
-	const [allNews, setAllNews] = useState(null);
 
-	useEffect(() => {
-		dispatch(setDataState(DATA_STATE.DATA_STATE_LOADING));
-		const fetchNews = async () => {
-			try {
-				setTimeout(async () => {
-					const updatedNewsData = await updateImageUrls(newsData);
-					setAllNews(updatedNewsData);
-					dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
-				}, 100);
-
-				/* Uncomment the below code for the actual API call to retrieve data from the server */
-
-				// const response = await axios.get(`${SERVER_URL}/getallnews`);
-				// const updatedNewsData = await updateImageUrls(response.data);
-				// setAllNews(updatedNewsData);
-				// dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
-			} catch (error) {
-				const notificationPayload = {
-					text: "Došlo je do greške!",
-					type: NOTIFICATION_TYPES.ERROR,
-				};
-				dispatch(displayNotification(notificationPayload));
-			}
-		};
-
-		fetchNews();
-	}, [dispatch]);
-
-	const updateImageUrls = async (data) => {
+	const updateImageUrls = useCallback(async (data) => {
 		const updatedData = await Promise.all(
-			data.map(async (item, index) => {
-				if (item.image) {
-					const downloadUrl = await getDownloadURLFromStorage(
-						item.image,
-						index,
-					);
-					return { ...item, image: downloadUrl };
-				}
-				return item;
-			}),
+		  data.map(async (item, index) => {
+			if (item.image) {
+			  const downloadUrl = await getDownloadURLFromStorage(item.image);
+			  return { ...item, image: downloadUrl };
+			}
+			return item;
+		  })
 		);
 		return updatedData;
-	};
-	const getDownloadURLFromStorage = async (storageUrl) => {
+	  }, []);
+	
+	  const getDownloadURLFromStorage = async (storageUrl) => {
 		const storageRef = ref(STORAGE, storageUrl);
 		const downloadUrl = await getDownloadURL(storageRef);
 		return downloadUrl;
-	};
-
-	return allNews;
+	  };
+	// console.log("useGetAllNews executed");
+	useEffect(() => {
+		// console.log("useEffect executed");
+		dispatch(setDataState(DATA_STATE.DATA_STATE_LOADING));
+		const fetchNews = async () => {
+		  try {
+	
+			if (!SERVER_URL) {
+			  const response = await axios.get(`${SERVER_URL}news/`, { crossdomain: true });
+			  dispatch(setAllNews(response.data));
+			  console.log("news");
+			} else {
+			  await new Promise(resolve => setTimeout(resolve, 100)); 
+			  const updatedNewsData = await updateImageUrls(newsData);
+			  dispatch(setAllNews(updatedNewsData));
+			  console.log(updatedNewsData);
+			}
+		  } catch (error) {
+			const notificationPayload = {
+			  text: "Error!",
+			  type: NOTIFICATION_TYPES.ERROR,
+			};
+			console.log(error);
+			dispatch(displayNotification(notificationPayload));
+		  } finally {
+			dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
+		  }
+		};
+	  
+		fetchNews();
+	  }, [updateImageUrls, dispatch]);
 };
 
 export default useGetAllNews;

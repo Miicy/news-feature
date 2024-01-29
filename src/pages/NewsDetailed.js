@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import BreadcrumbsPage from "../components/common/Breadcrumbs";
 import { useParams } from "react-router-dom";
-import useGetAllNews from "../helpers/hooks/getAllNews";
 import { isMobile } from "react-device-detect";
 import { selectScreenSize } from "../store/reducers/layoutSlice";
 import { useSelector } from "react-redux";
 
-function NewsDetailed() {
+function NewsDetailed({ allNews }) {
 	const { id } = useParams();
-	const allNews = useGetAllNews();
 	const screenSize = useSelector(selectScreenSize);
 	const [newsDetails, setNewsDetails] = useState(null);
 
@@ -21,6 +19,8 @@ function NewsDetailed() {
 			}
 		}
 	}, [allNews, id]);
+	
+	const backgroundImageUrl = newsDetails?.coverImage || newsDetails?.image || '';
 
 	const newsDetailedStyles = {
 		container: {
@@ -48,7 +48,7 @@ function NewsDetailed() {
 			marginLeft: "10px",
 		},
 		image: {
-			backgroundImage: newsDetails ? `url(${newsDetails.image})` : "none",
+			backgroundImage: backgroundImageUrl ? `url(${backgroundImageUrl})` : 'none',
 			backgroundSize: "cover",
 			backgroundPosition: "center center",
 			height: screenSize === "small" || isMobile ? "200px" : "500px",
@@ -115,11 +115,19 @@ function NewsDetailed() {
 				</div>
 				<div style={newsDetailedStyles.bottomContainer}>
 					<div style={newsDetailedStyles.tags}>
-						{newsDetails.tags.map((tag, index) => (
-							<span key={index} style={newsDetailedStyles.tags}>
-								#{tag}&nbsp;
-							</span>
-						))}
+						{newsDetails.allTags
+							? newsDetails.allTags.map((tag, index) => (
+									<span key={index} style={newsDetailedStyles.tags}>
+										#{tag}&nbsp;
+									</span>
+							  ))
+							: newsDetails.tags
+							? newsDetails.tags.map((tag, index) => (
+									<span key={index} style={newsDetailedStyles.tags}>
+										#{tag}&nbsp;
+									</span>
+							  ))
+							: null}
 					</div>
 					<div style={newsDetailedStyles.date}>{newsDetails.date}</div>
 				</div>

@@ -1,13 +1,13 @@
 import React from "react";
 import Gallery from "../components/common/Gallery";
-import { selectActiveTheme } from "../store/reducers/userSlice";
+import {  selectAllNews } from "../store/reducers/userSlice";
 import { useSelector } from "react-redux";
 import { isMobile } from "react-device-detect";
 import { selectScreenSize } from "../store/reducers/layoutSlice";
-import useGetAllNews from "../helpers/hooks/getAllNews";
 import BreadcrumbsPage from "../components/common/Breadcrumbs";
 
 function Home() {
+	const allNews = useSelector(selectAllNews);
 	const screenSize = useSelector(selectScreenSize);
 	const homeStyles = {
 		container: {
@@ -15,7 +15,7 @@ function Home() {
 			height: screenSize === "small" || isMobile ? "500px" : "700px",
 		},
 	};
-	const allNews = useGetAllNews();
+
 	return (
 		<div className="innerPageContainer">
 			<div className="breadcrumbsContainer">

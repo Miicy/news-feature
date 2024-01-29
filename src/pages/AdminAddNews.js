@@ -1,16 +1,22 @@
+import dayjs from "dayjs";
+import axios from "axios";
+import * as Yup from "yup";
 import "../pages/pages.css";
-import { useTheme } from "@emotion/react";
+import { STORAGE } from "../firebase";
 import React, { useState } from "react";
+import { useTheme } from "@emotion/react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { selectScreenSize } from "../store/reducers/layoutSlice";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-import dayjs from "dayjs";
-import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
 import FormikField from "../components/common/FormikField";
+import LocationSelect from "../components/common/LocationSelect";
+import FormikFieldTag from "../components/common/FormikFieldTag";
 import FormikDatePicker from "../components/common/FormikDatePicker";
 import ReactQuillComponent from "../components/common/ReactQuillComponent";
+
 import CustomButton from "../components/common/CustomButton";
 import {
 	DATA_STATE,
@@ -21,10 +27,6 @@ import {
 	displayNotification,
 	setDataState,
 } from "../store/reducers/notificationSlice";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { STORAGE } from "../firebase";
-import LocationSelect from "../components/common/LocationSelect";
-import FormikFieldTag from "../components/common/FormikFieldTag";
 
 function AdminAddNews() {
 	const today = dayjs();
@@ -36,49 +38,51 @@ function AdminAddNews() {
 	const [tags, setTags] = useState([]);
 	const [modalOpen, setModalOpen] = useState(false);
 
-	const handleTagsChange = (newTags) => {
-		setTags(newTags);
-	};
 
-	// console.log(tags);
 
-	const storageRef = getStorage();
+	// const storageRef = getStorage();
+	// const handleFileChange = (event) => {
+	// 	const file = event.currentTarget.files[0];
+	// 	const imageRef = ref(STORAGE, `adminNewsImages/${file.name}`);
+	// 	dispatch(setDataState(DATA_STATE.DATA_STATE_LOADING));
+	// 	uploadBytes(imageRef, file)
+	// 	  .then((snapshot) => {
+	// 		return getDownloadURL(snapshot.ref);
+	// 	  })
+	// 	  .then((downloadURL) => {
+	// 		setCoverImage(downloadURL);
+	// 		dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
+	// 	  })
+	// 	  .catch((error) => {
+	// 		console.error("Error uploading file:", error);
+	// 		setCoverImage(null);
+	// 		const notificationPayload = {
+	// 		  text: "Error uploading file!",
+	// 		  type: NOTIFICATION_TYPES.ERROR,
+	// 		};
+	// 		dispatch(displayNotification(notificationPayload));
+	// 	  });
+	//   };
 
-	const handleFileChange = (event) => {
-		const file = event.currentTarget.files[0];
-		const imageRef = ref(STORAGE, `adminNewsImages/${file.name}`);
-		dispatch(setDataState(DATA_STATE.DATA_STATE_LOADING));
-		uploadBytes(imageRef, file)
-			.then((snapshot) => {
-				return getDownloadURL(snapshot.ref);
-			})
-			.then((downloadURL) => {
-				setCoverImage(downloadURL);
-				dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
-
-				dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
-			})
-
-			.catch((error) => {
-				console.error("Error uploading file:", error);
-				setCoverImage(null);
-				const notificationPayload = {
-					text: "!",
-					type: NOTIFICATION_TYPES.ERROR,
-				};
-				dispatch(displayNotification(notificationPayload));
-			});
-	};
-
+	
 	const initialValues = {
 		title: "",
 		date: today,
 		content: "",
-		coverImage: "",
+		coverImage: undefined,
 		location: "",
 		allTags: [],
 	};
 
+	const handleTagsChange = (newTags) => {
+		setTags(newTags);
+	};
+
+	const handleFileChange = (event) => {
+		const file = event.currentTarget.files[0];
+		setCoverImage(file);
+	};
+	
 	const validationSchema = Yup.object().shape({
 		title: Yup.string().required("Title required!"),
 		date: Yup.date()
@@ -92,23 +96,28 @@ function AdminAddNews() {
 	const onSubmit = async (values) => {
 		try {
 			dispatch(setDataState(DATA_STATE.DATA_STATE_LOADING));
-			// if (!coverImage || !tags.length) {
 			if (!tags.length) {
 				setModalOpen(true);
 			} else {
 				const date = new Date(values.date);
-				const formattedDate = `${date.getDate()}/${
-					date.getMonth() + 1
-				}/${date.getFullYear()}`;
 
+				const year = date.getFullYear();
+				const month = String(date.getMonth() + 1).padStart(2, "0");
+				const day = String(date.getDate()).padStart(2, "0");
+
+				const formattedDate = `${year}-${month}-${day}`;
 				const updatedValues = {
 					...values,
 					date: formattedDate,
 					coverImage: coverImage || initialValues.coverImage,
-					allTags: `${tags}` || initialValues.allTags,
+					allTags: tags || initialValues.allTags,
 				};
-				
+
+				console.log(coverImage);
+
 				console.log("Updated Values:", updatedValues);
+
+				const response = await axios.post(`${SERVER_URL}news/`, updatedValues);
 
 				const notificationPayload = {
 					text: "News Added!",
@@ -129,55 +138,11 @@ function AdminAddNews() {
 				};
 				dispatch(displayNotification(notificationPayload));
 			}
-		}
-		dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
-	};
-
-	const handleModalAccept = async (values) => {
-		try {
-			dispatch(setDataState(DATA_STATE.DATA_STATE_LOADING));
-			setModalOpen(false);
-
-			const date = new Date(values.date);
-			const formattedDate = `${date.getDate()}/${
-				date.getMonth() + 1
-			}/${date.getFullYear()}`;
-
-			const { tags, ...valuesWithoutTags } = values;
-			const updatedValues = {
-				...valuesWithoutTags,
-				date: formattedDate,
-			};
-			console.log("Updated Values:", updatedValues);
-
-			const notificationPayload = {
-				text: "News Added!",
-				type: NOTIFICATION_TYPES.SUCCESS,
-			};
+		} finally {
 			dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
-			dispatch(displayNotification(notificationPayload));
-		} catch (error) {
-			if (
-				error.response &&
-				error.response.data.error === "Internal server error"
-			) {
-				const notificationPayload = {
-					text: "Server error!",
-					type: NOTIFICATION_TYPES.ERROR,
-				};
-				dispatch(displayNotification(notificationPayload));
-			}
 		}
 	};
 
-	const handleModalCancel = () => {
-		setModalOpen(false);
-		const notificationPayload = {
-			text: "News Not Added!",
-			type: NOTIFICATION_TYPES.ERROR,
-		};
-		dispatch(displayNotification(notificationPayload));
-	};
 	const AdminAddNewsStyles = {
 		formCotainer: {
 			display: "flex",
@@ -347,7 +312,7 @@ function AdminAddNews() {
 				onSubmit={onSubmit}
 			>
 				{({ isValid, touched, errors }) => (
-					<Form style={AdminAddNewsStyles.form}>
+					<Form style={AdminAddNewsStyles.form} enctype="multipart/form-data">
 						<div style={AdminAddNewsStyles.formFields}>
 							<div style={AdminAddNewsStyles.button}>
 								<CustomButton
@@ -475,39 +440,6 @@ function AdminAddNews() {
 					</Form>
 				)}
 			</Formik>
-			{modalOpen && (
-				<div style={AdminAddNewsStyles.modalContainer}>
-					<div style={AdminAddNewsStyles.modal}>
-						<p style={{ color: "white", width: "80%", textAlign: "center" }}>
-							You haven't added image or tags. Whould you still like to procced?{" "}
-						</p>
-						<div
-							style={{
-								display: "flex",
-								justifyContent: "space-evenly",
-								width: "80%",
-							}}
-						>
-							<CustomButton
-								onClick={handleModalAccept}
-								text={"Accept"}
-								width={"40%"}
-								height={"40px"}
-								borderRadius={2}
-								color={"black"}
-							/>
-							<CustomButton
-								onClick={handleModalCancel}
-								text={"Cancel"}
-								width={"40%"}
-								height={"40px"}
-								borderRadius={2}
-								color={"black"}
-							/>
-						</div>
-					</div>
-				</div>
-			)}
 		</div>
 	);
 }

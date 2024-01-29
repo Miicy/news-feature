@@ -14,11 +14,17 @@ import { useSelector } from "react-redux";
 import ScreenSizeListener from "./helpers/ScreenSizeListener";
 import { selectScreenSize } from "./store/reducers/layoutSlice";
 import { isMobile } from "react-device-detect";
+import { selectAllNews } from "./store/reducers/userSlice";
+import useGetAllNews from "./helpers/hooks/getAllNews";
 
 function App() {
+	useGetAllNews();
+	const allNews = useSelector(selectAllNews);
+	console.log(allNews);
 	const navigate = useNavigate();
 	const [theme, setTheme] = useState(themeCreation());
 	const screenSize = useSelector(selectScreenSize);
+	const loading = useSelector((state) => state.user.loading);
 
 	useEffect(() => {
 		navigate("/news");
@@ -28,8 +34,8 @@ function App() {
 		<ThemeProvider theme={theme}>
 			<Header />
 			<Routes>
-				<Route path="/news" element={<News />} />
-				<Route path="/news/:id" element={<NewsDetailed />} />
+				<Route path="/news" element={<News allNews={allNews}/>} />
+				<Route path="/news/:id" element={<NewsDetailed allNews={allNews}/>} />
 				{!isMobile || screenSize !== "small" ? (
 					<>
 						<Route path="/admin" element={<AdminLogin />} />

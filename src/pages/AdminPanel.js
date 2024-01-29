@@ -3,14 +3,14 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectScreenSize } from "../store/reducers/layoutSlice";
 import { useTheme } from "@emotion/react";
-import useGetAllNews from "../helpers/hooks/getAllNews";
 import { isMobile } from "react-device-detect";
 import NewsAdminContainer from "../components/common/NewsAdminContainer";
+import { selectAllNews } from "../store/reducers/userSlice";
 
 function AdminPanel() {
+	const allNews = useSelector(selectAllNews);
 	const screenSize = useSelector(selectScreenSize);
 	const theme = useTheme();
-	const allNews = useGetAllNews();
 
 	const [allNewsArray, setAllNewsArray] = useState([]);
 

@@ -37,6 +37,8 @@ export default function NewsContainer({
 		}
 	  }, [showContent, news, dispatch]);
 
+	  const backgroundImageUrl = news?.coverImage || news?.image || '';
+
 	const newsContainerStyles = {
 		singleNews: {
 			margin: margin,
@@ -47,7 +49,7 @@ export default function NewsContainer({
 			width: layoutColumn ? "100%" : "auto",
 		},
 		singleNewsImage: {
-			backgroundImage: news ? `url(${news.image})` : "none",
+			backgroundImage: backgroundImageUrl ? `url(${backgroundImageUrl})` : "none",
 			backgroundSize: "cover",
 			backgroundPosition: "center top",
 			minWidth: "100px",

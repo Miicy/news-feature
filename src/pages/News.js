@@ -3,7 +3,6 @@ import { isMobile } from "react-device-detect";
 import ViewHeadlineIcon from "@mui/icons-material/ViewHeadline";
 import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import NewsContainer from "../components/common/NewsContainer";
-import useGetAllNews from "../helpers/hooks/getAllNews";
 import BreadcrumbsPage from "../components/common/Breadcrumbs";
 import "./pages.css";
 import { useNavigate } from "react-router-dom";
@@ -12,24 +11,16 @@ import { useSelector } from "react-redux";
 import { useTheme } from "@emotion/react";
 import SearchInput from "../components/common/SearchInput";
 
-function News() {
+function News({ allNews }) {
+	// console.log(allNews);
 	const navigate = useNavigate();
 	const screenSize = useSelector(selectScreenSize);
 	const [layoutColumn, setLayoutColumn] = useState(true);
 	const theme = useTheme();
-
-	const allNews = useGetAllNews();
 	const [newsLimit, setNewsLimit] = useState(7);
 	const [filteredNews, setFilteredNews] = useState([]);
 
-	const toggleLayoutColumn = () => {
-		const isSmallScreen = screenSize === "small";
-		const isMediumSScreen = screenSize === "medium-s";
-
-		if (!isMobile && !isSmallScreen && !isMediumSScreen) {
-			setLayoutColumn((prevLayoutColumn) => !prevLayoutColumn);
-		}
-	};
+	let latestNews, restOfNews, isRestOfNewsOdd, handleSearch, loadMoreNews;
 
 	useEffect(() => {
 		const isSmallScreen = screenSize === "small";
@@ -40,32 +31,44 @@ function News() {
 		}
 	}, [screenSize]);
 
-	const latestNews = allNews && allNews.length > 0 ? allNews[0] : null;
-	const restOfNews = allNews ? allNews.slice(1) : [];
+	const toggleLayoutColumn = () => {
+		const isSmallScreen = screenSize === "small";
+		const isMediumSScreen = screenSize === "medium-s";
 
-	const isRestOfNewsOdd = restOfNews.length % 2 === 1;
-
-	//news load
-	const loadMoreNews = () => {
-		setNewsLimit(newsLimit + 8);
+		if (!isMobile && !isSmallScreen && !isMediumSScreen) {
+			setLayoutColumn((prevLayoutColumn) => !prevLayoutColumn);
+		}
 	};
 
-	//search
-	const handleSearch = (searchValue) => {
-		// console.log("Search value:", searchValue);
-		const filteredNews = allNews.filter((item) => {
-			const matchesTitle = item.title
-				.toLowerCase()
-				.includes(searchValue.toLowerCase());
-			const matchesTag = item.tags.some((tag) =>
-				tag.toLowerCase().includes(searchValue.toLowerCase()),
-			);
+	if (allNews) {
+		latestNews = allNews[0];
+		restOfNews = allNews.slice(1);
+		isRestOfNewsOdd = restOfNews.length % 2 === 1;
 
-			return matchesTitle || matchesTag;
-		});
-		setFilteredNews(filteredNews);
-		// console.log("Filtered news:", filteredNews);
-	};
+		// news load
+		loadMoreNews = () => {
+			setNewsLimit(newsLimit + 8);
+		};
+
+		// search
+		handleSearch = (searchValue) => {
+			const filteredNews = allNews.filter((item) => {
+				const matchesTitle = item.title
+					.toLowerCase()
+					.includes(searchValue.toLowerCase());
+				const matchesTag =
+					item.allTags &&
+					item.allTags.some((tag) =>
+						tag.toLowerCase().includes(searchValue.toLowerCase()),
+					);
+
+				return matchesTitle || matchesTag;
+			});
+			setFilteredNews(filteredNews);
+		};
+	}
+
+	const backgroundImageUrl = latestNews?.coverImage || latestNews?.image || "";
 
 	const newsPageStyles = {
 		breadcrumbsContainerMobile: {
@@ -105,7 +108,9 @@ function News() {
 			flexDirection: "column",
 		},
 		latest: {
-			backgroundImage: latestNews ? `url(${latestNews.image})` : "none",
+			backgroundImage: backgroundImageUrl
+				? `url(${backgroundImageUrl})`
+				: "none",
 			backgroundSize: "cover",
 			backgroundPosition: "center top",
 			position: "absolute",
@@ -189,6 +194,7 @@ function News() {
 	};
 
 	if (!allNews) return null;
+	if (!latestNews) return null;
 
 	return (
 		<div className="innerPageContainer">

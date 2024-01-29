@@ -53,6 +53,7 @@ function NewsAdminContainer({
 			fontSize: "1.5em",
 		},
 	};
+
 	return (
 		<div
 			style={{ ...newsContainerStyles.singleNews, cursor: "default" }}
@@ -102,13 +103,30 @@ function NewsAdminContainer({
 					justifyContent: "flex-start",
 				}}
 			>
-				{news.tags.slice(0, 2).map((tag, index) => (
-					<span key={index}>
-						#{tag}
-						{index !== 1 && <>&nbsp;</>}
-					</span>
-				))}
-				{news.tags.length > 2 && <span>&nbsp;...</span>}
+				{news.allTags && news.allTags.length > 0 ? (
+					<>
+						{news.allTags.slice(0, 2).map((tag, index) => (
+							<span key={index}>
+								#{tag}
+								{index !== 1 && <>&nbsp;</>}
+							</span>
+						))}
+						{news.allTags.length > 2 && <span>&nbsp;...</span>}
+					</>
+				) : (
+					news.tags &&
+					news.tags.length > 0 && (
+						<>
+							{news.tags.slice(0, 2).map((tag, index) => (
+								<span key={index}>
+									#{tag}
+									{index !== 1 && <>&nbsp;</>}
+								</span>
+							))}
+							{news.tags.length > 2 && <span>&nbsp;...</span>}
+						</>
+					)
+				)}
 			</div>
 
 			<div

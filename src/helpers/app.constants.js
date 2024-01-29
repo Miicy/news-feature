@@ -1,7 +1,4 @@
-export const SERVER_URL =
-	process.env.NODE_ENV === "production"
-		? "https://brutal-server.onrender.com/"
-		: "http://localhost:8001/";
+export const SERVER_URL = "http://localhost:8000/api/v1/"
 
 export const DATA_STATE = {
 	DATA_STATE_OK: "DATA_STATE_OK",

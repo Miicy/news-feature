@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import Divider from "@mui/material/Divider";
@@ -21,16 +21,17 @@ function SearchInput({ onSearch, filteredNews }) {
 		setValue("");
 		setKeyPressed(false);
 	};
-	const handleKeyPress = React.useCallback(() => {
+
+	const handleKeyPress = useCallback(() => {
 		onSearch(value);
 		if (!keyPressed) {
-			setKeyPressed(true);
+		  setKeyPressed(true);
 		}
-	}, [value, keyPressed, onSearch]);
-	useEffect(() => {
+	  }, [value, keyPressed, onSearch]);
+	  
+	  useEffect(() => {
 		handleKeyPress();
-		console.log();
-	}, [handleKeyPress]);
+	  }, [value]);
 
 	const SearchInputStyles = {
 		container: {
@@ -45,6 +46,8 @@ function SearchInput({ onSearch, filteredNews }) {
 					: "100px",
 		},
 	};
+	
+	if (!filteredNews) return null;
 
 	return (
 		<div style={SearchInputStyles.container}>
