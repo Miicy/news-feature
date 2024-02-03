@@ -36,7 +36,7 @@ function AdminAddNews() {
 	const [tags, setTags] = useState([]);
 	const [modalOpen, setModalOpen] = useState(false);
 
-	
+
 	const initialValues = {
 		title: "",
 		date: today,
@@ -54,7 +54,7 @@ function AdminAddNews() {
 		const file = event.currentTarget.files[0];
 		setCoverImage(file);
 	};
-	
+
 	const validationSchema = Yup.object().shape({
 		title: Yup.string().required("Title required!"),
 		date: Yup.date()
@@ -78,18 +78,16 @@ function AdminAddNews() {
 				const day = String(date.getDate()).padStart(2, "0");
 
 				const formattedDate = `${year}-${month}-${day}`;
-				const updatedValues = {
-					...values,
-					date: formattedDate,
-					coverImage: coverImage || initialValues.coverImage,
-					allTags: tags || initialValues.allTags,
-				};
 
-				console.log(coverImage);
+				const formData = new FormData();
+				formData.append("title", values.title);
+				formData.append("date", formattedDate);
+				formData.append("content", values.content);
+				formData.append("location", values.location);
+				formData.append("coverImage", coverImage);
+				formData.append("allTags", tags);
 
-				console.log("Updated Values:", updatedValues);
-
-				const response = await axios.post(`${SERVER_URL}news/`, updatedValues);
+				const response = await axios.post(`${SERVER_URL}news/`, formData);
 
 				const notificationPayload = {
 					text: "News Added!",
