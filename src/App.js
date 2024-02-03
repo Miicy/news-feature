@@ -20,7 +20,7 @@ import useGetAllNews from "./helpers/hooks/getAllNews";
 function App() {
 	useGetAllNews();
 	const allNews = useSelector(selectAllNews);
-	console.log(allNews);
+	// console.log(allNews);
 	const navigate = useNavigate();
 	const [theme, setTheme] = useState(themeCreation());
 	const screenSize = useSelector(selectScreenSize);

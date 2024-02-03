@@ -2,13 +2,11 @@ import dayjs from "dayjs";
 import axios from "axios";
 import * as Yup from "yup";
 import "../pages/pages.css";
-import { STORAGE } from "../firebase";
 import React, { useState } from "react";
 import { useTheme } from "@emotion/react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { selectScreenSize } from "../store/reducers/layoutSlice";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 import { Formik, Form, Field } from "formik";
 import FormikField from "../components/common/FormikField";
@@ -37,32 +35,6 @@ function AdminAddNews() {
 	const [coverImage, setCoverImage] = useState(null);
 	const [tags, setTags] = useState([]);
 	const [modalOpen, setModalOpen] = useState(false);
-
-
-
-	// const storageRef = getStorage();
-	// const handleFileChange = (event) => {
-	// 	const file = event.currentTarget.files[0];
-	// 	const imageRef = ref(STORAGE, `adminNewsImages/${file.name}`);
-	// 	dispatch(setDataState(DATA_STATE.DATA_STATE_LOADING));
-	// 	uploadBytes(imageRef, file)
-	// 	  .then((snapshot) => {
-	// 		return getDownloadURL(snapshot.ref);
-	// 	  })
-	// 	  .then((downloadURL) => {
-	// 		setCoverImage(downloadURL);
-	// 		dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
-	// 	  })
-	// 	  .catch((error) => {
-	// 		console.error("Error uploading file:", error);
-	// 		setCoverImage(null);
-	// 		const notificationPayload = {
-	// 		  text: "Error uploading file!",
-	// 		  type: NOTIFICATION_TYPES.ERROR,
-	// 		};
-	// 		dispatch(displayNotification(notificationPayload));
-	// 	  });
-	//   };
 
 	
 	const initialValues = {
@@ -234,7 +206,7 @@ function AdminAddNews() {
 			borderRadius: "10px",
 			animation: "expandAnimation 0.2s ease 0s 1 normal forwards",
 			backgroundColor: coverImage ? "none" : theme.palette.forth.secondary,
-			backgroundImage: coverImage ? `url(${coverImage})` : "none",
+			backgroundImage: coverImage ? `url(${URL.createObjectURL(coverImage)})` : "none",
 			backgroundSize: "cover",
 			backgroundPosition: "center",
 			display: "flex",
@@ -312,7 +284,7 @@ function AdminAddNews() {
 				onSubmit={onSubmit}
 			>
 				{({ isValid, touched, errors }) => (
-					<Form style={AdminAddNewsStyles.form} enctype="multipart/form-data">
+					<Form style={AdminAddNewsStyles.form} encType="multipart/form-data">
 						<div style={AdminAddNewsStyles.formFields}>
 							<div style={AdminAddNewsStyles.button}>
 								<CustomButton
