@@ -16,53 +16,57 @@ const useGetAllNews = () => {
 
 	const updateImageUrls = useCallback(async (data) => {
 		const updatedData = await Promise.all(
-		  data.map(async (item, index) => {
-			if (item.image) {
-			  const downloadUrl = await getDownloadURLFromStorage(item.image);
-			  return { ...item, image: downloadUrl };
-			}
-			return item;
-		  })
+			data.map(async (item, index) => {
+				if (item.image) {
+					const downloadUrl = await getDownloadURLFromStorage(item.image);
+					return { ...item, image: downloadUrl };
+				}
+				return item;
+			}),
 		);
 		return updatedData;
-	  }, []);
-	
-	  const getDownloadURLFromStorage = async (storageUrl) => {
+	}, []);
+
+	const getDownloadURLFromStorage = async (storageUrl) => {
 		const storageRef = ref(STORAGE, storageUrl);
 		const downloadUrl = await getDownloadURL(storageRef);
 		return downloadUrl;
-	  };
-	// console.log("useGetAllNews executed");
-	useEffect(() => {
-		// console.log("useEffect executed");
-		dispatch(setDataState(DATA_STATE.DATA_STATE_LOADING));
-		const fetchNews = async () => {
-		  try {
-	
-			if (!SERVER_URL) {
-			  const response = await axios.get(`${SERVER_URL}news/`, { crossdomain: true });
-			  dispatch(setAllNews(response.data));
-			  console.log("news");
+	};
+	const fetchNews = async () => {
+		try {
+			dispatch(setDataState(DATA_STATE.DATA_STATE_LOADING));
+
+			let response;
+			if (SERVER_URL) {
+				response = await axios.get(`${SERVER_URL}news/`, { crossdomain: true });
 			} else {
-			  await new Promise(resolve => setTimeout(resolve, 100)); 
-			  const updatedNewsData = await updateImageUrls(newsData);
-			  dispatch(setAllNews(updatedNewsData));
-			  console.log(updatedNewsData);
+				await new Promise((resolve) => setTimeout(resolve, 100));
+				const updatedNewsData = await updateImageUrls(newsData);
+				response = { data: updatedNewsData };
 			}
-		  } catch (error) {
+
+			const updatedNewsArray = response.data;
+			dispatch(setAllNews(updatedNewsArray));
+
+			// Return the updated news array
+			return updatedNewsArray;
+		} catch (error) {
 			const notificationPayload = {
-			  text: "Error!",
-			  type: NOTIFICATION_TYPES.ERROR,
+				text: "Error!",
+				type: NOTIFICATION_TYPES.ERROR,
 			};
 			console.log(error);
 			dispatch(displayNotification(notificationPayload));
-		  } finally {
+		} finally {
 			dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
-		  }
-		};
-	  
+		}
+	};
+
+	useEffect(() => {
 		fetchNews();
-	  }, [updateImageUrls, dispatch]);
+	}, [updateImageUrls, dispatch]);
+
+	return { fetchNews }; 
 };
 
 export default useGetAllNews;

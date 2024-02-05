@@ -93,9 +93,8 @@ function AdminAddNews() {
 					text: "News Added!",
 					type: NOTIFICATION_TYPES.SUCCESS,
 				};
-				dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
+				// dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
 				dispatch(displayNotification(notificationPayload));
-				dispatch(navigate("/admin/admin-panel"));
 			}
 		} catch (error) {
 			if (

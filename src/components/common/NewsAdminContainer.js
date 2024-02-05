@@ -1,9 +1,20 @@
 import { Tooltip } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectScreenSize } from "../../store/reducers/layoutSlice";
 import { useTheme } from "@emotion/react";
+import { useNavigate } from "react-router-dom";
+import {
+	DATA_STATE,
+	NOTIFICATION_TYPES,
+	SERVER_URL,
+} from "../../helpers/app.constants";
+import {
+	displayNotification,
+	setDataState,
+} from "../../store/reducers/notificationSlice";
+import axios from "axios";
 
 function NewsAdminContainer({
 	news,
@@ -12,12 +23,14 @@ function NewsAdminContainer({
 	borderRadius,
 	admin,
 	columnClicked,
+	onDeleteSuccess
 }) {
 	const screenSize = useSelector(selectScreenSize);
 	const theme = useTheme();
+	const dispatch = useDispatch();
 
 	const maxCharacters =
-		screenSize === "medium" ? 60 : screenSize === "medium-s" ? 35 : 100;
+		screenSize === "medium" ? 40 : screenSize === "medium-s" ? 20 : 80;
 	const content = news.content;
 	const title = news.title;
 	const truncatedContent =
@@ -27,6 +40,33 @@ function NewsAdminContainer({
 
 	const truncatedTitle =
 		title.length > 30 ? title.substring(0, maxCharacters) + "..." : title;
+
+	const handleDelete = async () => {
+		try {
+			dispatch(setDataState(DATA_STATE.DATA_STATE_LOADING));
+			const response = await axios.delete(`${SERVER_URL}news/${news.id}`);
+
+			const notificationPayload = {
+				text: "News deleted!",
+				type: NOTIFICATION_TYPES.SUCCESS,
+			};
+			dispatch(displayNotification(notificationPayload));
+			onDeleteSuccess();
+		} catch (error) {
+			if (
+				error.response &&
+				error.response.data.error === "Internal server error"
+			) {
+				const notificationPayload = {
+					text: "Server error!",
+					type: NOTIFICATION_TYPES.ERROR,
+				};
+				dispatch(displayNotification(notificationPayload));
+			}
+		} finally {
+			dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
+		}
+	};
 
 	const newsContainerStyles = {
 		singleNews: {
@@ -141,8 +181,8 @@ function NewsAdminContainer({
 					alignItems: "flex-start",
 					padding: "5px",
 				}}
+				dangerouslySetInnerHTML={{__html: truncatedContent }}
 			>
-				{truncatedContent}
 			</div>
 			{admin && (
 				<div style={newsContainerStyles.rest}>
@@ -150,7 +190,11 @@ function NewsAdminContainer({
 						<EditIcon sx={newsContainerStyles.adminIcon} className="hover" />
 					</Tooltip>
 					<Tooltip title={`Delete news`}>
-						<DeleteIcon sx={newsContainerStyles.adminIcon} className="hover" />
+						<DeleteIcon
+							sx={newsContainerStyles.adminIcon}
+							onClick={handleDelete}
+							className="hover"
+						/>
 					</Tooltip>
 				</div>
 			)}

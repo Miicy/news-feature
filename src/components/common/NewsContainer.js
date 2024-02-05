@@ -140,7 +140,7 @@ export default function NewsContainer({
 						</div>
 					)}
 				</div>
-				<div style={newsContainerStyles.singleNewsContent}>{news.content}</div>
+				<div style={newsContainerStyles.singleNewsContent} dangerouslySetInnerHTML={{__html: news.content }}></div>
 				<div style={newsContainerStyles.readMore}>
 					{news.date}
 					{readMore && (

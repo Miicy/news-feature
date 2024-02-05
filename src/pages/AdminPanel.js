@@ -1,18 +1,28 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectScreenSize } from "../store/reducers/layoutSlice";
 import { useTheme } from "@emotion/react";
 import { isMobile } from "react-device-detect";
 import NewsAdminContainer from "../components/common/NewsAdminContainer";
-import { selectAllNews } from "../store/reducers/userSlice";
+import { selectAllNews, setAllNews } from "../store/reducers/userSlice";
+import getAllNews from "../helpers/hooks/getAllNews";
 
 function AdminPanel() {
 	const allNews = useSelector(selectAllNews);
 	const screenSize = useSelector(selectScreenSize);
 	const theme = useTheme();
+	const dispatch = useDispatch();
 
 	const [allNewsArray, setAllNewsArray] = useState([]);
+
+	const { fetchNews } = getAllNews();
+
+	const handleNewsDeleteSuccess = () => {
+		fetchNews().then((updatedNewsArray) => {
+			dispatch(setAllNews(updatedNewsArray));
+		  });
+	  };
 
 	const [columnClicked, setColumnClicked] = useState({
 		num: true,
@@ -77,10 +87,9 @@ function AdminPanel() {
 					: locationB.localeCompare(locationA);
 			}
 
-			return 0; 
+			return 0;
 		});
 	}
-
 
 	const adminPanelStyles = {
 		container: {
@@ -92,7 +101,7 @@ function AdminPanel() {
 			alignItems: "stretch",
 			overflow: "auto",
 			backgroundColor: theme.palette.secondary.secondary,
-			padding:"0px 0px 20px 0px"
+			padding: "0px 0px 20px 0px",
 		},
 		heading: {
 			display: "grid",
@@ -199,6 +208,7 @@ function AdminPanel() {
 					borderRadius={"0"}
 					readMore={false}
 					admin={true}
+					onDeleteSuccess={handleNewsDeleteSuccess}
 				/>
 			))}
 		</div>

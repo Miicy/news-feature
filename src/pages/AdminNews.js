@@ -17,12 +17,12 @@ function AdminNews() {
 
 	const handleOptionClick = (clickedOption) => {
 		setAdminRoutes((prevState) => ({
-		  ...prevState,
-		  addNews: clickedOption === 'addNews',
-		  adminPanelRender: clickedOption === 'adminPanelRender',
-		  other: clickedOption === 'other',
+			...prevState,
+			addNews: clickedOption === "addNews",
+			adminPanelRender: clickedOption === "adminPanelRender",
+			other: clickedOption === "other",
 		}));
-	  };
+	};
 
 	const innerPageContainerAdmin = {
 		width: "100%",
@@ -34,13 +34,13 @@ function AdminNews() {
 	const AdminSidebarStyles = {
 		container: {
 			height: "100vh",
-			width: "15%", 
+			width: "15%",
 			minWidth: "150px",
 			backgroundColor: theme.palette.opposite.main,
 			display: "flex",
 			flexDirection: "column",
 			overflowY: "auto",
-			zIndex:150,
+			zIndex: 150,
 		},
 		options: {
 			height: "80px",
@@ -65,52 +65,60 @@ function AdminNews() {
 			cursor: "pointer",
 		},
 	};
- const renderOption = (optionName, displayName) => (
-    <div
-      key={optionName}
-      className="hover-red"
-      style={{
-        ...(adminRoutes[optionName]
-          ? AdminSidebarStyles.linkActive
-          : AdminSidebarStyles.optionsInner),
-      }}
-      onClick={() => handleOptionClick(optionName)}
-    >
-      {displayName}
-    </div>
-  );
+	const renderOption = (optionName, displayName) => (
+		<div
+			key={optionName}
+			className="hover-red"
+			style={{
+				...(adminRoutes[optionName]
+					? AdminSidebarStyles.linkActive
+					: AdminSidebarStyles.optionsInner),
+			}}
+			onClick={() => handleOptionClick(optionName)}
+		>
+			{displayName}
+		</div>
+	);
 
-  return (
-    <div style={innerPageContainerAdmin}>
-      <div style={AdminSidebarStyles.container}>
-        <div style={AdminSidebarStyles.options}>
-          {renderOption('addNews', 'Add News')}
-          {renderOption('adminPanelRender', 'All News')}
-          <Divider
-            sx={{
-              ml: 1,
-              mr: 1,
-            }}
-            orientation="horizontal"
-            variant="middle"
-          />
-          {/* {renderOption('other', 'Other')} */}
-        </div>
-        <Divider
-          sx={{
-            ml: 1,
-            mr: 1,
-          }}
-          orientation="horizontal"
-          variant="middle"
-        />
-      </div>
-      <div style={{ backgroundColor: theme.palette.secondary.secondary, width: '100%', height: '100%',overflowY: "auto", }}>
-        {adminRoutes.addNews && <AdminAddNews />}
-        {adminRoutes.adminPanelRender && <AdminPanel />}
-        {adminRoutes.other && <div>Other</div>}
-      </div>
-    </div>
-  );
+	return (
+		<div style={innerPageContainerAdmin}>
+			<div style={AdminSidebarStyles.container}>
+				<div style={AdminSidebarStyles.options}>
+					{renderOption("adminPanelRender", "All News")}
+					{renderOption("addNews", "Add News")}
+
+					<Divider
+						sx={{
+							ml: 1,
+							mr: 1,
+						}}
+						orientation="horizontal"
+						variant="middle"
+					/>
+					{/* {renderOption('other', 'Other')} */}
+				</div>
+				<Divider
+					sx={{
+						ml: 1,
+						mr: 1,
+					}}
+					orientation="horizontal"
+					variant="middle"
+				/>
+			</div>
+			<div
+				style={{
+					backgroundColor: theme.palette.secondary.secondary,
+					width: "100%",
+					height: "100%",
+					overflowY: "auto",
+				}}
+			>
+				{adminRoutes.adminPanelRender && <AdminPanel />}
+				{adminRoutes.addNews && <AdminAddNews />}
+				{adminRoutes.other && <div>Other</div>}
+			</div>
+		</div>
+	);
 }
 export default AdminNews;

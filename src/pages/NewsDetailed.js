@@ -19,8 +19,9 @@ function NewsDetailed({ allNews }) {
 			}
 		}
 	}, [allNews, id]);
-	
-	const backgroundImageUrl = newsDetails?.coverImage || newsDetails?.image || '';
+
+	const backgroundImageUrl =
+		newsDetails?.coverImage || newsDetails?.image || "";
 
 	const newsDetailedStyles = {
 		container: {
@@ -48,7 +49,9 @@ function NewsDetailed({ allNews }) {
 			marginLeft: "10px",
 		},
 		image: {
-			backgroundImage: backgroundImageUrl ? `url(${backgroundImageUrl})` : 'none',
+			backgroundImage: backgroundImageUrl
+				? `url(${backgroundImageUrl})`
+				: "none",
 			backgroundSize: "cover",
 			backgroundPosition: "center center",
 			height: screenSize === "small" || isMobile ? "200px" : "500px",
@@ -66,6 +69,7 @@ function NewsDetailed({ allNews }) {
 			margin: screenSize === "small" || isMobile ? "20px 0" : "35px 0",
 			minHeight: screenSize === "small" || isMobile ? "200px" : "200px",
 			marginLeft: "10px",
+			textAlign:"justify",
 		},
 		bottomContainer: {
 			display: "flex",
@@ -103,15 +107,7 @@ function NewsDetailed({ allNews }) {
 				</div>
 				<div style={newsDetailedStyles.image}></div>
 				<div style={newsDetailedStyles.content}>
-					<p style={newsDetailedStyles.contentInner}>
-						{newsDetails.content.split("/n").map((paragraph, index) => (
-							<React.Fragment key={index}>
-								<br />
-								{paragraph}
-								<br />
-							</React.Fragment>
-						))}
-					</p>
+					<div style={newsDetailedStyles.contentInner} dangerouslySetInnerHTML={{ __html: newsDetails.content }} />
 				</div>
 				<div style={newsDetailedStyles.bottomContainer}>
 					<div style={newsDetailedStyles.tags}>
