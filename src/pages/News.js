@@ -12,7 +12,6 @@ import { useTheme } from "@emotion/react";
 import SearchInput from "../components/common/SearchInput";
 
 function News({ allNews }) {
-	// console.log(allNews);
 	const navigate = useNavigate();
 	const screenSize = useSelector(selectScreenSize);
 	const [layoutColumn, setLayoutColumn] = useState(true);

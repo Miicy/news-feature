@@ -4,14 +4,25 @@ import TextField from "@mui/material/TextField";
 import { Field } from "formik";
 import { useState, useEffect } from "react";
 
-function FormikFieldTag({ tags: propTags, onTagsChange, name, type, sx, helperText, ...rest }) {
+function FormikFieldTag({
+	modalOpen,
+	setModalOpen,
+	initialTags,
+	tags: propTags,
+	onTagsChange,
+	name,
+	type,
+	sx,
+	helperText,
+	...rest
+}) {
 	const theme = useTheme();
-	const [tags, setTags] = useState(propTags || []);
+	const [tags, setTags] = useState(initialTags || []);
 	const [inputTag, setInputTag] = useState("");
 
 	useEffect(() => {
-		setTags(propTags || []);
-	}, [propTags]);
+		setTags(initialTags || []);
+	}, [initialTags]);
 
 	const handleTagChange = (e) => {
 		setInputTag(e.target.value);
@@ -19,20 +30,19 @@ function FormikFieldTag({ tags: propTags, onTagsChange, name, type, sx, helperTe
 
 	const handleTagAdd = () => {
 		if (inputTag.trim() !== "") {
-		  const newTags = [...tags, inputTag.trim()];
-		  setTags(newTags);
-		  onTagsChange(newTags);
-		  setInputTag("");
+			const newTags = [...tags, inputTag.trim()];
+			setTags(newTags);
+			onTagsChange(newTags);
+			setInputTag("");
 		}
-	  };
+	};
 
 	const handleTagRemove = (index) => {
 		const newTags = tags.filter((_, i) => i !== index);
 		setTags(newTags);
-		onTagsChange(newTags); // Update parent with updated tags
+		onTagsChange(newTags); 
 	};
 
-	// console.log(tags)
 
 	return (
 		<div>
@@ -48,6 +58,7 @@ function FormikFieldTag({ tags: propTags, onTagsChange, name, type, sx, helperTe
 						onChange={(e) => {
 							field.onChange(e);
 							handleTagChange(e);
+							setModalOpen(false);
 						}}
 						value={inputTag}
 						onKeyDown={(e) => {
@@ -60,7 +71,22 @@ function FormikFieldTag({ tags: propTags, onTagsChange, name, type, sx, helperTe
 					/>
 				)}
 			</Field>
-			<div style={{ minHeight: "30px", height:"fit-content", overflow: "auto",  }}>
+			{modalOpen && (
+				<div
+					style={{
+						color: "red",
+						marginLeft: "20px",
+						fontSize: "0.8em",
+						marginTop: "5px",
+						position:"absolute",
+					}}
+				>
+					Tags required!
+				</div>
+			)}
+			<div
+				style={{ minHeight: "30px", height: "fit-content", overflow: "auto" }}
+			>
 				{tags.map((tag, index) => (
 					<span key={index} style={{ marginRight: "5px" }}>
 						#{tag}

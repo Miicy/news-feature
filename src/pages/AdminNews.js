@@ -5,6 +5,7 @@ import AdminPanel from "./AdminPanel";
 import { useTheme } from "@emotion/react";
 import { Divider } from "@mui/material";
 import "../pages/pages.css";
+import AdminUpdateNews from "./AdminUpdateNews";
 
 function AdminNews() {
 	const theme = useTheme();
@@ -12,7 +13,11 @@ function AdminNews() {
 	const [adminRoutes, setAdminRoutes] = useState({
 		addNews: false,
 		adminPanelRender: true,
-		other: false,
+		updateNews: {
+			active: false,
+			newsId: null,
+			newsObject: null,
+		},
 	});
 
 	const handleOptionClick = (clickedOption) => {
@@ -20,7 +25,7 @@ function AdminNews() {
 			...prevState,
 			addNews: clickedOption === "addNews",
 			adminPanelRender: clickedOption === "adminPanelRender",
-			other: clickedOption === "other",
+			updateNews: clickedOption === "updateNews",
 		}));
 	};
 
@@ -95,7 +100,19 @@ function AdminNews() {
 						orientation="horizontal"
 						variant="middle"
 					/>
-					{/* {renderOption('other', 'Other')} */}
+					{adminRoutes.updateNews.active && (
+						<>
+							{renderOption("updateNews", "Update News")}
+							<Divider
+								sx={{
+									ml: 1,
+									mr: 1,
+								}}
+								orientation="horizontal"
+								variant="middle"
+							/>
+						</>
+					)}
 				</div>
 				<Divider
 					sx={{
@@ -114,9 +131,15 @@ function AdminNews() {
 					overflowY: "auto",
 				}}
 			>
-				{adminRoutes.adminPanelRender && <AdminPanel />}
-				{adminRoutes.addNews && <AdminAddNews />}
-				{adminRoutes.other && <div>Other</div>}
+				{adminRoutes.adminPanelRender && (
+					<AdminPanel setAdminRoutes={setAdminRoutes} />
+				)}
+				{adminRoutes.addNews && (
+					<AdminAddNews setAdminRoutes={setAdminRoutes} />
+				)}
+				{adminRoutes.updateNews && (
+					<AdminUpdateNews adminRoutes={adminRoutes} setAdminRoutes={setAdminRoutes} />
+				)}
 			</div>
 		</div>
 	);

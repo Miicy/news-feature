@@ -6,15 +6,26 @@ function LocationSelect({ field, form, border }) {
 	const [selectedCountry, setSelectedCountry] = useState(null);
 	useEffect(() => {
 		fetch(
-			"https://valid.layercode.workers.dev/list/countries?format=select&flags=true&value=code",
+		  "https://valid.layercode.workers.dev/list/countries?format=select&flags=true&value=code"
 		)
-			.then((response) => response.json())
-			.then((data) => {
-				setCountries(data.countries);
-				setSelectedCountry(data.userSelectValue);
-			});
-	}, []);
-
+		  .then((response) => response.json())
+		  .then((data) => {
+			setCountries(data.countries);
+			
+			// Check if the field value is not set, then set the initial value
+			if (!field.value) {
+			  setSelectedCountry(data.userSelectValue);
+			  form.setFieldValue(field.name, data.userSelectValue.value);
+			} else {
+			  // If the field value is already set, find the corresponding option
+			  const selectedOption = data.countries.find(
+				(option) => option.value === field.value
+			  );
+			  setSelectedCountry(selectedOption);
+			}
+		  });
+	  }, [field.name, field.value, form]);
+	  
 	const customStyles = {
 		control: (provided) => ({
 			...provided,

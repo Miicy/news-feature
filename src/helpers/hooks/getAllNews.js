@@ -55,7 +55,6 @@ const useGetAllNews = () => {
 				text: "Error!",
 				type: NOTIFICATION_TYPES.ERROR,
 			};
-			console.log(error);
 			dispatch(displayNotification(notificationPayload));
 		} finally {
 			dispatch(setDataState(DATA_STATE.DATA_STATE_OK));

@@ -5,7 +5,7 @@ import React from "react";
 import { ErrorMessage, Field } from "formik";
 import { useTheme } from "@emotion/react";
 
-function ReactQuillComponent(name, helperText, ...rest) {
+function ReactQuillComponent({name, initialContent, helperText, ...rest}) {
 	const theme = useTheme();
 
 	const ReactQuillComponentStyles = {
@@ -60,6 +60,7 @@ function ReactQuillComponent(name, helperText, ...rest) {
 							modules={modules}
 							formats={formats}
 							placeholder={"Article"}
+							value={form.values[name] || initialContent} 
 							{...rest}
 						/>
 

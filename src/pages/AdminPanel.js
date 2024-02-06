@@ -8,7 +8,7 @@ import NewsAdminContainer from "../components/common/NewsAdminContainer";
 import { selectAllNews, setAllNews } from "../store/reducers/userSlice";
 import getAllNews from "../helpers/hooks/getAllNews";
 
-function AdminPanel() {
+function AdminPanel({ setAdminRoutes }) {
 	const allNews = useSelector(selectAllNews);
 	const screenSize = useSelector(selectScreenSize);
 	const theme = useTheme();
@@ -21,7 +21,20 @@ function AdminPanel() {
 	const handleNewsDeleteSuccess = () => {
 		fetchNews().then((updatedNewsArray) => {
 			dispatch(setAllNews(updatedNewsArray));
-		  });
+		});
+	};
+
+	const handleUpdate = (newsId, newsObject) => {
+		setAdminRoutes((prevState) => ({
+		  ...prevState,
+		  adminPanelRender: false,
+		  addNews: false,
+		  updateNews: {
+			active: true,
+			newsId: newsId,
+			newsObject: newsObject,
+		  },
+		}));
 	  };
 
 	const [columnClicked, setColumnClicked] = useState({
@@ -209,6 +222,7 @@ function AdminPanel() {
 					readMore={false}
 					admin={true}
 					onDeleteSuccess={handleNewsDeleteSuccess}
+					handleUpdate={handleUpdate}
 				/>
 			))}
 		</div>

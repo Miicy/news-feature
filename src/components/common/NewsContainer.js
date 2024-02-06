@@ -5,16 +5,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
 import { selectScreenSize } from "../../store/reducers/layoutSlice";
-import {
-	setDataState,
-	displayNotification,
-} from "../../store/reducers/notificationSlice";
-import {
-	DATA_STATE,
-	NOTIFICATION_TYPES,
-	SERVER_URL,
-} from "../../helpers/app.constants";
-import { useEffect, useState } from "react";
+import { setDataState } from "../../store/reducers/notificationSlice";
+import { DATA_STATE } from "../../helpers/app.constants";
+import { useEffect} from "react";
 
 export default function NewsContainer({
 	news,
@@ -29,15 +22,15 @@ export default function NewsContainer({
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const screenSize = useSelector(selectScreenSize);
-	const [showContent, setShowContent] = useState(false);
+	let showContent = false;
 
 	useEffect(() => {
 		if (showContent && news) {
-		  dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
+			dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
 		}
-	  }, [showContent, news, dispatch]);
+	}, [showContent, news, dispatch]);
 
-	  const backgroundImageUrl = news?.coverImage || news?.image || '';
+	const backgroundImageUrl = news?.coverImage || news?.image || "";
 
 	const newsContainerStyles = {
 		singleNews: {
@@ -49,7 +42,9 @@ export default function NewsContainer({
 			width: layoutColumn ? "100%" : "auto",
 		},
 		singleNewsImage: {
-			backgroundImage: backgroundImageUrl ? `url(${backgroundImageUrl})` : "none",
+			backgroundImage: backgroundImageUrl
+				? `url(${backgroundImageUrl})`
+				: "none",
 			backgroundSize: "cover",
 			backgroundPosition: "center top",
 			minWidth: "100px",
@@ -140,7 +135,10 @@ export default function NewsContainer({
 						</div>
 					)}
 				</div>
-				<div style={newsContainerStyles.singleNewsContent} dangerouslySetInnerHTML={{__html: news.content }}></div>
+				<div
+					style={newsContainerStyles.singleNewsContent}
+					dangerouslySetInnerHTML={{ __html: news.content }}
+				></div>
 				<div style={newsContainerStyles.readMore}>
 					{news.date}
 					{readMore && (

@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import axios from "axios";
 import * as Yup from "yup";
 import "../pages/pages.css";
-import React, { useState } from "react";
+import React, {useState } from "react";
 import { useTheme } from "@emotion/react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectScreenSize } from "../store/reducers/layoutSlice";
@@ -25,23 +25,35 @@ import {
 	setDataState,
 } from "../store/reducers/notificationSlice";
 
-function AdminAddNews({ setAdminRoutes }) {
-	const today = dayjs();
+function AdminUpdateNews({ adminRoutes, setAdminRoutes }) {
+	const newsData = adminRoutes.updateNews.newsObject;
 	const dispatch = useDispatch();
 	const theme = useTheme();
+	const today = dayjs();
 	const screenSize = useSelector(selectScreenSize);
 	const [coverImage, setCoverImage] = useState(null);
+	const [coverImagePreview, setCoverImagePreview] = useState(null);
 	const [tags, setTags] = useState([]);
 	const [modalOpen, setModalOpen] = useState(false);
 
+	if (!newsData) return null;
+
 	const initialValues = {
-		title: "",
-		date: today,
-		content: "",
-		coverImage: undefined,
-		location: "",
-		allTags: [],
+		title: newsData.title || "",
+		date: dayjs(newsData.date) || today,
+		content: newsData.content || "",
+		coverImage: "",
+		location: newsData.location || "",
+		allTags: newsData.allTags || [],
 	};
+
+	const setCoverImagePreviewIfNecessary = () => {
+		if (newsData.coverImage && !coverImagePreview) {
+			setCoverImagePreview(newsData.coverImage);
+		}
+	};
+
+	setCoverImagePreviewIfNecessary();
 
 	const handleTagsChange = (newTags) => {
 		setTags(newTags);
@@ -65,7 +77,7 @@ function AdminAddNews({ setAdminRoutes }) {
 	const onSubmit = async (values) => {
 		try {
 			dispatch(setDataState(DATA_STATE.DATA_STATE_LOADING));
-			if (!tags.length) {
+			if (!tags.length === 0 || initialValues.allTags.length === 0) {
 				setModalOpen(true);
 			} else {
 				const date = new Date(values.date);
@@ -82,12 +94,15 @@ function AdminAddNews({ setAdminRoutes }) {
 				formData.append("content", values.content);
 				formData.append("location", values.location);
 				formData.append("coverImage", coverImage);
-				formData.append("allTags", tags);
+				formData.append("allTags", tags && initialValues.allTags);
 
-				await axios.post(`${SERVER_URL}news/`, formData);
+				await axios.put(
+                    `${SERVER_URL}news/${newsData.id}/`,
+                    formData,
+                );
 
 				const notificationPayload = {
-					text: "News Added!",
+					text: "News Updated!",
 					type: NOTIFICATION_TYPES.SUCCESS,
 				};
 				dispatch(displayNotification(notificationPayload));
@@ -105,8 +120,9 @@ function AdminAddNews({ setAdminRoutes }) {
 			}
 		} catch (error) {
 			if (
-				error.response &&
-				error.response.data.error === "Internal server error"
+				// error.response &&
+				// error.response.data.error === "Internal server error"
+                console.log(error)
 			) {
 				const notificationPayload = {
 					text: "Server error!",
@@ -212,7 +228,7 @@ function AdminAddNews({ setAdminRoutes }) {
 			backgroundColor: coverImage ? "none" : theme.palette.forth.secondary,
 			backgroundImage: coverImage
 				? `url(${URL.createObjectURL(coverImage)})`
-				: "none",
+				: `url(${coverImagePreview})`,
 			backgroundSize: "cover",
 			backgroundPosition: "center",
 			display: "flex",
@@ -282,6 +298,8 @@ function AdminAddNews({ setAdminRoutes }) {
 		},
 	};
 
+	if (!newsData) return null;
+
 	return (
 		<div style={AdminAddNewsStyles.formCotainer}>
 			<Formik
@@ -296,7 +314,7 @@ function AdminAddNews({ setAdminRoutes }) {
 								<CustomButton
 									type="submit"
 									disabled={!isValid}
-									text="Add News"
+									text="Update News"
 									className="hover-button"
 									width={"20%"}
 									borderRadius={0}
@@ -385,6 +403,7 @@ function AdminAddNews({ setAdminRoutes }) {
 												type="text"
 												modalOpen={modalOpen}
 												setModalOpen={setModalOpen}
+												initialTags={initialValues.allTags}
 											/>
 										</label>
 									</div>
@@ -414,7 +433,10 @@ function AdminAddNews({ setAdminRoutes }) {
 								</div>
 							</div>
 							<div style={AdminAddNewsStyles.quill}>
-								<ReactQuillComponent name="content" />
+								<ReactQuillComponent
+									initialContent={initialValues.content}
+									name="content"
+								/>
 							</div>
 						</div>
 					</Form>
@@ -424,4 +446,4 @@ function AdminAddNews({ setAdminRoutes }) {
 	);
 }
 
-export default AdminAddNews;
+export default AdminUpdateNews;

@@ -1,7 +1,7 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { ThemeProvider } from "@mui/material/styles";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Header from "./components/layout/Header";
 import News from "./pages/News";
 import LoadingModal from "./components/other/LoadingModal";
@@ -20,18 +20,15 @@ import useGetAllNews from "./helpers/hooks/getAllNews";
 function App() {
 	useGetAllNews();
 	const allNews = useSelector(selectAllNews);
-	// console.log(allNews);
 	const navigate = useNavigate();
-	const [theme, setTheme] = useState(themeCreation());
 	const screenSize = useSelector(selectScreenSize);
-	const loading = useSelector((state) => state.user.loading);
 
 	useEffect(() => {
 		navigate("/news");
-	}, []);
+	  }, []);
 
 	return (
-		<ThemeProvider theme={theme}>
+		<ThemeProvider theme={themeCreation()}>
 			<Header />
 			<Routes>
 				<Route path="/news" element={<News allNews={allNews}/>} />

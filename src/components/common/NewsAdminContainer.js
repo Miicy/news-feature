@@ -4,7 +4,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
 import { selectScreenSize } from "../../store/reducers/layoutSlice";
 import { useTheme } from "@emotion/react";
-import { useNavigate } from "react-router-dom";
 import {
 	DATA_STATE,
 	NOTIFICATION_TYPES,
@@ -23,7 +22,8 @@ function NewsAdminContainer({
 	borderRadius,
 	admin,
 	columnClicked,
-	onDeleteSuccess
+	onDeleteSuccess,
+	handleUpdate
 }) {
 	const screenSize = useSelector(selectScreenSize);
 	const theme = useTheme();
@@ -44,7 +44,7 @@ function NewsAdminContainer({
 	const handleDelete = async () => {
 		try {
 			dispatch(setDataState(DATA_STATE.DATA_STATE_LOADING));
-			const response = await axios.delete(`${SERVER_URL}news/${news.id}`);
+			await axios.delete(`${SERVER_URL}news/${news.id}`);
 
 			const notificationPayload = {
 				text: "News deleted!",
@@ -66,6 +66,10 @@ function NewsAdminContainer({
 		} finally {
 			dispatch(setDataState(DATA_STATE.DATA_STATE_OK));
 		}
+	};
+
+	const handleUpdateClick = () => {
+		handleUpdate(news.id, news);
 	};
 
 	const newsContainerStyles = {
@@ -181,13 +185,16 @@ function NewsAdminContainer({
 					alignItems: "flex-start",
 					padding: "5px",
 				}}
-				dangerouslySetInnerHTML={{__html: truncatedContent }}
-			>
-			</div>
+				dangerouslySetInnerHTML={{ __html: truncatedContent }}
+			></div>
 			{admin && (
 				<div style={newsContainerStyles.rest}>
 					<Tooltip title={`Edit news`}>
-						<EditIcon sx={newsContainerStyles.adminIcon} className="hover" />
+						<EditIcon
+							sx={newsContainerStyles.adminIcon}
+							onClick={handleUpdateClick}
+							className="hover"
+						/>
 					</Tooltip>
 					<Tooltip title={`Delete news`}>
 						<DeleteIcon
