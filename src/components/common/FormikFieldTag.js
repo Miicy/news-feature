@@ -43,7 +43,6 @@ function FormikFieldTag({
 		onTagsChange(newTags); 
 	};
 
-
 	return (
 		<div>
 			<Field name={name}>

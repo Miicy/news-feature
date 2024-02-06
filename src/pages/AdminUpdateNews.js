@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import axios from "axios";
 import * as Yup from "yup";
 import "../pages/pages.css";
-import React, {useState } from "react";
+import React, { useState } from "react";
 import { useTheme } from "@emotion/react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectScreenSize } from "../store/reducers/layoutSlice";
@@ -93,13 +93,12 @@ function AdminUpdateNews({ adminRoutes, setAdminRoutes }) {
 				formData.append("date", formattedDate);
 				formData.append("content", values.content);
 				formData.append("location", values.location);
-				formData.append("coverImage", coverImage);
-				formData.append("allTags", tags && initialValues.allTags);
+				if (coverImage) {
+					formData.append("coverImage", coverImage);
+				}
+				formData.append("allTags", tags);
 
-				await axios.put(
-                    `${SERVER_URL}news/${newsData.id}/`,
-                    formData,
-                );
+				await axios.put(`${SERVER_URL}news/${newsData.id}/`, formData);
 
 				const notificationPayload = {
 					text: "News Updated!",
@@ -122,7 +121,7 @@ function AdminUpdateNews({ adminRoutes, setAdminRoutes }) {
 			if (
 				// error.response &&
 				// error.response.data.error === "Internal server error"
-                console.log(error)
+				console.log(error)
 			) {
 				const notificationPayload = {
 					text: "Server error!",
