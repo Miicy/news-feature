@@ -40,8 +40,12 @@ function News({ allNews }) {
 	};
 
 	if (allNews) {
-		latestNews = allNews[0];
-		restOfNews = allNews.slice(1);
+
+		const sortedNews = [...allNews];
+
+		sortedNews.sort((a, b) => new Date(b.date) - new Date(a.date));
+		latestNews = sortedNews[0];
+		restOfNews = sortedNews.slice(1);
 		isRestOfNewsOdd = restOfNews.length % 2 === 1;
 
 		// news load

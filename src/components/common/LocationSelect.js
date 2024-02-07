@@ -11,18 +11,16 @@ function LocationSelect({ field, form, border }) {
 		  .then((response) => response.json())
 		  .then((data) => {
 			setCountries(data.countries);
-			
-			// Check if the field value is not set, then set the initial value
 			if (!field.value) {
 			  setSelectedCountry(data.userSelectValue);
 			  form.setFieldValue(field.name, data.userSelectValue.value);
 			} else {
-			  // If the field value is already set, find the corresponding option
 			  const selectedOption = data.countries.find(
 				(option) => option.value === field.value
 			  );
 			  setSelectedCountry(selectedOption);
 			}
+
 		  });
 	  }, [field.name, field.value, form]);
 	  
@@ -51,8 +49,8 @@ function LocationSelect({ field, form, border }) {
 	};
 
 	const handleCountryChange = (selectedOption) => {
-		setSelectedCountry(selectedOption);
-		form.setFieldValue(field.name, selectedOption.value);
+		setSelectedCountry(selectedOption.label);
+		form.setFieldValue(field.name, selectedOption.label);
 	};
 
 	const handleKeyDown = (event) => {
