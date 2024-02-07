@@ -71,6 +71,7 @@ function NewsAdminContainer({
 	const handleUpdateClick = () => {
 		handleUpdate(news.id, news);
 	};
+	
 
 	const newsContainerStyles = {
 		singleNews: {
@@ -110,7 +111,7 @@ function NewsAdminContainer({
 					backgroundColor: columnClicked.num && "#d1d1d1",
 				}}
 			>
-				{news.id}
+				{index + 1}
 			</div>
 			<div
 				style={{

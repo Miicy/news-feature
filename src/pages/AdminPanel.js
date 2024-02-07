@@ -78,9 +78,9 @@ function AdminPanel({ setAdminRoutes }) {
 		sortedNews = [...allNewsArray].sort((a, b) => {
 			if (sortColumn === "num") {
 				if (sortOrder === "asc") {
-					return a.id - b.id;
+					return allNewsArray.indexOf(a) - allNewsArray.indexOf(b);
 				} else {
-					return b.id - a.id;
+					return allNewsArray.indexOf(b) - allNewsArray.indexOf(a);
 				}
 			} else if (sortColumn === "title") {
 				const titleA = a.title.toLowerCase();

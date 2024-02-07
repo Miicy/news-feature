@@ -96,7 +96,9 @@ function AdminUpdateNews({ adminRoutes, setAdminRoutes }) {
 				if (coverImage) {
 					formData.append("coverImage", coverImage);
 				}
-				formData.append("allTags", tags);
+				if (tags) {
+					formData.append("allTags", tags);
+				}
 
 				await axios.put(`${SERVER_URL}news/${newsData.id}/`, formData);
 

@@ -122,6 +122,7 @@ function News({ allNews }) {
 			backgroundColor: "lightgrey",
 			cursor: "pointer",
 			zIndex: 1,
+			boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
 		},
 		textContainer: {
 			width: "100%",
@@ -172,6 +173,8 @@ function News({ allNews }) {
 			gap: "10px",
 			width: isMobile || screenSize === "small" ? "90%" : "80%",
 			transsition: "all 0.3s",
+			borderRadius: "5px",
+			boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
 		},
 		loadMore: {
 			width: "100%",

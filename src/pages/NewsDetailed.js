@@ -31,11 +31,14 @@ function NewsDetailed({ allNews }) {
 			flexDirection: "column",
 			padding: "10px",
 			marginBottom: "50px",
+			backgroundColor: "rgba(115, 113, 113, 0.15)",
+			borderRadius: "5px",
+			boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
 		},
 		titleContainer: {
 			display: "flex",
 			flexDirection: "column",
-			alignItems: screenSize === "small" || isMobile ? "center" : "flex-start",
+			alignItems: "center",
 			justifyContent: "space-between",
 		},
 		title: {
@@ -48,6 +51,11 @@ function NewsDetailed({ allNews }) {
 			fontSize: screenSize === "small" || isMobile ? "0.8em" : "1.3em",
 			marginLeft: "10px",
 		},
+		imageContainer:{
+			width:"100%",
+			display: "flex",
+			justifyContent: "center",
+		},
 		image: {
 			backgroundImage: backgroundImageUrl
 				? `url(${backgroundImageUrl})`
@@ -55,7 +63,8 @@ function NewsDetailed({ allNews }) {
 			backgroundSize: "cover",
 			backgroundPosition: "center center",
 			height: screenSize === "small" || isMobile ? "200px" : "500px",
-			width: screenSize === "small" || isMobile ? "100%" : "100%",
+			width: screenSize === "small" || isMobile ? "95%" : "80%",
+			borderRadius: "5px",
 		},
 
 		content: {
@@ -64,12 +73,12 @@ function NewsDetailed({ allNews }) {
 			alignItems: "center",
 		},
 		contentInner: {
-			width: "90%",
+			width: "80%",
 			fontSize: screenSize === "small" || isMobile ? "0.9em" : "1.2em",
 			margin: screenSize === "small" || isMobile ? "20px 0" : "35px 0",
 			minHeight: screenSize === "small" || isMobile ? "200px" : "200px",
 			marginLeft: "10px",
-			textAlign:"justify",
+			textAlign: "justify",
 		},
 		bottomContainer: {
 			display: "flex",
@@ -105,9 +114,15 @@ function NewsDetailed({ allNews }) {
 						</div>
 					</p>
 				</div>
-				<div style={newsDetailedStyles.image}></div>
+				<div style={newsDetailedStyles.imageContainer}>
+					<div style={newsDetailedStyles.image}></div>
+				</div>
+
 				<div style={newsDetailedStyles.content}>
-					<div style={newsDetailedStyles.contentInner} dangerouslySetInnerHTML={{ __html: newsDetails.content }} />
+					<div
+						style={newsDetailedStyles.contentInner}
+						dangerouslySetInnerHTML={{ __html: newsDetails.content }}
+					/>
 				</div>
 				<div style={newsDetailedStyles.bottomContainer}>
 					<div style={newsDetailedStyles.tags}>
