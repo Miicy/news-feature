@@ -34,10 +34,10 @@ const FormikDatePicker = ({
 		}
 	  };
 
-	return (
+	  return (
 		<Field name={name}>
 			{({ form }) => {
-				const { error, touched } = form.getFieldMeta(name);
+				const { error, touched, value } = form.getFieldMeta(name);
 				return (
 					<LocalizationProvider dateAdapter={AdapterDayjs}>
 						<div style={DatePickerStyles.container}>
@@ -45,8 +45,8 @@ const FormikDatePicker = ({
 								disableFuture
 								{...rest}
 								sx={sx || null}
-								onChange={(value) => form.setFieldValue("date", value)}
-								value={today}
+								onChange={(newValue) => form.setFieldValue(name, newValue)}
+								value={value}
 								format="LL"
 								shrink="true"
 								slotProps={{
@@ -62,7 +62,7 @@ const FormikDatePicker = ({
 							/>
 							<ErrorMessage
 								style={DatePickerStyles.error}
-								name="date"
+								name={name}
 								component="div"
 								className="error-message"
 							/>

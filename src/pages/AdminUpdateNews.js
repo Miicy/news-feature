@@ -99,8 +99,6 @@ function AdminUpdateNews({ adminRoutes, setAdminRoutes }) {
 				if (tags) {
 					formData.append("allTags", tags);
 				}
-
-				console.log(newsData.allTags)
 				await axios.put(`${SERVER_URL}news/${newsData.id}/`, formData);
 
 				const notificationPayload = {
@@ -122,9 +120,9 @@ function AdminUpdateNews({ adminRoutes, setAdminRoutes }) {
 			}
 		} catch (error) {
 			if (
-				// error.response &&
-				// error.response.data.error === "Internal server error"
-				console.log(error)
+				error.response &&
+				error.response.data.error === "Internal server error"
+				// console.log(error)
 			) {
 				const notificationPayload = {
 					text: "Server error!",
