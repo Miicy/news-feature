@@ -1,29 +1,34 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 
-function LocationSelect({ field, form, border }) {
+function LocationSelect({ field, form, border, initialLocation }) {
 	const [countries, setCountries] = useState([]);
-	const [selectedCountry, setSelectedCountry] = useState(null);
+	const [selectedCountry, setSelectedCountry] = useState(initialLocation);
+
 	useEffect(() => {
 		fetch(
-		  "https://valid.layercode.workers.dev/list/countries?format=select&flags=true&value=code"
+			"https://valid.layercode.workers.dev/list/countries?format=select&flags=true&value=code",
 		)
-		  .then((response) => response.json())
-		  .then((data) => {
-			setCountries(data.countries);
-			if (!field.value) {
-			  setSelectedCountry(data.userSelectValue);
-			  form.setFieldValue(field.name, data.userSelectValue.value);
-			} else {
-			  const selectedOption = data.countries.find(
-				(option) => option.value === field.value
-			  );
-			  setSelectedCountry(selectedOption);
-			}
+			.then((response) => response.json())
+			.then((data) => {
+				setCountries(data.countries);
+				if (!field.value) {
+					setSelectedCountry(data.userSelectValue);
+					form.setFieldValue(field.name, data.userSelectValue.value);
+				} else if (initialLocation) {
+					const selectedOption = data.countries.find(
+						(option) => option.label === initialLocation,
+					);
+					setSelectedCountry(selectedOption);
+				} else {
+					const selectedOption = data.countries.find(
+						(option) => option.value === field.value,
+					);
+					setSelectedCountry(selectedOption);
+				}
+			});
+	}, [field.name, field.value, form, initialLocation]);
 
-		  });
-	  }, [field.name, field.value, form]);
-	  
 	const customStyles = {
 		control: (provided) => ({
 			...provided,
@@ -55,13 +60,13 @@ function LocationSelect({ field, form, border }) {
 
 	const handleKeyDown = (event) => {
 		if (event.key === "Enter") {
-		  event.preventDefault();
+			event.preventDefault();
 		}
-	  };
-	
+	};
 
 	return (
 		<Select
+			defaultValue={initialLocation}
 			options={countries}
 			value={selectedCountry}
 			onChange={handleCountryChange}

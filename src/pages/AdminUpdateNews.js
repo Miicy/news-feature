@@ -100,6 +100,7 @@ function AdminUpdateNews({ adminRoutes, setAdminRoutes }) {
 					formData.append("allTags", tags);
 				}
 
+				console.log(newsData.allTags)
 				await axios.put(`${SERVER_URL}news/${newsData.id}/`, formData);
 
 				const notificationPayload = {
@@ -374,6 +375,7 @@ function AdminUpdateNews({ adminRoutes, setAdminRoutes }) {
 																	? `1px solid ${theme.palette.red.error}`
 																	: "1px solid black"
 															}
+															initialLocation={initialValues.location}
 														/>
 													</label>
 													{errors.location && (

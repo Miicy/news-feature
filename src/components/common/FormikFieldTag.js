@@ -30,7 +30,7 @@ function FormikFieldTag({
 
 	const handleTagAdd = () => {
 		if (inputTag.trim() !== "") {
-			const newTags = [...tags, inputTag.trim()];
+			const newTags = [...new Set([...tags, inputTag.trim(), ...propTags])];
 			setTags(newTags);
 			onTagsChange(newTags);
 			setInputTag("");
