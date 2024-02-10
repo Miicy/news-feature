@@ -16,7 +16,7 @@ function News({ allNews }) {
 	const screenSize = useSelector(selectScreenSize);
 	const [layoutColumn, setLayoutColumn] = useState(true);
 	const theme = useTheme();
-	const [newsLimit, setNewsLimit] = useState(7);
+	const [newsLimit, setNewsLimit] = useState(layoutColumn ? 6 : 7);
 	const [filteredNews, setFilteredNews] = useState([]);
 
 	let latestNews, restOfNews, isRestOfNewsOdd, handleSearch, loadMoreNews;

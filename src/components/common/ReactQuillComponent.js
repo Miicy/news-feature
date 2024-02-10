@@ -1,79 +1,80 @@
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-
 import React from "react";
 import { ErrorMessage, Field } from "formik";
 import { useTheme } from "@emotion/react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
-function ReactQuillComponent({name, initialContent, helperText, ...rest}) {
-	const theme = useTheme();
+function ReactQuillComponent({ name, initialContent, helperText, ...rest }) {
+  const theme = useTheme();
 
-	const ReactQuillComponentStyles = {
-		container: {
-			color: theme.palette.opposite.main,
-		},
-		quill: {
-			height: "500px",
-			borderRadius: "5px",
-		},
-		quillError: {
-			color: theme.palette.red.error,
-			margin: "3px 50px 0 14px",
-		},
-	};
-	const modules = {
-		toolbar: [
-			[{ header: [1, 2, 3, 4, false] }],
-			// [{ size: [] }],
-			["bold", "italic", "underline", "strike"],
-			[{ list: "ordered" }, { list: "bullet" }],
-			[{ align: [] }],
-			["link", "image", "video"],
-		],
-	};
+  const ReactQuillComponentStyles = {
+    container: {
+      color: theme.palette.opposite.main,
+    },
+    quill: {
+      height: "500px",
+      borderRadius: "5px",
+    },
+    quillError: {
+      color: theme.palette.red.error,
+      margin: "3px 50px 0 14px",
+    },
+  };
 
-	const formats = [
-		"header",
-		// "size",
-		"bold",
-		"italic",
-		"underline",
-		"strike",
-		"list",
-		"bullet",
-		"align",
-		"link",
-		"image",
-		"video",
-	];
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, 4, false] }],
+      ["bold", "italic", "underline", "strike"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      [{ align: [] }],
+      ["link", "image", "video"],
+    ],
+  };
 
-	return (
-		<Field name={name}>
-			{({ form }) => {
-				return (
-					<div style={ReactQuillComponentStyles.container}>
-						<ReactQuill
-							style={ReactQuillComponentStyles.quill}
-							onChange={(value) => {
-								form.setFieldValue("content", value);
-							}}
-							modules={modules}
-							formats={formats}
-							placeholder={"Article"}
-							value={form.values[name] || initialContent} 
-							{...rest}
-						/>
+  const formats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "list",
+    "bullet",
+    "align",
+    "link",
+    "image",
+    "video",
+  ];
 
-						<ErrorMessage
-							style={ReactQuillComponentStyles.quillError}
-							name="content"
-							component="div"
-						/>
-					</div>
-				);
-			}}
-		</Field>
-	);
+  return (
+    <Field name={name}>
+      {({ form }) => (
+        <div style={ReactQuillComponentStyles.container}>
+          <ReactQuill
+            style={ReactQuillComponentStyles.quill}
+            onChange={(value) => {
+              form.handleChange({
+                target: {
+                  name: name,
+                  value: value,
+                },
+              });
+            }}
+            modules={modules}
+            formats={formats}
+            placeholder={"Article"}
+            value={form.values[name] || initialContent}
+            {...rest}
+          />
+
+          <ErrorMessage
+            style={ReactQuillComponentStyles.quillError}
+            name={name}
+            component="div"
+          />
+        </div>
+      )}
+    </Field>
+  );
 }
 
 export default ReactQuillComponent;

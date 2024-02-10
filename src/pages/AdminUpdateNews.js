@@ -77,7 +77,7 @@ function AdminUpdateNews({ adminRoutes, setAdminRoutes }) {
 	const onSubmit = async (values) => {
 		try {
 			dispatch(setDataState(DATA_STATE.DATA_STATE_LOADING));
-			if (!tags.length === 0 || initialValues.allTags.length === 0) {
+			if (initialValues.allTags.length === 0) {
 				setModalOpen(true);
 			} else {
 				const date = new Date(values.date);
@@ -101,6 +101,7 @@ function AdminUpdateNews({ adminRoutes, setAdminRoutes }) {
 				}
 				await axios.put(`${SERVER_URL}news/${newsData.id}/`, formData);
 
+				console.log(values.content)
 				const notificationPayload = {
 					text: "News Updated!",
 					type: NOTIFICATION_TYPES.SUCCESS,
