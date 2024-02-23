@@ -170,7 +170,7 @@ function News({ allNews }) {
 			marginTop: "650px",
 			padding: "15px",
 			height: "auto",
-			backgroundColor: "rgba(115, 113, 113, 0.45)",
+			backgroundColor: "rgba(115, 113, 113, 0.15)",
 			display: "grid",
 			gridTemplateColumns: layoutColumn ? "1fr" : "repeat(2, 1fr)",
 			gridTemplateRows: "auto",

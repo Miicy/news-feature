@@ -42,7 +42,7 @@ function NewsDetailed({ allNews }) {
 			justifyContent: "space-between",
 		},
 		title: {
-			fontSize: screenSize === "small" || isMobile ? "1em" : "2.3em",
+			fontSize: screenSize === "small" || isMobile ? "1em" : "1.8em",
 			marginLeft: screenSize === "small" || isMobile ? "2px" : "5px",
 			fontWeight: "bold",
 		},
@@ -51,8 +51,8 @@ function NewsDetailed({ allNews }) {
 			fontSize: screenSize === "small" || isMobile ? "0.8em" : "1.3em",
 			marginLeft: "10px",
 		},
-		imageContainer:{
-			width:"100%",
+		imageContainer: {
+			width: "100%",
 			display: "flex",
 			justifyContent: "center",
 		},
@@ -73,7 +73,7 @@ function NewsDetailed({ allNews }) {
 			alignItems: "center",
 		},
 		contentInner: {
-			width: "80%",
+			width: "85%",
 			fontSize: screenSize === "small" || isMobile ? "0.9em" : "1.2em",
 			margin: screenSize === "small" || isMobile ? "20px 0" : "35px 0",
 			minHeight: screenSize === "small" || isMobile ? "200px" : "200px",
@@ -82,14 +82,23 @@ function NewsDetailed({ allNews }) {
 		},
 		bottomContainer: {
 			display: "flex",
-			width: "100%",
-			justifyContent: "space-between",
+			flexDirection: isMobile ? "column" : "row",
+			width:"100%" ,
+			justifyContent: isMobile ? "none" : "center",
+			alignItems: "center",
+			marginBottom: !isMobile && "20px",
 		},
 		date: {
+			width: isMobile ? "85%" : "42%",
 			display: "flex",
 			justifyContent: "flex-end",
-			marginBottom: "20px",
+			marginBottom: isMobile && "20px",
 			fontSize: screenSize === "small" || isMobile ? "0.85em" : "1em",
+		},
+		tags: {
+			width: isMobile ? "85%" : "42%",
+			display: isMobile && "flex",
+			flexWrap: isMobile && "wrap",
 		},
 	};
 	if (!allNews) return null;
@@ -97,7 +106,14 @@ function NewsDetailed({ allNews }) {
 
 	return (
 		<div className="innerPageContainer">
-			<div className="breadcrumbsContainer">
+			<div
+				className="breadcrumbsContainer"
+				style={{
+					width: isMobile ? "85%" : "80%",
+					display: "flex",
+					justifyContent: isMobile ? "center" : "flex-start",
+				}}
+			>
 				<BreadcrumbsPage
 					second={"News"}
 					secondUrl={"news"}
